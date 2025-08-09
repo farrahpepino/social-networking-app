@@ -1,0 +1,19 @@
+<video autoplay muted loop playsinline class="bg-video">
+    <source src="/Gradient-Background-09.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
+  
+<div class="content">
+    <div class="item">
+        <p class="logo">matinee</p>
+        <p>A quiet space to share what you love...</p>
+    </div>
+    <div class="item">
+        <app-login *ngIf="showLogin"/>
+        <app-register *ngIf="!showLogin"/>
+        <p class="sub">
+            {{showLogin? "Don't have an account? " : "Already have an account? "}}
+            <button class="toggle-b" (click)="toggleForm()">{{showLogin ? "Sign up." : "Sign in."}}</button>
+        </p>    
+    </div>
+</div>

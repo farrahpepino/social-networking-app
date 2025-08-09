@@ -1,0 +1,50 @@
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+}
+
+input{
+    background: transparent;
+    outline: none;
+    color: white;  
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    font-size: 20px;  
+    border: none;
+    text-align: left;
+    height: 20%;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input::placeholder{
+    color: white;
+    font-weight: 100;
+}
+
+label{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    contain: content;
+}
+
+button{
+    padding: 1.5rem;
+    border-radius: 100vmax;
+    border: none;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 20px;  
+    color: white;
+    background-color: rgb(240, 100, 0, 0.3)
+}
