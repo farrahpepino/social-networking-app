@@ -48,3 +48,7 @@ button{
     color: white;
     background-color: rgb(240, 100, 0, 0.3)
 }
+
+button:hover{
+    background-color: rgb(240, 100, 0, 0.5)
+}
