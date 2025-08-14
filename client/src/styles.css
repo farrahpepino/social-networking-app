@@ -1,8 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
 body{
     font-family: "Roboto", sans-serif;
-    /* font-weight: 100; */
-    font-size: 1rem;
+    font-size: 14px;
     background-color: #EBEDEF;
     margin: 0;
 }
@@ -73,14 +71,6 @@ hr{
   z-index: 998; 
 }
 
-input{
-  outline: none;
-  width: 95%;
-  font-family: Arial;
-  border-radius: 20px;
-  border: solid 0.5px rgb(0,0,0,0.1);
-  padding: 10px;
-}
 
 .col{
   display: flex;
@@ -90,4 +80,25 @@ input{
 
 .st{
   font-size: smaller;
+}
+
+.p-i{
+  outline: none;
+  width: 87%;
+}
+
+.p-i[placeholder]:empty:before {
+  content: attr(placeholder);
+  opacity: 20%; 
+  font-weight: 100;
+}
+
+.brd{
+  outline: none;
+  width: 97.5%;
+  font-family: Arial;
+  border-radius: 20px;
+  border: solid 0.5px rgb(0,0,0,0.1);
+  padding: 10px;
+  contain: content;
 }
