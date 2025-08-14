@@ -1,14 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 body{
     font-family: "Roboto", sans-serif;
-    font-weight: 100;
+    /* font-weight: 100; */
+    margin: 0 auto;
     font-size: 1rem;
+    background-color: #EBEDEF;
 }
 
+p{
+  margin: 0 auto;
+}
 .liquid-glass {
     position: relative;
-    padding: 1.5rem;
-    border-radius: 100vmax;
+    padding: 10px;
+    border-radius: 20px;
     isolation: isolate;
     background-color: rgb(255 255 255 / 25%);
     color: rgb(255 255 255 / 90%);
@@ -41,3 +46,50 @@ body{
       cursor: grabbing;
     }
   }
+  
+.logo{
+  font-family: Arial;
+  font-size: 2rem;
+}
+
+.f-700{
+  font-weight: 700;
+
+}
+.f-100{
+  font-weight: 100;
+}
+
+hr{
+  opacity: 20%;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px); 
+  z-index: 998; 
+}
+
+input{
+  outline: none;
+  width: 95%;
+  font-family: Arial;
+  border-radius: 20px;
+  border: solid 0.5px rgb(0,0,0,0.1);
+  padding: 10px;
+}
+
+.col{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.st{
+  font-size: smaller;
+}
