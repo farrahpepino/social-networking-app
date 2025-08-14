@@ -1,10 +1,10 @@
 .container{
     display:flex;
     justify-content: space-between;
-    padding: 0.5rem 0.5rem;
     align-items: center;
     background-color: #0D0D0D;
     color: white;
+    margin-bottom: 10px;
 }
 
 .parent{
@@ -22,13 +22,19 @@
     width: 10rem;
     height: 3.5rem;
     border-radius: 20px;
+    z-index: 1001;
 }
 .parent:hover .child {
     visibility: visible;
   }
 
-  ul {
+ul {
     list-style-type: none;
     margin: 0 auto;
-    padding: 0px 0px;
+}
+
+@media (max-width: 900px){
+    .container{
+        width: 100%;
+    }
 }

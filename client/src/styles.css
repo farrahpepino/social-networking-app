@@ -2,14 +2,12 @@
 body{
     font-family: "Roboto", sans-serif;
     /* font-weight: 100; */
-    margin: 0 auto;
     font-size: 1rem;
     background-color: #EBEDEF;
+    margin: 0;
 }
 
-p{
-  margin: 0 auto;
-}
+
 .liquid-glass {
     position: relative;
     padding: 10px;
@@ -49,7 +47,7 @@ p{
   
 .logo{
   font-family: Arial;
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 .f-700{

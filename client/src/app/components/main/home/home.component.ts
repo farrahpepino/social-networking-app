@@ -9,4 +9,17 @@ import { NavigationComponent } from '../../navigation/navigation.component';
 })
 export class HomeComponent {
 
+  showPost = false;
+
+  viewPost(){
+    this.showPost = true;
+  }
+  hidePost(){
+    this.showPost = false;
+  }
+
+  
+
+
+
 }

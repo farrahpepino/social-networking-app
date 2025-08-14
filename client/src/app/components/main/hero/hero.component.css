@@ -48,7 +48,8 @@
       align-items: center;        
       height: auto;              
       padding: 1rem;             
-      row-gap: 1.5rem;            
+      row-gap: 1.5rem;   
+      margin-top: 40%;         
     }
   }
   
