@@ -10,6 +10,7 @@ import { NavigationComponent } from '../../navigation/navigation.component';
 export class HomeComponent {
 
   showPost = false;
+  showForm = false;
 
   viewPost(){
     this.showPost = true;
@@ -18,6 +19,13 @@ export class HomeComponent {
     this.showPost = false;
   }
 
+  viewForm(){
+    this.showForm = true;
+  }
+
+  hideForm(){
+    this.showForm = false;
+  }
   
 
 

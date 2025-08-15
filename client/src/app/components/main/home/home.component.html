@@ -1,5 +1,6 @@
 <app-navigation />
-<button class="mb">
+
+<button class="mb" (click)="viewForm()">
     +
 </button>
 
@@ -18,25 +19,26 @@
 <br>
 
 <!-- post details -->
-<!-- <div class="backdrop" [class.hidden]="!showPost"></div>
-<div class="post-details" [class.hidden]="!showPost">
+<div class="backdrop" [class.hidden]="!showForm"></div>
+<div class="post-block" [class.hidden]="!showForm">
     <div class="col">
         <div>
             <p class="f-700">farrahpepino</p>
         </div>
         
-        <button class="bt" (click)="hidePost()">X</button>
+        <button class="bt" (click)="hideForm()">X</button>
     </div>
-    <p class="p-i" contenteditable="true" placeholder="Type something..."> </p>
-    <hr>
-    <button>post</button>
-    <hr>
-   
-</div> -->
+    <form action="">
+        <p class="p-i" contenteditable="true" placeholder="Type something..."> </p>
+        <br>
+        <br>
+        <button type="submit" class="b">post</button>
+    </form> 
+</div>
 
 
 <div class="backdrop" [class.hidden]="!showPost"></div>
-<div class="post-details" [class.hidden]="!showPost">
+<div class="post-block" [class.hidden]="!showPost">
     <div class="col">
         <div>
             <p class="f-700">farrahpepino</p>

@@ -1,6 +1,5 @@
 namespace server.Models
 {
-
     public class PostModel{
         public required string Id {get; set;}
         public required string UserId {get; set;}

@@ -5,7 +5,6 @@ body{
     margin: 0;
 }
 
-
 .liquid-glass {
     position: relative;
     padding: 10px;
@@ -80,25 +79,4 @@ hr{
 
 .st{
   font-size: smaller;
-}
-
-.p-i{
-  outline: none;
-  width: 87%;
-}
-
-.p-i[placeholder]:empty:before {
-  content: attr(placeholder);
-  opacity: 20%; 
-  font-weight: 100;
-}
-
-.brd{
-  outline: none;
-  width: 97.5%;
-  font-family: Arial;
-  border-radius: 20px;
-  border: solid 0.5px rgb(0,0,0,0.1);
-  padding: 10px;
-  contain: content;
 }
