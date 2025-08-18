@@ -25,14 +25,14 @@ body{
       border-radius: inherit;
     }
     
-    // Glass distortion effect
+    /* Glass distortion effect */
     &::before {
       backdrop-filter: blur(3px);
       filter: url(#glass-distortion);
       z-index: -1;
     }
     
-    // Outline shine
+    /* Outline shine */
     &::after {
       box-shadow: inset 2px 2px 1px 0 rgb(255 255 255 / 50%), inset -1px -1px 1px 1px rgb(255 255 255 / 50%);
     }
