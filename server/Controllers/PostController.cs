@@ -1,13 +1,14 @@
 using server.Models;
 using server.Services;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
-
+    
     [ApiController]
     [Route("[controller]")]
+    [Authorize] 
 
     public class PostController: ControllerBase{
         
@@ -38,6 +39,7 @@ namespace server.Controllers{
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeletePost(string id)
         {
             var success = await _postService.DeletePost(id);

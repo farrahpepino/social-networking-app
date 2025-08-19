@@ -4,11 +4,11 @@ import { HomeComponent } from './components/main/home/home.component';
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'auth',
         component: HomeComponent
     },
     {
-        path: 'auth',
+        path: '',
         component: HeroComponent
     }
 ];

@@ -1,5 +1,6 @@
 using server.Data; //needed for dapper
 using server.Services; //needed for Dependency Injection
+using server.Middlewares;
 
 /*
 Future: Try Entity Framework
@@ -24,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args); // Creates a builder object to
 builder.Services.AddSingleton<DapperContext>(); //instantiated once. all service share the same dapper context
 builder.Services.AddControllers();  //turn on controllers. or else [ApiController] won't work
 builder.Services.AddScoped<PostService>();
+builder.Services.AddSingleton<IJwtService, JwtService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
@@ -47,6 +49,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAngularDev");
+app.UseMiddleware<JwtMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -54,7 +57,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers(); //connects controller routes
+app.MapControllers();
+
+//connects controller routes
 
 
 app.Run();
