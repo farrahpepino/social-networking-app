@@ -28,18 +28,18 @@ namespace server.Services{
             _logger = logger;
         }
     
-    
+
         public async Task<PostModel?> CreatePost(PostModel post){
 
             try{
         
-            post.Id = Guid.NewGuid();
-            post.CreatedAt = DateTime.UtcNow;
-               
+            post.Id = Guid.NewGuid().ToString();
+            post.CreatedAt = DateTime.Now;
+            
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
-
             _logger.LogInformation("Post created!");
+            
             return post;
             }
             catch (Exception ex){
@@ -49,7 +49,7 @@ namespace server.Services{
            
         }
 
-        public async Task<bool> DeletePost(Guid postId){
+        public async Task<bool> DeletePost(string postId){
            try{
 
             using var connection = _context.CreateConnection();
@@ -72,7 +72,7 @@ namespace server.Services{
 
         }
 
-        public async Task<PostModel?> GetPost(Guid postId){
+        public async Task<PostModel?> GetPost(string postId){
             try{
 
             using var connection = _context.CreateConnection();
@@ -86,5 +86,4 @@ namespace server.Services{
         }
     
     }
-
 }

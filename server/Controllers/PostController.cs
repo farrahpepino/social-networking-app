@@ -2,6 +2,7 @@ using server.Models;
 using server.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace server.Controllers{
 
@@ -11,9 +12,11 @@ namespace server.Controllers{
     public class PostController: ControllerBase{
         
         private readonly PostService _postService;
-
-        public PostController(PostService postService){
+        private readonly ILogger<PostController> _logger;
+        
+        public PostController(PostService postService, ILogger<PostController> logger){
             _postService = postService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -22,23 +25,28 @@ namespace server.Controllers{
 
             if (createdPost == null)
                 return StatusCode(500, "Failed to create post.");
-
-            // return 201 Created + Location header + post in body
-            return CreatedAtAction(
-                nameof(GetPost),     
-                new { id = createdPost.Id }, 
-                createdPost              
-            );
+            return Ok(createdPost); 
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPost(Guid id){
+        public async Task<IActionResult> GetPost(string id){
             var post = await _postService.GetPost(id);
 
             if(post == null)
                 return NotFound();
             return Ok(post);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            var success = await _postService.DeletePost(id);
+            if (!success)
+                return NotFound();
+
+            return NoContent(); 
+        }
+
 
     }
     

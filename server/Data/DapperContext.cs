@@ -1,6 +1,6 @@
-using Microsoft.Data.SqlClient; // For SqlClient
 using System.Data; // For IDbConnection
 using Microsoft.Extensions.Configuration; // For IConfiguration
+using MySqlConnector;
 
 namespace server.Data
 {
@@ -15,6 +15,9 @@ namespace server.Data
             _connectionString = _configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        public IDbConnection CreateConnection() => new SqlConnection(_connectionString);
+        public MySqlConnection CreateConnection()
+        {
+            return new MySqlConnection(_connectionString);
+        }
     }
 }

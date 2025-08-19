@@ -23,7 +23,16 @@ var builder = WebApplication.CreateBuilder(args); // Creates a builder object to
 //this is to register services
 builder.Services.AddSingleton<DapperContext>(); //instantiated once. all service share the same dapper context
 builder.Services.AddControllers();  //turn on controllers. or else [ApiController] won't work
-builder.Services.AddScoped<PostService>(); 
+builder.Services.AddScoped<PostService>();
+builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev",
+        policy => policy
+            .WithOrigins("http://localhost:4200") 
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 // tells asp.net how PostService is provided whenever it is needed
 // AddScoped means a new instance is created for each HTTP request.
 
@@ -32,8 +41,12 @@ var app = builder.Build(); //builds the application
 
 
 //middlewares
-app.UseHttpsRedirection();
-app.UseCors("AllowAngular");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
+app.UseCors("AllowAngularDev");
 
 if (app.Environment.IsDevelopment())
 {

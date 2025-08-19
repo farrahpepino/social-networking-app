@@ -28,8 +28,14 @@
         
         <button class="bt" (click)="hideForm()">X</button>
     </div>
-    <form action="">
-        <p class="p-i" contenteditable="true" placeholder="Type something..."> </p>
+    <form (submit)="submitPost()">
+        <p 
+        class="p-i"
+        contenteditable="true"
+        placeholder="Type something..."
+        #postInput
+        >
+        </p>
         <br>
         <br>
         <button type="submit" class="b">post</button>
