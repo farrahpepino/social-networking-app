@@ -2,6 +2,7 @@ using server.Data;
 using server.Models;
 using Dapper;
 using Microsoft.Extensions.Logging;
+using BCrypt.Net;
 
 
 namespace server.Services{
@@ -9,11 +10,15 @@ namespace server.Services{
     public class AuthService{
         private readonly DapperContext _context;
         private readonly ILogger<AuthService> _logger;
+        private readonly IJwtService _jwtService;
+
 
         
-        public AuthService (DapperContext context, ILogger<AuthService> logger){
+        public AuthService (DapperContext context, ILogger<AuthService> logger, IJwtService jwtService){
             _context = context;
             _logger = logger;
+            _jwtService = jwtService;
+
         }
 
 
@@ -29,7 +34,7 @@ namespace server.Services{
                 await connection.ExecuteAsync(query, newUser);
 
                 _logger.LogInformation($"User registered!");
-                var token = JwtService.GenerateToken(userId: newUser.Id, username: newUser.Username, email: newUser.Email);
+                var token = _jwtService.GenerateToken(userId: newUser.Id, username: newUser.Username, email: newUser.Email);
                 return token;
 
             }
@@ -59,7 +64,7 @@ namespace server.Services{
                 }
 
                 
-                var token = JwtService.GenerateToken(userId: existingUser.Id, username: existingUser.Username, email: existingUser.Email);
+                var token = _jwtService.GenerateToken(userId: existingUser.Id, username: existingUser.Username, email: existingUser.Email);
                 return token;
             }
             catch (Exception ex)

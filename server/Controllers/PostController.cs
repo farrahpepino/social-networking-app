@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
-    
+
     [ApiController]
     [Route("[controller]")]
     [Authorize] 
@@ -48,8 +48,5 @@ namespace server.Controllers{
 
             return NoContent(); 
         }
-
-
     }
-    
 }
