@@ -8,14 +8,10 @@ namespace server.Services{
     public class JwtService: IJwtService{
         private readonly IConfiguration _configuration;
         private readonly string? _secret;
-        private readonly int _expiryMinutes;
 
         public JwtService (IConfiguration configuration){
             _configuration = configuration;
             _secret = configuration["Jwt:Secret"] ?? throw new ArgumentNullException("Jwt:Secret is missing from config");
-            _expiryMinutes = int.TryParse(configuration["Jwt:ExpiryMinutes"], out var minutes) 
-                ? minutes 
-                : 60; 
         }
 
         public string GenerateToken(string userId, string username, string email)
@@ -35,7 +31,7 @@ namespace server.Services{
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_expiryMinutes),
+                expires: DateTime.Now.AddDays(7),
                 signingCredentials: creds
             );
 

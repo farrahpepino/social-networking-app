@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PostModel } from '../../models/PostModel';
 import { environment } from '../../../environments/environment';
@@ -10,22 +10,34 @@ import { environment } from '../../../environments/environment';
 export class PostService {
 
   constructor(private http: HttpClient) {}
-
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
   createPost(authorId: string, content: string): Observable<PostModel> {
     return this.http.post<PostModel>(`${environment.apiUrl}/post`, {
       AuthorId: authorId, 
       Content: content    
-    });
+    },
+    { headers: this.getAuthHeaders() }
+    );
   }
   
-  
   deletePost(id: string): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/post/${id}`);
+    return this.http.delete<void>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
+    );
   }
 
   getPost(id: string): Observable<PostModel>{
-    return this.http.get<PostModel>(`${environment.apiUrl}/post/${id}`);
+    return this.http.get<PostModel>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
+    );
   }
-  
+
+  getPosts(): Observable<PostModel>{
+    return this.http.get<PostModel>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
+    );
+  }
   
 }

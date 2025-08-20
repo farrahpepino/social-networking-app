@@ -125,3 +125,4 @@
 /Users/farrahpepino/Documents/GitHub/loop-social/server/bin/Debug/net9.0/runtimes/win-x64/native/krbcc64.dll
 /Users/farrahpepino/Documents/GitHub/loop-social/server/bin/Debug/net9.0/runtimes/win/lib/net8.0/System.Windows.Extensions.dll
 /Users/farrahpepino/Documents/GitHub/loop-social/server/bin/Debug/net9.0/BCrypt.Net-Next.dll
+/Users/farrahpepino/Documents/GitHub/loop-social/server/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -10,32 +10,42 @@ namespace server.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
-        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger, AuthService authService)
+        public AuthController(AuthService authService)
         {
             _authService = authService;
-            _logger = logger;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegistrationModel newUser)
         {
-            var token = await _authService.RegisterUser(newUser);
-            if (token == null)
-                return BadRequest("Registration failed.");
+            try {
+                var token = await _authService.RegisterUser(newUser);
+                if (token!=null){
+                    return Ok(new { token });
+                }
 
-            return Ok(new { token });
+                return BadRequest();
+            }
+            catch (Exception ex) {
+                return BadRequest("Registration failed: " + ex.Message);
+            }
+
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] LoginModel user)
         {
+            try{
             var token = await _authService.LoginUser(user);
             if (token == null)
                 return Unauthorized("Invalid email or password.");
 
             return Ok(new { token });
+            }
+            catch (Exception ex){
+                return BadRequest("Login failed: " + ex.Message);
+            }
         }
     }
 }

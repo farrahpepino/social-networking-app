@@ -1,14 +1,10 @@
 using server.Data; //needed for dapper
 using server.Services; //needed for Dependency Injection
-using server.Middlewares;
-
-/*
-Future: Try Entity Framework
-*/
-
-
+using server.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 /* DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in c#
-
 
 Singleton → one instance for the entire app lifetime.
 Scoped → one instance per request.
@@ -18,38 +14,60 @@ Dependency Injection is used so you don't have to create instances of your class
 */
 
 var builder = WebApplication.CreateBuilder(args); // Creates a builder object to configure the app’s services, settings, and middleware before it starts running.
-
+var secret = builder.Configuration["Jwt:Secret"];
 
 // Dependency Injection (DI) registration in ASP.NET Core. ASP.NET Core giving your class what it needs, instead of you creating it yourself.
-//this is to register services
+// AddScoped means a new instance is created for each HTTP request.
+
+// register services
 builder.Services.AddSingleton<DapperContext>(); //instantiated once. all service share the same dapper context
+builder.Services.AddScoped<PostService>();// tells asp.net how PostService is provided whenever it is needed
+builder.Services.AddScoped<AuthService>(); 
+builder.Services.AddScoped<IJwtService, JwtService>(); //
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddControllers();  //turn on controllers. or else [ApiController] won't work
-builder.Services.AddScoped<PostService>();
-builder.Services.AddSingleton<IJwtService, JwtService>();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // 
+
+//configure cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev",
         policy => policy
-            .WithOrigins("http://localhost:4200") 
+            .WithOrigins("*") 
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
-// tells asp.net how PostService is provided whenever it is needed
-// AddScoped means a new instance is created for each HTTP request.
 
 
-var app = builder.Build(); //builds the application
+// configure jwt authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false, // set true for issuer validation
+        ValidateAudience = false, // set true for audience validation
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!))
+    };
+});
+
+//build app
+var app = builder.Build(); 
 
 
-//middlewares
+//configure middlewares
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
 
 app.UseCors("AllowAngularDev");
-app.UseMiddleware<JwtMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -57,9 +75,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-
-//connects controller routes
-
+app.UseAuthentication(); 
+app.UseAuthorization();
+app.MapControllers(); // connects controller routes
 
 app.Run();

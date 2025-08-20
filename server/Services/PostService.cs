@@ -21,8 +21,9 @@ namespace server.Services{
 
         private const string InsertPostQuery = @"INSERT INTO posts (Id, AuthorId, Content, CreatedAt) VALUES (@Id, @AuthorId, @Content, @CreatedAt);";
         private const string DeletePostByIdQuery = "DELETE FROM posts WHERE Id = @Id";
-        private const string SelectPostByIdQuery = "SELECT * FROM posts WHERE Id = @Id";
-
+        private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE Id = @Id ";
+        private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId";
+        
         public PostService(DapperContext context, ILogger<PostService> logger){
             _context = context;
             _logger = logger;
@@ -30,7 +31,6 @@ namespace server.Services{
     
 
         public async Task<PostModel?> CreatePost(PostModel post){
-
             try{
         
             post.Id = Guid.NewGuid().ToString();
@@ -38,7 +38,7 @@ namespace server.Services{
             
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
-            _logger.LogInformation("Post created!");
+            _logger.LogInformation("Post created.");
             
             return post;
             }
@@ -46,7 +46,6 @@ namespace server.Services{
                 _logger.LogError(ex, "Error creating post");
                 return null;
             }
-           
         }
 
         public async Task<bool> DeletePost(string postId){
@@ -56,7 +55,7 @@ namespace server.Services{
             var affectedRows = await connection.ExecuteAsync(DeletePostByIdQuery, new {Id = postId});
 
             if (affectedRows > 0){
-                _logger.LogInformation("Post deleted!");
+                _logger.LogInformation("Post deleted.");
                 return true;
             }
 
@@ -82,6 +81,20 @@ namespace server.Services{
             catch (Exception ex){
                 _logger.LogError(ex, "Error getting post");
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<PostModel>> GetPosts()
+        {
+            try
+            {
+                using var connection = _context.CreateConnection();
+                return await connection.QueryAsync<PostModel>(SelectPostsQuery);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting posts");
+                return Enumerable.Empty<PostModel>();
             }
         }
     

@@ -1,9 +1,9 @@
-<form action="">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <label class="liquid-glass"> email
-    <input type="email" placeholder="johndoe@email.com" />
+    <input type="email" placeholder="johndoe@email.com" formControlName="email"/>
     </label>
     <label class="liquid-glass"> password
-        <input type="password"/>
+        <input type="password" formControlName="password"/>
     </label>
     <button type="submit">sign in</button>
 </form>

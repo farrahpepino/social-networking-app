@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero',
+  standalone: true,
   imports: [LoginComponent, RegisterComponent, CommonModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'

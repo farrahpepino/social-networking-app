@@ -1,11 +1,47 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AuthService } from '../../../services/AuthService/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent{
 
+  constructor (private authService: AuthService){}
+
+  registerForm = new FormGroup(
+    {
+      email: new FormControl(''),
+      username: new FormControl(''),
+      password: new FormControl(''),
+      confirmPassword: new FormControl('')
+    },
+    {
+      validators: (control: AbstractControl): ValidationErrors | null => {
+        return control.get('password')?.value === control.get('confirmPassword')?.value ? null : { passwordsMismatch: true };
+      }
+    }
+  );
+  
+  onSubmit(){
+    if(this.registerForm.valid){
+      const {username, password, email} = this.registerForm.value;
+      this.authService.registerUser(username!, password!, email!)
+      .subscribe({
+        next: (response) => 
+        {
+          console.log("User registered.");
+        },
+        error: (err) => 
+        {
+        console.error('Registration failed. ');
+        }
+      });
+    }
+  }
 }

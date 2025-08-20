@@ -57,6 +57,7 @@
     bottom: 5%;
     font-size: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 1004;
 } 
 
 form{

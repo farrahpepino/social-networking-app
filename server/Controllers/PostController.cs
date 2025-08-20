@@ -3,6 +3,9 @@ using server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+
 
 namespace server.Controllers{
 
@@ -13,17 +16,14 @@ namespace server.Controllers{
     public class PostController: ControllerBase{
         
         private readonly PostService _postService;
-        private readonly ILogger<PostController> _logger;
         
-        public PostController(PostService postService, ILogger<PostController> logger){
+        public PostController(PostService postService){
             _postService = postService;
-            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePost([FromBody] PostModel post){
             var createdPost = await _postService.CreatePost(post);
-
             if (createdPost == null)
                 return StatusCode(500, "Failed to create post.");
             return Ok(createdPost); 
@@ -39,7 +39,6 @@ namespace server.Controllers{
         }
 
         [HttpDelete("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> DeletePost(string id)
         {
             var success = await _postService.DeletePost(id);

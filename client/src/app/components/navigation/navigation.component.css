@@ -35,6 +35,16 @@ ul {
     margin: 0 auto;
 }
 
+.bt{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+button{
+    color: white;
+}
+
 @media (max-width: 900px){
     .container{
         width: 100%;

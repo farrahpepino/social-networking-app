@@ -1,16 +1,21 @@
-<form action="">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <label class="liquid-glass"> email
-    <input type="email" placeholder="johndoe@email.com" />
+    <input type="email" placeholder="johndoe@email.com" formControlName="email"/>
     </label>
     <label class="liquid-glass"> username
-        <input type="text" placeholder="johndoe"/>
+        <input type="text" placeholder="johndoe" formControlName="username"/>
     </label>
     <label class="liquid-glass"> password
-        <input type="password"/>
+        <input type="password" formControlName="password"/>
     </label>
     <label class="liquid-glass"> 
-        <input type="password" placeholder="confirm password" />
+        <input type="password" placeholder="confirm password"  formControlName="confirmPassword"/>
     </label>
-    <button type="submit">sign up</button>
+    <button type="submit" [disabled]="registerForm.invalid">sign up</button>
 </form>
 
+
+<!-- fix css later -->
+<p *ngIf="registerForm.errors?.['passwordsMismatch']" class="f-100">
+    Passwords do not match
+</p>

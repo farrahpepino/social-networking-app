@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { PostService } from '../../../services/PostService/post.service';
 import { ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/UserService/user.service';
 @Component({
   selector: 'app-home',
   standalone: true, 
   imports: [NavigationComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
 
-  constructor(private postService: PostService) {}
+  constructor(private userService: UserService, private postService: PostService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
 
   showPost = false;
@@ -21,15 +23,21 @@ export class HomeComponent {
   viewForm() { this.showForm = true; }
   hideForm() { this.showForm = false; }
   
-  // authorId: string = ""; //change this once auth is created
-  
+ 
   submitPost() {
-
+    const token = localStorage.getItem('token');
+    const user = this.userService.getCurrentUser(token!);
+    if (!token) {
+      alert('You must be logged in to post.');
+      return;
+    }
+    const authorId = user.id;
+    
     const content = this.postInput.nativeElement.innerText.trim();
     if (!content) return;
 
-    this.postService.createPost( "admin", content).subscribe({
-      next: (post) => {
+    this.postService.createPost(authorId, content).subscribe({
+      next: () => {
         alert('Post created.');
         this.postInput.nativeElement.innerText = ''; 
       },
