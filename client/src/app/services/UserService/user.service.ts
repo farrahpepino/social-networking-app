@@ -7,12 +7,19 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private loggedInUserSubject = new BehaviorSubject<UserModel | null>(
-  JSON.parse(localStorage.getItem('loggedInUser') || 'null')
-  );
+  private loggedInUserSubject = new BehaviorSubject<UserModel | null>(null);
+
+
 
   loggedInUser$ = this.loggedInUserSubject.asObservable();
-  constructor(private jwtService: JwtService) { }
+  constructor(private jwtService: JwtService) {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('loggedInUser');
+      if (storedUser) {
+        this.loggedInUserSubject.next(JSON.parse(storedUser));
+      }
+    }
+   }
 
   initializeUser(token: string) {
     const decoded = this.jwtService.getDecodedAccessToken(token);
