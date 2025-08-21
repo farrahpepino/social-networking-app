@@ -10,12 +10,14 @@ import { environment } from '../../../environments/environment';
 export class PostService {
 
   constructor(private http: HttpClient) {}
+  
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
   }
+
   createPost(authorId: string, content: string): Observable<PostModel> {
     return this.http.post<PostModel>(`${environment.apiUrl}/post`, {
       AuthorId: authorId, 

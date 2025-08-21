@@ -5,8 +5,6 @@ using Dapper;
 namespace server.Repositories{
 
     public class UserRepository{
-
-
         private readonly DapperContext _context;
 
         public UserRepository(DapperContext context){
@@ -17,8 +15,7 @@ namespace server.Repositories{
                         VALUES (@Id, @Username, @Email, @HashedPassword, @CreatedAt)";
         private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email";
 
-
-         public async Task InsertUser(RegistrationModel newUser) {
+        public async Task InsertUser(RegistrationModel newUser) {
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertUserQuery, newUser);
         }
@@ -28,7 +25,6 @@ namespace server.Repositories{
             return await connection.QuerySingleOrDefaultAsync<RegistrationModel>(
                 SelectUserByEmailQuery, new { Email = email });
         }
-
 
     }    
 }

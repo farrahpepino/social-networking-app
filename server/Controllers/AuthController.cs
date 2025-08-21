@@ -7,8 +7,7 @@ namespace server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase
-    {
+    public class AuthController : ControllerBase{
         private readonly AuthService _authService;
 
         public AuthController(AuthService authService)
@@ -17,14 +16,12 @@ namespace server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegistrationModel newUser)
-        {
+        public async Task<IActionResult> RegisterUser([FromBody] RegistrationModel newUser){
             try {
                 var token = await _authService.RegisterUser(newUser);
                 if (token!=null){
                     return Ok(new { token });
                 }
-
                 return BadRequest();
             }
             catch (Exception ex) {
@@ -34,18 +31,17 @@ namespace server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginModel user)
-        {
+        public async Task<IActionResult> LoginUser([FromBody] LoginModel user){
             try{
-            var token = await _authService.LoginUser(user);
-            if (token == null)
-                return Unauthorized("Invalid email or password.");
-
-            return Ok(new { token });
+                var token = await _authService.LoginUser(user);
+                if (token == null)
+                    return Unauthorized("Invalid email or password.");
+                return Ok(new { token });
             }
             catch (Exception ex){
                 return BadRequest("Login failed: " + ex.Message);
             }
         }
+        
     }
 }

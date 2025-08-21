@@ -1,6 +1,5 @@
 namespace server.Models{
-    public class JwtSettings
-    {
+    public class JwtSettings{
         public required string Secret { get; set; }
         public int ExpiryMinutes { get; set; }
     }

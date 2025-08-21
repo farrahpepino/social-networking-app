@@ -14,7 +14,6 @@ export class NavigationComponent {
 
   logout() {
     this.authService.logout();
-    alert("logging out");
   }
 
   viewProfile() {

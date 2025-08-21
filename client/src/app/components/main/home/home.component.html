@@ -5,16 +5,18 @@
 </button>
 
 <div class="post-wrapper">
-<div class="post-container" *ngFor="let post of posts">
+<div class="post-container" *ngFor="let post of posts" >
+    <button class="bt" (click)="viewPost(post.id)">
     <div>
         <p class="f-700">{{post.username}}</p>
         <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
     </div>
     <p>{{post.content}}</p>
+    </button>
     <hr>
     <div class="react">
         <button class="bt">like</button>
-        <button class="bt" (click)="viewPost()">comment</button>
+        <button class="bt" (click)="viewPost(post.id)">comment</button>
     </div> 
 </div>
 </div>
@@ -26,12 +28,12 @@
 <div class="post-block" [class.hidden]="!showForm">
     <div class="col">
         <div>
-            <p class="f-700">farrahpepino</p>
+            <p class="f-700">{{loggedInUser?.username}}</p>
         </div>
         
         <button class="bt" (click)="hideForm()">X</button>
     </div>
-    <form (submit)="submitPost()">
+    <form (submit)="submitPost()" name="postForm" id="postForm">
         <p 
         class="p-i"
         contenteditable="true"
@@ -47,15 +49,15 @@
 
 
 <div class="backdrop" [class.hidden]="!showPost"></div>
-<div class="post-block" [class.hidden]="!showPost">
+<div class="post-block" [class.hidden]="!showPost" *ngIf="post">
     <div class="col">
         <div>
-            <p class="f-700">farrahpepino</p>
-            <p class="f-100 st">September 26, 2025 at 6:04 PM</p>
+            <p class="f-700">{{post.username}}</p>
+            <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
         </div>
         <button class="bt" (click)="hidePost()">X</button>
     </div>
-    <p>i've been singing back to friends by sombr and crashing out. so good and hes beautiful not my type but what a guy. ive also watched my oxford year today and i learned corey's lastname mylcheester? very productive day.</p>
+    <p>{{post.content}}</p>
     <hr>
     <div class="react">
         <p>like</p>
@@ -72,7 +74,7 @@
         </div>
     </div>  
     <div>
-        <form action="">
+        <form name="commentForm" id="commentForm">
             <div class="brd">
             <p class="p-i" contenteditable="true" placeholder="Add a comment..."> </p>
             <button class="f-b" type="submit">post</button>

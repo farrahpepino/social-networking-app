@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/AuthService/auth.service';
+import { UserService } from '../../../services/UserService/user.service';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule],
@@ -10,7 +11,7 @@ import { AuthService } from '../../../services/AuthService/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService, private userService: UserService){}
 
   loginForm = new FormGroup({
     email: new FormControl(''),
@@ -23,9 +24,10 @@ export class LoginComponent {
       const {email, password} = this.loginForm.value;
       this.authService.loginUser(email!, password!)
       .subscribe({
-        next: (response) => 
+        next: () => 
         {
-          console.log('User logged in.');
+          const token = localStorage.getItem('token');
+          this.userService.initializeUser(token!);
         },
         error: (err) => 
         {

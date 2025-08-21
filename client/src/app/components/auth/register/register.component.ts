@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../../services/AuthService/auth.service';
+import { UserService } from '../../../services/UserService/user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ import { AuthService } from '../../../services/AuthService/auth.service';
 })
 export class RegisterComponent{
 
-  constructor (private authService: AuthService){}
+  constructor (private authService: AuthService, private userService: UserService){}
 
   registerForm = new FormGroup(
     {
@@ -33,9 +34,9 @@ export class RegisterComponent{
       const {username, password, email} = this.registerForm.value;
       this.authService.registerUser(username!, password!, email!)
       .subscribe({
-        next: (response) => 
-        {
-          console.log("User registered.");
+        next: ()=>{
+          const token = localStorage.getItem('token');
+          this.userService.initializeUser(token!);
         },
         error: (err) => 
         {

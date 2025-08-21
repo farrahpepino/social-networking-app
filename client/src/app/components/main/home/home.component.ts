@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { PostModel } from '../../../models/PostModel';
 import { CommonModule } from '@angular/common';
+import { UserModel } from '../../../models/UserModel';
 @Component({
   selector: 'app-home',
   standalone: true, 
@@ -18,9 +19,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
-
+  loggedInUser: UserModel | null = null;
   posts: PostModel[] = [];
+  post: PostModel | null = null;
+
   ngOnInit(): void {
+    this.userService.loggedInUser$.subscribe(user => {
+      this.loggedInUser = user;
+    });
     this.postService.getPosts().subscribe(
       {
         next: (data)=>{
@@ -35,38 +41,38 @@ export class HomeComponent implements OnInit {
 
   showPost = false;
   showForm = false;
-  viewPost() { this.showPost = true; }
-  hidePost() { this.showPost = false; }
+  viewPost(id: string) {
+    this.showPost = true; 
+    this.postService.getPost(id).subscribe({
+      next: (data) => {
+        this.post = data;
+      },
+      error: (err) => {
+        console.error('Error fetching post: ', err);
+      }
+    });
+    }
+
+  hidePost() { 
+    this.post = null;
+    this.showPost = false; 
+  }
+
   viewForm() { this.showForm = true; }
   hideForm() { this.showForm = false; }
-  
  
+
   submitPost() {
-    const token = localStorage.getItem('token');
-    const user = this.userService.getCurrentUser(token!);
-    if (!token) {
-      alert('You must be logged in to post.');
-      return;
-    }
-    const authorId = user.id;
+    const authorId = this.loggedInUser!.id;
     
     const content = this.postInput.nativeElement.innerText.trim();
     if (!content) return;
 
     this.postService.createPost(authorId, content).subscribe({
-      next: () => {
-        alert('Post created.');
-        this.postInput.nativeElement.innerText = ''; 
-      },
       error: (err) => {
         console.error('Error creating post:', err);
-        alert('Failed to create post.');
       }
     });
   }
-
-
-  
-
 
 }

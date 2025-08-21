@@ -46,15 +46,12 @@ namespace server.Controllers{
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePost(string id)
-        {
+        public async Task<IActionResult> DeletePost(string id){
             var success = await _postService.DeletePost(id);
             if (!success)
                 return NotFound();
-
             return NoContent(); 
         }
-
 
     }
 }

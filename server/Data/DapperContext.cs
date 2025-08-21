@@ -9,14 +9,12 @@ namespace server.Data
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
 
-        public DapperContext(IConfiguration configuration)
-        {
+        public DapperContext(IConfiguration configuration){
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("DefaultConnection")!;
         }
 
-        public MySqlConnection CreateConnection()
-        {
+        public MySqlConnection CreateConnection(){
             return new MySqlConnection(_connectionString);
         }
     }
