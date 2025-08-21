@@ -27,9 +27,12 @@ var secret = builder.Configuration["Jwt:Secret"];
 builder.Services.AddSingleton<DapperContext>(); //instantiated once. all service share the same dapper context
 builder.Services.AddScoped<PostService>();// tells asp.net how PostService is provided whenever it is needed
 builder.Services.AddScoped<AuthService>(); 
+builder.Services.AddScoped<CommentService>();
 builder.Services.AddScoped<IJwtService, JwtService>(); //
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PostRepository>();
+builder.Services.AddScoped<CommentRepository>();
+
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddControllers();  //turn on controllers. or else [ApiController] won't work
 builder.Services.AddSwaggerGen(); // 

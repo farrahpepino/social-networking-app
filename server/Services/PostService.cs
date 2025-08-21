@@ -66,7 +66,7 @@ namespace server.Services{
                 return await _postRepository.GetPostById(postId);
             }
             catch (Exception ex){
-                _logger.LogError(ex, "Error getting post");
+                _logger.LogError(ex, "Error fetching post");
                 return null;
             }
         }
@@ -79,7 +79,7 @@ namespace server.Services{
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting posts");
+                _logger.LogError(ex, "Error fetching posts");
                 return Enumerable.Empty<PostModel>();
             }
         }
