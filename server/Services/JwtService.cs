@@ -1,9 +1,10 @@
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration; 
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Microsoft.IdentityModel.Tokens; // for SymmetricSecurityKey, SigningCredentials to sign your JWT with a secret 
+using Microsoft.Extensions.Configuration; // to access app's configuration system (appsettings)
+using System.IdentityModel.Tokens.Jwt; // for building the token and serializing it JwtSecurityToken and JwtSecurityTokenHandler
+using System.Security.Claims; // for defining claims
+using System.Text; // for encoding strings into bytes
 
+//This is responsible for generating JWTs
 namespace server.Services{
     public class JwtService: IJwtService{
         private readonly IConfiguration _configuration;

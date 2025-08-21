@@ -3,4 +3,5 @@ export interface PostModel {
     authorId: string;
     content: string;
     createdAt: Date;
+    username?: string;
 }

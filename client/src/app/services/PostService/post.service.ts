@@ -35,8 +35,8 @@ export class PostService {
     );
   }
 
-  getPosts(): Observable<PostModel>{
-    return this.http.get<PostModel>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
+  getPosts(): Observable<PostModel[]>{
+    return this.http.get<PostModel[]>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
     );
   }
   

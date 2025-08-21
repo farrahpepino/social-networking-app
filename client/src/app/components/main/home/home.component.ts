@@ -1,20 +1,37 @@
 import { Component } from '@angular/core';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { PostService } from '../../../services/PostService/post.service';
-import { ViewChild, ElementRef } from '@angular/core';
+import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
+import { PostModel } from '../../../models/PostModel';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true, 
-  imports: [NavigationComponent],
+  imports: [NavigationComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+
+export class HomeComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
+
+  posts: PostModel[] = [];
+  ngOnInit(): void {
+    this.postService.getPosts().subscribe(
+      {
+        next: (data)=>{
+          this.posts = data;
+        },
+        error: (err)=>{
+          console.error("Error fetching posts: ", err);
+        }
+      }
+    );
+  }
 
   showPost = false;
   showForm = false;

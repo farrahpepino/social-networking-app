@@ -1,24 +1,20 @@
 using server.Data;
 using server.Models;
-using Dapper;
+using server.Repositories;
 using Microsoft.Extensions.Logging;
-using BCrypt.Net;
+using BCrypt.Net; // for hashing password and verification
 
 namespace server.Services{
     public class AuthService{
-        private readonly DapperContext _context;
         private readonly ILogger<AuthService> _logger;
         private readonly IJwtService _jwtService;
+        private readonly UserRepository _userRepository;
 
-        private const string InsertUserQuery = @"INSERT INTO users (Id, Username, Email, HashedPassword, CreatedAt) 
-                        VALUES (@Id, @Username, @Email, @HashedPassword, @CreatedAt)";
-        private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email";
 
-        public AuthService (DapperContext context, ILogger<AuthService> logger, IJwtService jwtService){
-            _context = context;
+        public AuthService (ILogger<AuthService> logger, IJwtService jwtService, UserRepository userRepository ){
             _logger = logger;
             _jwtService = jwtService;
-
+            _userRepository = userRepository;
         }
 
         public async Task<string?> RegisterUser(RegistrationModel newUser){
@@ -30,20 +26,15 @@ namespace server.Services{
             newUser.CreatedAt = DateTime.Now;
             newUser.HashedPassword = BCrypt.Net.BCrypt.HashPassword(newUser.HashedPassword);
                 
-            
-            using var connection = _context.CreateConnection();
-            await connection.ExecuteAsync(InsertUserQuery, newUser);
-
-            _logger.LogInformation($"User registered.");
+            await _userRepository.InsertUser(newUser);
             var token = _jwtService.GenerateToken(userId: newUser.Id, username: newUser.Username, email: newUser.Email);
             return token;
         }   
 
         public async Task<string?> LoginUser(LoginModel user)
         {
-            using var connection = _context.CreateConnection();
-            var existingUser = await connection.QuerySingleOrDefaultAsync<RegistrationModel>(SelectUserByEmailQuery, new { user.Email });
-
+           
+            var existingUser = await _userRepository.GetUserByEmail(user.Email);
             if (existingUser == null)
             {
                  _logger.LogWarning($"No user found.");
@@ -51,17 +42,14 @@ namespace server.Services{
             }
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, existingUser.HashedPassword);
-            
             if (!isPasswordValid)
             {
                 _logger.LogWarning($"Invalid password.");
                 return null; 
             }
 
-            _logger.LogInformation($"User logged in.");
             var token = _jwtService.GenerateToken(userId: existingUser.Id, username: existingUser.Username, email: existingUser.Email);
             return token;
-            
         }
 
     }

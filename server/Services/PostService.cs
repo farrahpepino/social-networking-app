@@ -1,5 +1,6 @@
 using server.Data;
 using server.Models;
+using server.Repositories;
 using Dapper; 
 using Microsoft.Extensions.Logging;
 
@@ -16,30 +17,21 @@ namespace server.Services{
 
     public class PostService{
 
-        private readonly DapperContext _context;
         private readonly ILogger<PostService> _logger;
-
-        private const string InsertPostQuery = @"INSERT INTO posts (Id, AuthorId, Content, CreatedAt) VALUES (@Id, @AuthorId, @Content, @CreatedAt);";
-        private const string DeletePostByIdQuery = "DELETE FROM posts WHERE Id = @Id";
-        private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE Id = @Id ";
-        private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId";
-        
-        public PostService(DapperContext context, ILogger<PostService> logger){
-            _context = context;
+        private readonly PostRepository _postRepository;
+    
+        public PostService(ILogger<PostService> logger, PostRepository postRepository){
             _logger = logger;
+            _postRepository = postRepository;
         }
     
-
         public async Task<PostModel?> CreatePost(PostModel post){
             try{
         
             post.Id = Guid.NewGuid().ToString();
             post.CreatedAt = DateTime.Now;
-            
-            using var connection = _context.CreateConnection();
-            await connection.ExecuteAsync(InsertPostQuery, post);
-            _logger.LogInformation("Post created.");
-            
+        
+            await _postRepository.InsertPost(post);
             return post;
             }
             catch (Exception ex){
@@ -51,11 +43,9 @@ namespace server.Services{
         public async Task<bool> DeletePost(string postId){
            try{
 
-            using var connection = _context.CreateConnection();
-            var affectedRows = await connection.ExecuteAsync(DeletePostByIdQuery, new {Id = postId});
+            var affectedRows = await _postRepository.DeletePost(postId);
 
             if (affectedRows > 0){
-                _logger.LogInformation("Post deleted.");
                 return true;
             }
 
@@ -73,10 +63,7 @@ namespace server.Services{
 
         public async Task<PostModel?> GetPost(string postId){
             try{
-
-            using var connection = _context.CreateConnection();
-
-            return await connection.QuerySingleOrDefaultAsync<PostModel>(SelectPostByIdQuery, new { Id = postId });
+                return await _postRepository.GetPostById(postId);
             }
             catch (Exception ex){
                 _logger.LogError(ex, "Error getting post");
@@ -88,8 +75,7 @@ namespace server.Services{
         {
             try
             {
-                using var connection = _context.CreateConnection();
-                return await connection.QueryAsync<PostModel>(SelectPostsQuery);
+                return await _postRepository.GetPosts();
             }
             catch (Exception ex)
             {

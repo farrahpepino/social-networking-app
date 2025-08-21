@@ -32,10 +32,17 @@ namespace server.Controllers{
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(string id){
             var post = await _postService.GetPost(id);
-
             if(post == null)
                 return NotFound();
             return Ok(post);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPosts(){
+            var posts = await _postService.GetPosts();
+            if(posts == null)
+                return NotFound();
+            return Ok(posts);
         }
 
         [HttpDelete("{id}")]
@@ -47,5 +54,7 @@ namespace server.Controllers{
 
             return NoContent(); 
         }
+
+
     }
 }
