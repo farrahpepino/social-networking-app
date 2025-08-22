@@ -25,7 +25,7 @@ namespace server.Services{
                 }
                 catch (Exception ex){
                         _logger.LogError($"Error creating comment: {ex.Message}");
-                        return null;
+                        throw;
                 }
         }
 

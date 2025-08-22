@@ -36,7 +36,7 @@ namespace server.Services{
             }
             catch (Exception ex){
                 _logger.LogError(ex, "Error creating post");
-                return null;
+                throw;
             }
         }
 
@@ -67,7 +67,7 @@ namespace server.Services{
             }
             catch (Exception ex){
                 _logger.LogError(ex, "Error fetching post");
-                return null;
+                throw;
             }
         }
 
@@ -84,7 +84,7 @@ namespace server.Services{
             }
         }
 
-        public async Task<IEnumerable<LikesModel>> GetLikesByPostId(string postId)
+        public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string postId)
         {
             try
             {
@@ -93,27 +93,29 @@ namespace server.Services{
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching the like from post");
-                return Enumerable.Empty<PostModel>();
+                return Enumerable.Empty<LikeModel>();
             }
         }
 
-        public async Task<LikeModel?> LikePost(LikeModel like){
+        public async Task<LikeModel> LikePost(LikeModel like){
             try
             {
                 like.Id = Guid.NewGuid().ToString();
                 like.CreatedAt = DateTime.Now;
-                return await _postRepository.LikePost(like);
+                await _postRepository.LikePost(like);
+                return like;
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error liking the post");
-                return null;
+                throw;
             }
         }
 
-        public async Task<bool> UnlikePost(LikeModel like){
+        public async Task<bool> UnlikePost(string likeId, string postId){
             try{
-                var affectedRows =  await _postRepository.UnlikePost(like.PostId, like.Id);
+                var affectedRows =  await _postRepository.UnlikePost(likeId, postId);
             
                 if (affectedRows > 0){
                     return true;
@@ -127,7 +129,7 @@ namespace server.Services{
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error unliking the post");
-                return false.
+                return false;
             }
         }
     

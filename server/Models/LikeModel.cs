@@ -1,6 +1,6 @@
 namespace server.Models{
 
-    public class LikesModel{
+    public class LikeModel{
         public required string Id {get; set;} = Guid.NewGuid().ToString();
         public required string PostId {get; set;} = string.Empty;
         public string LikerId {get; set;} = string.Empty;

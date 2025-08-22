@@ -15,9 +15,8 @@ namespace server.Repositories{
         private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE posts.Id = @Id ";
         private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId ORDER BY posts.CreatedAt DESC";
         private const string InsertLikeQuery = @"INSERT INTO likes (Id, PostId, LikerId, CreatedAt) VALUES (@Id, @PostId, @LikerId, @CreatedAt)";
-        private const string DeleteLikeQuery = "DELETE FROM likes where WHERE PostId = @PostId AND Id=@Id";
+        private const string DeleteLikeQuery = "DELETE FROM likes WHERE PostId = @PostId AND Id=@Id";
         private const string SelectLikesByPostIdQuery = "SELECT * FROM likes JOIN users on users.Id = likes.likerId ORDER BY likes.CreatedAt ASC";
-
 
         public async Task InsertPost(PostModel post) {
             using var connection = _context.CreateConnection();
@@ -41,12 +40,12 @@ namespace server.Repositories{
 
         public async Task LikePost(LikeModel like){
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(InsertLike, like);
+            await connection.ExecuteAsync(InsertLikeQuery, like);
         }
 
-        public async<int> Task UnlikePost(string postId, string id){
+        public async Task<int> UnlikePost(string likeId, string postId){
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(InsertLike, new {PostId = postId, Id = id});
+            return await connection.ExecuteAsync(DeleteLikeQuery, new {PostId = postId, Id = likeId});
         }
         
         public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string postId){

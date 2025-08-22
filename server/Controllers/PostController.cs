@@ -2,6 +2,7 @@ using server.Models;
 using server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
 
@@ -50,8 +51,8 @@ namespace server.Controllers{
         }
 
         [HttpDelete("unlike-post")]
-        public async Task<IActionResult> UnlikePost([FromBody] LikeModel like){
-            var success = await _postService.UnlikePost(like.PostId, like.Id);
+        public async Task<IActionResult> UnlikePost([FromBody] string likeId, string postId){
+            var success = await _postService.UnlikePost(likeId, postId);
             if (!success)
                 return NotFound();
             return NoContent(); 
@@ -70,7 +71,7 @@ namespace server.Controllers{
             var likes = await _postService.GetLikesByPostId(postId);
             if(likes == null)
                 return NotFound();
-            return Ok(posts);
+            return Ok(likes);
         }
 
 

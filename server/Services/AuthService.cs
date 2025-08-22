@@ -38,14 +38,14 @@ namespace server.Services{
             if (existingUser == null)
             {
                  _logger.LogWarning($"No user found.");
-                return null; 
+                return null;
             }
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, existingUser.HashedPassword);
             if (!isPasswordValid)
             {
                 _logger.LogWarning($"Invalid password.");
-                return null; 
+                return null;
             }
 
             var token = _jwtService.GenerateToken(userId: existingUser.Id, username: existingUser.Username, email: existingUser.Email);
