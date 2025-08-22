@@ -83,6 +83,53 @@ namespace server.Services{
                 return Enumerable.Empty<PostModel>();
             }
         }
+
+        public async Task<IEnumerable<LikesModel>> GetLikesByPostId(string postId)
+        {
+            try
+            {
+                return await _postRepository.GetLikesByPostId(postId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching the like from post");
+                return Enumerable.Empty<PostModel>();
+            }
+        }
+
+        public async Task<LikeModel?> LikePost(LikeModel like){
+            try
+            {
+                like.Id = Guid.NewGuid().ToString();
+                like.CreatedAt = DateTime.Now;
+                return await _postRepository.LikePost(like);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error liking the post");
+                return null;
+            }
+        }
+
+        public async Task<bool> UnlikePost(LikeModel like){
+            try{
+                var affectedRows =  await _postRepository.UnlikePost(like.PostId, like.Id);
+            
+                if (affectedRows > 0){
+                    return true;
+                }
+
+                else{
+                    _logger.LogWarning("No post found with that Id.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error unliking the post");
+                return false.
+            }
+        }
     
     }
 }

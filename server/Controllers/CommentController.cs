@@ -2,7 +2,6 @@ using server.Models;
 using server.Services;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
 

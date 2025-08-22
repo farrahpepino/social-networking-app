@@ -14,7 +14,11 @@ namespace server.Repositories{
         private const string DeletePostByIdQuery = "DELETE FROM posts WHERE Id = @Id";
         private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE posts.Id = @Id ";
         private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId ORDER BY posts.CreatedAt DESC";
-        
+        private const string InsertLikeQuery = @"INSERT INTO likes (Id, PostId, LikerId, CreatedAt) VALUES (@Id, @PostId, @LikerId, @CreatedAt)";
+        private const string DeleteLikeQuery = "DELETE FROM likes where WHERE PostId = @PostId AND Id=@Id";
+        private const string SelectLikesByPostIdQuery = "SELECT * FROM likes JOIN users on users.Id = likes.likerId ORDER BY likes.CreatedAt ASC";
+
+
         public async Task InsertPost(PostModel post) {
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
@@ -34,6 +38,22 @@ namespace server.Repositories{
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<PostModel>(SelectPostsQuery);
         }
+
+        public async Task LikePost(LikeModel like){
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(InsertLike, like);
+        }
+
+        public async<int> Task UnlikePost(string postId, string id){
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(InsertLike, new {PostId = postId, Id = id});
+        }
+        
+        public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string postId){
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<LikeModel>(SelectLikesByPostIdQuery);
+        }
+
 
     }
 }
