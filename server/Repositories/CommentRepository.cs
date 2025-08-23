@@ -12,7 +12,7 @@ namespace server.Repositories{
         }
 
         private const string InsertCommentQuery = @"INSERT INTO comments (AuthorId, Content, PostId, Id, CreatedAt) VALUES (@AuthorId, @Content, @PostId, @Id, @CreatedAt)";
-        private const string SelectCommentsQuery = "SELECT comments.AuthorId, comments.content, comments.PostId, comments.CreatedAt, comments.Id, users.Username FROM comments JOIN users on comments.AuthorId = users.Id WHERE comments.PostId = @PostId";
+        private const string SelectCommentsQuery = "SELECT comments.AuthorId, comments.content, comments.PostId, comments.CreatedAt, comments.Id, users.Username FROM comments JOIN users on comments.AuthorId = users.Id WHERE comments.PostId = @PostId ORDER BY comments.CreatedAt ASC";
 
         public async Task InsertComment(CommentModel comment){
             using var connection = _context.CreateConnection();
@@ -21,7 +21,7 @@ namespace server.Repositories{
 
         public async Task<IEnumerable<CommentModel>> GetComments (string postId){
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<CommentModel>(SelectCommentsQuery, postId);
+            return await connection.QueryAsync<CommentModel>(SelectCommentsQuery, new { PostId = postId });
         }
     }
 

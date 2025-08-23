@@ -41,7 +41,6 @@ namespace server.Controllers
             catch (Exception ex){
                 return BadRequest("Login failed: " + ex.Message);
             }
-        }
-        
+        }   
     }
 }

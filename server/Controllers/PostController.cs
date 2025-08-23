@@ -73,8 +73,5 @@ namespace server.Controllers{
                 return NotFound();
             return Ok(likes);
         }
-
-
-
     }
 }

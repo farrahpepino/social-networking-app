@@ -65,20 +65,20 @@
     </div> 
     <hr>
     <div class="comments-container">
-        <div class="comment"> 
+        <div class="comment" *ngFor="let comment of comments"> 
             <div class="comment-content">
-                <p class="f-700">farrahpepino</p>
-                <p>Hey omg!!</p>
-                <p class="f-100 st">September 26, 2025 at 6:04 PM</p>
+                <p class="f-700">{{comment.username}}</p>
+                <p>{{comment.content}}</p>
+                <p class="f-100 st">{{comment.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
             </div>
         </div>
     </div>  
     <div>
-        <form name="commentForm" id="commentForm">
-            <div class="brd">
-            <p class="p-i" contenteditable="true" placeholder="Add a comment..."> </p>
-            <button class="f-b" type="submit">post</button>
-            </div>
-        </form>
+      
+        <div class="brd">
+        <p class="p-i" contenteditable="true" placeholder="Add a comment..."  #commentInput> </p>
+        <button class="f-b" type="submit" (click)="submitComment(post.id)">post</button>
+        </div>
+
     </div>
 </div>

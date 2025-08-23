@@ -34,11 +34,5 @@ namespace server.Controllers{
             }
             return Ok(comments);
         }        
-
-
     }
-
-
-
-
 }

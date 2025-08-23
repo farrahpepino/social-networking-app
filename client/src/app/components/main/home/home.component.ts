@@ -4,9 +4,11 @@ import { PostService } from '../../../services/PostService/post.service';
 import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
+import { CommentService } from '../../../services/CommentService/comment.service';
 import { PostModel } from '../../../models/PostModel';
 import { CommonModule } from '@angular/common';
 import { UserModel } from '../../../models/UserModel';
+import { CommentModel } from '../../../models/CommentModel';
 @Component({
   selector: 'app-home',
   standalone: true, 
@@ -17,11 +19,14 @@ import { UserModel } from '../../../models/UserModel';
 
 export class HomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private postService: PostService, private router: Router) {}
+  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
+  @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
+
   loggedInUser: UserModel | null = null;
   posts: PostModel[] = [];
   post: PostModel | null = null;
+  comments: CommentModel[] = [];
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -37,6 +42,7 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+    
   }
 
   showPost = false;
@@ -46,6 +52,11 @@ export class HomeComponent implements OnInit {
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
+        this.commentService.getComments(this.post.id).subscribe({
+          next: (data)=>{
+            this.comments = Array.isArray(data) ? data : [data];
+          }
+        })
       },
       error: (err) => {
         console.error('Error fetching post: ', err);
@@ -73,6 +84,22 @@ export class HomeComponent implements OnInit {
         console.error('Error creating post:', err);
       }
     });
+  }
+
+  submitComment(postId: string){
+    const authorId = this.loggedInUser!.id;
+    const content = this.commentInput.nativeElement.innerText.trim();
+    if (!content) return;
+
+    this.commentService.createComment(authorId, content, postId ).subscribe({
+      next: (data) => {
+        data.username = this.loggedInUser!.username; 
+        this.comments.push(data); 
+        this.commentInput.nativeElement.innerText = ''; 
+      },
+      error: (err)=> { console.error(err, "Error creating comment."); }
+    });
+    
   }
 
 }
