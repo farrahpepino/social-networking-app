@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   posts: PostModel[] = [];
   post: PostModel | null = null;
   comments: CommentModel[] = [];
+  commentCount: number = 0;
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -55,6 +56,7 @@ export class HomeComponent implements OnInit {
         this.commentService.getComments(this.post.id).subscribe({
           next: (data)=>{
             this.comments = Array.isArray(data) ? data : [data];
+            this.commentCount = this.comments.length; 
           }
         })
       },
@@ -94,6 +96,7 @@ export class HomeComponent implements OnInit {
     this.commentService.createComment(authorId, content, postId ).subscribe({
       next: (data) => {
         data.username = this.loggedInUser!.username; 
+        this.commentCount = this.comments.length;
         this.comments.push(data); 
         this.commentInput.nativeElement.innerText = ''; 
       },
