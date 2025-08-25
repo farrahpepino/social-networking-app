@@ -13,5 +13,5 @@ export const routes: Routes = [
         path: '',
         component: HeroComponent,
         canActivate: [guestGuard]
-    }
+    },
 ];

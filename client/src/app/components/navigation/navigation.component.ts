@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/AuthService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -10,14 +11,18 @@ import { AuthService } from '../../services/AuthService/auth.service';
 })
 export class NavigationComponent {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   logout() {
     this.authService.logout();
   }
 
   viewProfile() {
-    alert("viewing profile");
+    this.router.navigate(['/profile']); 
+  }
+
+  navigateToHome(){
+    this.router.navigate(['/home']); 
   }
 
 }

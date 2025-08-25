@@ -15,21 +15,21 @@
     </button>
     <hr>
     <div class="react w-7rem">
-        <button class="parent bt" (click)="toggleLike(post)">
-            <i 
+        <button class="parent bt" (click)="toggleLike(post)"> like
+            <!-- <i 
             [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
             [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
             >
-            </i>
-            <div class="child">
+            </i> -->
+            <!-- <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <strong>Liked by</strong>
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p>{{like.username}}</p>
+                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
-            </div>
+            </div> -->
         </button>
         <button class="bt" (click)="viewPost(post.id)" [style.color]="'rgba(0,0,0,0.5)'">
-            <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
+            <i class="fa-regular fa-comment" title="comment" ></i>
         </button>
     </div> 
 </div>
@@ -74,18 +74,18 @@
     <p>{{post.content}}</p>
     <hr>
     <div class="react w-7rem">
-        <button class="parent bt" (click)="toggleLike(post)">
-            <i 
+        <button class="parent bt" (click)="toggleLike(post)"> like
+            <!-- <i 
             [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
             [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
             >
-            </i>
-            <div class="child">
+            </i> -->
+            <!-- <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <strong>Liked by</strong>
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p>{{like.username}}</p>
+                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
-            </div>
+            </div> -->
         </button>
     
         <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>

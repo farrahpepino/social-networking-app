@@ -48,16 +48,9 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {
-          this.postService.getLikes(post.id).subscribe({
-            next: (likes: LikeModel[]) => {
-              post.likes = likes;
-              post.likedByUser = likes.some(like => like.likerId === this.loggedInUser?.id);
-            }
-          });
           this.commentService.getComments(post.id).subscribe({
-            next: (comments) => {
-              this.comments = Array.isArray(comments) ? comments : [comments];
-              this.commentCount = this.comments.length;
+            error: (err) => {
+             console.error("Error fetching comments:", err)
             }
           });
         });
@@ -67,27 +60,8 @@ export class HomeComponent implements OnInit {
   }
   toggleLike(post: PostModel) {
     if (!this.loggedInUser) return;
-    if (post.likedByUser) {
-      this.postService.unlikePost(post.id, this.loggedInUser.id).subscribe({
-        next:()=>{
-          post.likedByUser = false;
-        },
-        error: (err) => {
-          console.error('Failed to unlike post', err);
-        }
-      });
-    } else {
-      this.postService.likePost(post.id, this.loggedInUser.id).subscribe({
-        next: (like) => {
-          post.likedByUser = true;
-        },
-        error: (err) => {
-          console.error('Failed to like post', err);
-        }
-      });
-    }
-    this.loadPosts();
   }
+  
   
   
 
@@ -96,10 +70,10 @@ export class HomeComponent implements OnInit {
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
-        this.postService.getLikes(data.id).subscribe({
-          next: (likes: LikeModel[]) => {
-            data.likes = likes;
-            data.likedByUser = likes.some(like => like.likerId === this.loggedInUser?.id);
+        this.commentService.getComments(data.id).subscribe({
+          next: (comments) => {
+            this.comments = Array.isArray(comments) ? comments : [comments];
+            this.commentCount = this.comments.length;
           }
         });
       },
@@ -141,7 +115,7 @@ export class HomeComponent implements OnInit {
     this.commentService.createComment(authorId, content, postId ).subscribe({
       next: (data) => {
         data.username = this.loggedInUser!.username; 
-        this.commentCount = this.comments.length;
+        this.commentCount = this.comments.length+1;
         this.comments.push(data); 
         this.commentInput.nativeElement.innerText = ''; 
       },
