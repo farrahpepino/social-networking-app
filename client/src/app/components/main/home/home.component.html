@@ -4,7 +4,7 @@
     +
 </button>
 
-<div class="post-wrapper">
+<div class="post-wrapper content">
 <div class="post-container" *ngFor="let post of posts" >
     <button class="bt" (click)="viewPost(post.id)">
     <div>
@@ -14,9 +14,23 @@
     <p>{{post.content}}</p>
     </button>
     <hr>
-    <div class="react">
-        <button class="bt">like</button>
-        <button class="bt" (click)="viewPost(post.id)">comment</button>
+    <div class="react w-7rem">
+        <button class="parent bt" (click)="toggleLike(post)">
+            <i 
+            [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
+            >
+            </i>
+            <div class="child">
+                <strong>Liked by</strong>
+                <div class="p-10" *ngFor="let like of post.likes">
+                    <p>{{like.username}}</p>
+                </div>
+            </div>
+        </button>
+        <button class="bt" (click)="viewPost(post.id)" [style.color]="'rgba(0,0,0,0.5)'">
+            <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
+        </button>
     </div> 
 </div>
 </div>
@@ -60,8 +74,21 @@
     <p>{{post.content}}</p>
     <hr>
     <div class="react w-7rem">
-        <p>like</p>
-        <p>comment({{commentCount}})</p>
+        <button class="parent bt" (click)="toggleLike(post)">
+            <i 
+            [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
+            >
+            </i>
+            <div class="child">
+                <strong>Liked by</strong>
+                <div class="p-10" *ngFor="let like of post.likes">
+                    <p>{{like.username}}</p>
+                </div>
+            </div>
+        </button>
+    
+        <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
     </div> 
     <hr>
     <div class="comments-container">

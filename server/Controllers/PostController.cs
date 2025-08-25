@@ -42,6 +42,14 @@ namespace server.Controllers{
             return Ok(posts);
         }
 
+        [HttpGet("{authorId}/posts")]
+        public async Task<IActionResult> GetPostsByUserId(string authorId){
+            var posts = await _postService.GetPostsByUserId(authorId);
+            if(posts == null)
+                return NotFound();
+            return Ok(posts);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(string id){
             var success = await _postService.DeletePost(id);
@@ -50,9 +58,9 @@ namespace server.Controllers{
             return NoContent(); 
         }
 
-        [HttpDelete("unlike-post")]
-        public async Task<IActionResult> UnlikePost([FromBody] string likeId, string postId){
-            var success = await _postService.UnlikePost(likeId, postId);
+        [HttpDelete("{PostId}/unlike-post/{LikerId}")]
+        public async Task<IActionResult> UnlikePost(string PostId, string LikerId){
+            var success = await _postService.UnlikePost(PostId, LikerId);
             if (!success)
                 return NotFound();
             return NoContent(); 

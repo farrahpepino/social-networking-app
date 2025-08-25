@@ -9,6 +9,7 @@ import { PostModel } from '../../../models/PostModel';
 import { CommonModule } from '@angular/common';
 import { UserModel } from '../../../models/UserModel';
 import { CommentModel } from '../../../models/CommentModel';
+import { LikeModel } from '../../../models/LikeModel';
 @Component({
   selector: 'app-home',
   standalone: true, 
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
 
   loggedInUser: UserModel | null = null;
   posts: PostModel[] = [];
+  likes: LikeModel[] = [];
   post: PostModel | null = null;
   comments: CommentModel[] = [];
   commentCount: number = 0;
@@ -32,33 +34,74 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
       this.loggedInUser = user;
+      this.loadPosts();
     });
-    this.postService.getPosts().subscribe(
-      {
-        next: (data)=>{
-          this.posts = data;
-        },
-        error: (err)=>{
-          console.error("Error fetching posts: ", err);
-        }
-      }
-    );
     
+   
   }
 
   showPost = false;
   showForm = false;
+
+  loadPosts() {
+    this.postService.getPosts().subscribe({
+      next: (data) => {
+        this.posts = data;
+        this.posts.forEach(post => {
+          this.postService.getLikes(post.id).subscribe({
+            next: (likes: LikeModel[]) => {
+              post.likes = likes;
+              post.likedByUser = likes.some(like => like.likerId === this.loggedInUser?.id);
+            }
+          });
+          this.commentService.getComments(post.id).subscribe({
+            next: (comments) => {
+              this.comments = Array.isArray(comments) ? comments : [comments];
+              this.commentCount = this.comments.length;
+            }
+          });
+        });
+      },
+      error: (err) => console.error("Error fetching posts:", err)
+    });
+  }
+  toggleLike(post: PostModel) {
+    if (!this.loggedInUser) return;
+    if (post.likedByUser) {
+      this.postService.unlikePost(post.id, this.loggedInUser.id).subscribe({
+        next:()=>{
+          post.likedByUser = false;
+        },
+        error: (err) => {
+          console.error('Failed to unlike post', err);
+        }
+      });
+    } else {
+      this.postService.likePost(post.id, this.loggedInUser.id).subscribe({
+        next: (like) => {
+          post.likedByUser = true;
+        },
+        error: (err) => {
+          console.error('Failed to like post', err);
+        }
+      });
+    }
+    this.loadPosts();
+  }
+  
+  
+
   viewPost(id: string) {
     this.showPost = true; 
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
-        this.commentService.getComments(this.post.id).subscribe({
-          next: (data)=>{
-            this.comments = Array.isArray(data) ? data : [data];
-            this.commentCount = this.comments.length; 
+        this.postService.getLikes(data.id).subscribe({
+          next: (likes: LikeModel[]) => {
+            data.likes = likes;
+            data.likedByUser = likes.some(like => like.likerId === this.loggedInUser?.id);
           }
-        })
+        });
       },
       error: (err) => {
         console.error('Error fetching post: ', err);
@@ -69,10 +112,12 @@ export class HomeComponent implements OnInit {
   hidePost() { 
     this.post = null;
     this.showPost = false; 
+    this.loadPosts();
   }
 
   viewForm() { this.showForm = true; }
-  hideForm() { this.showForm = false; }
+  hideForm() { this.showForm = false;
+  }
  
 
   submitPost() {

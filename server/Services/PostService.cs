@@ -71,6 +71,20 @@ namespace server.Services{
             }
         }
 
+        public async Task<IEnumerable<PostModel>> GetPostsByUserId(string authorId)
+        {
+            try
+            {
+                return await _postRepository.GetPostsByUserId(authorId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching posts");
+                return Enumerable.Empty<PostModel>();
+            }
+        }
+        
+
         public async Task<IEnumerable<PostModel>> GetPosts()
         {
             try
@@ -83,6 +97,7 @@ namespace server.Services{
                 return Enumerable.Empty<PostModel>();
             }
         }
+        
 
         public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string postId)
         {
@@ -113,18 +128,10 @@ namespace server.Services{
             }
         }
 
-        public async Task<bool> UnlikePost(string likeId, string postId){
+        public async Task<bool> UnlikePost(string PostId, string LikerId){
             try{
-                var affectedRows =  await _postRepository.UnlikePost(likeId, postId);
-            
-                if (affectedRows > 0){
-                    return true;
-                }
-
-                else{
-                    _logger.LogWarning("No post found with that Id.");
-                    return false;
-                }
+                var affectedRows =  await _postRepository.UnlikePost(PostId, LikerId);
+                return (affectedRows > 0);
             }
             catch (Exception ex)
             {
