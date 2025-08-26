@@ -1,5 +1,5 @@
-namespace server.Models{
-    public class RegistrationModel{
+namespace server.Dtos{
+    public class RegistrationDto{
         public required string Username {get; set;}
         public required string HashedPassword { get; set; }
         public required string Email {get; set;}

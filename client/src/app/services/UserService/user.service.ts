@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { JwtService } from '../JwtService/jwt.service';
-import { UserModel } from '../../models/UserModel';
+import { UserDto } from '../../dtos/UserDto';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private loggedInUserSubject = new BehaviorSubject<UserModel | null>(null);
+  private loggedInUserSubject = new BehaviorSubject<UserDto | null>(null);
 
 
 
@@ -23,7 +23,7 @@ export class UserService {
 
   initializeUser(token: string) {
     const decoded = this.jwtService.getDecodedAccessToken(token);
-    const user: UserModel = {
+    const user: UserDto = {
       id: decoded.sub,
       username: decoded.unique_name,
       email: decoded.email
@@ -31,12 +31,12 @@ export class UserService {
     this.setLoggedInUser(user);
   }
 
-  setLoggedInUser(user: UserModel) {
+  setLoggedInUser(user: UserDto) {
     this.loggedInUserSubject.next(user);
     localStorage.setItem('loggedInUser', JSON.stringify(user));
   }
 
-  getLoggedInUser(): UserModel | null {
+  getLoggedInUser(): UserDto | null {
     return this.loggedInUserSubject.value;
   }
 }

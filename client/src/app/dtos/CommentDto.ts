@@ -1,4 +1,4 @@
-export interface CommentModel{
+export interface CommentDto{
     authorId: string;
     content: string;
     postId: string;

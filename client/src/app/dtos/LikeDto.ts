@@ -1,4 +1,4 @@
-export interface LikeModel
+export interface LikeDto
 {
     id?: string,
     postId: string,

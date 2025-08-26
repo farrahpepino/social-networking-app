@@ -1,5 +1,5 @@
 using server.Data;
-using server.Models;
+using server.Dtos;
 using Dapper;
 
 namespace server.Repositories{
@@ -15,14 +15,14 @@ namespace server.Repositories{
                         VALUES (@Id, @Username, @Email, @HashedPassword, @CreatedAt)";
         private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email";
 
-        public async Task InsertUser(RegistrationModel newUser) {
+        public async Task InsertUser(RegistrationDto newUser) {
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertUserQuery, newUser);
         }
 
-        public async Task<RegistrationModel?> GetUserByEmail(string email) {
+        public async Task<RegistrationDto?> GetUserByEmail(string email) {
             using var connection = _context.CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<RegistrationModel>(
+            return await connection.QuerySingleOrDefaultAsync<RegistrationDto>(
                 SelectUserByEmailQuery, new { Email = email });
         }
 

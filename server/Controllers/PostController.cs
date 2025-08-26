@@ -1,4 +1,4 @@
-using server.Models;
+using server.Dtos;
 using server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,7 +19,7 @@ namespace server.Controllers{
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost([FromBody] PostModel post){
+        public async Task<IActionResult> CreatePost([FromBody] PostDto post){
             var createdPost = await _postService.CreatePost(post);
             if (createdPost == null)
                 return StatusCode(500, "Failed to create post.");
@@ -67,7 +67,7 @@ namespace server.Controllers{
         }
 
         [HttpPost("like-post")]
-        public async Task<IActionResult> LikePost([FromBody] LikeModel like){
+        public async Task<IActionResult> LikePost([FromBody] LikeDto like){
             var liker = await _postService.LikePost(like);
             if (liker == null)
                 return StatusCode(500, "Failed to like post.");

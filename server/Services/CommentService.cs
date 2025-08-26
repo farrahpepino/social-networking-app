@@ -1,5 +1,5 @@
 using server.Data;
-using server.Models;
+using server.Dtos;
 using server.Repositories;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,7 @@ namespace server.Services{
                 _commentRepository = commentRepository;
         }
 
-        public async Task<CommentModel?> CreateComment(CommentModel comment){
+        public async Task<CommentDto?> CreateComment(CommentDto comment){
                 try{
                         comment.Id = Guid.NewGuid().ToString();
                         comment.CreatedAt = DateTime.Now;
@@ -29,13 +29,13 @@ namespace server.Services{
                 }
         }
 
-        public async Task<IEnumerable<CommentModel>> GetComments(string postId){
+        public async Task<IEnumerable<CommentDto>> GetComments(string postId){
                 try{
                         return await _commentRepository.GetComments(postId);     
                 }
                 catch (Exception ex){
                         _logger.LogError(ex, $"Error fetching comments");
-                        return Enumerable.Empty<CommentModel>();
+                        return Enumerable.Empty<CommentDto>();
                 }
         }
    

@@ -1,4 +1,4 @@
-using server.Models;
+using server.Dtos;
 using server.Services;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace server.Controllers{
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment ([FromBody] CommentModel comment){
+        public async Task<IActionResult> CreateComment ([FromBody] CommentDto comment){
             var createdComment = await _commentService.CreateComment(comment);
             if (createdComment == null)
                 return StatusCode(500, "Failed to create a comment.");

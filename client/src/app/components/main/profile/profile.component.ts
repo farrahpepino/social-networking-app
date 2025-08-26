@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { PostService } from '../../../services/PostService/post.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { UserModel } from '../../../models/UserModel';
-import { PostModel } from '../../../models/PostModel';
-import { LikeModel } from '../../../models/LikeModel';
-import { CommentModel } from '../../../models/CommentModel';
+import { UserDto } from '../../../dtos/UserDto';
+import { PostDto } from '../../../dtos/PostDto';
+import { LikeDto } from '../../../dtos/LikeDto';
+import { CommentDto } from '../../../dtos/CommentDto';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
 @Component({
@@ -22,11 +22,11 @@ export class ProfileComponent implements OnInit {
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
-  loggedInUser: UserModel | null = null;
-  posts: PostModel[] = [];
-  post: PostModel | null = null;
-  comments: CommentModel[] = [];
-  likes: LikeModel[] = []
+  loggedInUser: UserDto | null = null;
+  posts: PostDto[] = [];
+  post: PostDto | null = null;
+  comments: CommentDto[] = [];
+  likes: LikeDto[] = []
   commentCount: number = 0;
   likedPosts: { [postId: string]: boolean } = {};
 
@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
 
 
   
-  toggleLike(post: PostModel) {
+  toggleLike(post: PostDto) {
     const postId = post.id;
     const userId = this.loggedInUser!.id;
   

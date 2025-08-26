@@ -1,5 +1,5 @@
 using server.Data;
-using server.Models;
+using server.Dtos;
 using server.Repositories;
 using Microsoft.Extensions.Logging;
 using BCrypt.Net; // for hashing password and verification
@@ -17,7 +17,7 @@ namespace server.Services{
             _userRepository = userRepository;
         }
 
-        public async Task<string?> RegisterUser(RegistrationModel newUser){
+        public async Task<string?> RegisterUser(RegistrationDto newUser){
             if(newUser.HashedPassword == "" || newUser.Username == "" || newUser.Email == "" ){
                 _logger.LogWarning($"Some required fields are missing or invalid.");
                 return null;
@@ -31,7 +31,7 @@ namespace server.Services{
             return token;
         }   
 
-        public async Task<string?> LoginUser(LoginModel user)
+        public async Task<string?> LoginUser(LoginDto user)
         {
            
             var existingUser = await _userRepository.GetUserByEmail(user.Email);

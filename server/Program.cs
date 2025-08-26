@@ -1,6 +1,6 @@
 using server.Data; //needed for dapper
 using server.Services; //needed for Dependency Injection
-using server.Models; //for jwtsettings
+using server.Dtos; //for jwtsettings
 using server.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //for authentication
 using Microsoft.IdentityModel.Tokens; // for signing credentials
