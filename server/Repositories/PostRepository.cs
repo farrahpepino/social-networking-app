@@ -17,13 +17,20 @@ namespace server.Repositories{
         private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId ORDER BY posts.CreatedAt DESC";
         private const string InsertLikeQuery = @"INSERT IGNORE INTO likes (Id, PostId, LikerId, CreatedAt) VALUES (@Id, @PostId, @LikerId, @CreatedAt);";
         private const string DeleteLikeQuery = "DELETE FROM likes WHERE PostId = @PostId AND LikerId=@LikerId";
-        private const string SelectLikesByPostIdQuery = "SELECT * FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
+        private const string SelectLikesByPostIdQuery = "SELECT likes.CreatedAt, likes.Id, likes.LikerId, likes.PostId, users.Username  FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
         private const string LikeExistsQuery = "SELECT 1 FROM likes WHERE PostId=@PostId AND LikerId=@LikerId";
 
         public async Task InsertPost(PostModel post) {
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
         }
+        public async Task<bool> LikeExists(string PostId, string LikerId)
+        {
+            using var connection = _context.CreateConnection();
+            var result = await connection.ExecuteScalarAsync<int?>(LikeExistsQuery, new { PostId, LikerId });
+            return result.HasValue;
+        }
+
 
         public async Task<int> DeletePost (string postId){
             using var connection = _context.CreateConnection();

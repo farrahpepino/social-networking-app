@@ -28,7 +28,9 @@ export class HomeComponent implements OnInit {
   posts: PostModel[] = [];
   post: PostModel | null = null;
   comments: CommentModel[] = [];
+  likes: LikeModel[] = []
   commentCount: number = 0;
+  likedPosts: { [postId: string]: boolean } = {};
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -36,13 +38,14 @@ export class HomeComponent implements OnInit {
       this.loadPosts();
     });
     
-   
   }
 
   showPost = false;
   showForm = false;
 
-  
+  isLiked(postId: string){
+    return !!this.likedPosts[postId];
+}
 
   loadPosts() {
     this.postService.getPosts().subscribe({
@@ -50,9 +53,18 @@ export class HomeComponent implements OnInit {
         this.posts = data;
         this.posts.forEach(post => {
           this.postService.getLikes(post.id).subscribe({
+            next:(data)=>{
+              post.likes = data;
+            },
             error: (err) => {
              console.error("Error fetching likes:", err)
             }
+          });
+          this.postService.isLiked(post.id, this.loggedInUser!.id).subscribe({
+            next: (data) => {
+              this.likedPosts[post.id] = data;
+            },
+            error: (err) => console.error('Error checking post...', err)
           });
           this.commentService.getComments(post.id).subscribe({
             error: (err) => {
@@ -67,17 +79,46 @@ export class HomeComponent implements OnInit {
 
 
   
-
+  toggleLike(post: PostModel) {
+    const postId = post.id;
+    const userId = this.loggedInUser!.id;
   
+    if (this.likedPosts[postId]) {
+      this.postService.unlikePost(postId, userId).subscribe({
+        next: () => {
+          this.likedPosts[postId] = false;
+          post.likes = post.likes?.filter(like => like.likerId !== userId) || [];
+        },
+        error: (err) => console.error('Error unliking post', err)
+      });
+    } else {
+      this.postService.likePost(postId, userId).subscribe({
+        next: (like) => {
+          this.likedPosts[postId] = true;
+          post.likes = [...(post.likes || []), {
+            ...like,
+            username: this.loggedInUser!.username
+          }];
+        },
+        error: (err) => console.error('Error liking post', err)
+      });
+    }
+    this.loadPosts();
+  }
   
-  
-
   viewPost(id: string) {
     this.showPost = true; 
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
-  
+        this.postService.getLikes(id).subscribe({
+          next:(data)=>{
+            this.post!.likes = data;
+          },
+          error: (err) => {
+           console.error("Error fetching likes:", err)
+          }
+        });
         this.commentService.getComments(data.id).subscribe({
           next: (comments) => {
             this.comments = Array.isArray(comments) ? comments : [comments];

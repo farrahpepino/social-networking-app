@@ -6,6 +6,6 @@ export interface PostModel {
     content: string;
     createdAt: Date;
     username?: string;
-    likes: LikeModel[];
-    liked: boolean;
+    likes?: LikeModel[];
+    likedByCurrentUser?: boolean;
 }

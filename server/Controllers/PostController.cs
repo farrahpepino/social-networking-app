@@ -63,7 +63,7 @@ namespace server.Controllers{
             var success = await _postService.UnlikePost(PostId, LikerId);
             if (!success)
                 return NotFound();
-            return NoContent(); 
+            return Ok(); 
         }
 
         [HttpPost("like-post")]
@@ -72,6 +72,13 @@ namespace server.Controllers{
             if (liker == null)
                 return StatusCode(500, "Failed to like post.");
             return Ok(liker);  
+        }
+
+        [HttpGet("{postId}/liked-by/{userId}")]
+        public async Task<IActionResult> LikeExists(string postId, string userId)
+        {
+            var exists = await _postService.LikeExists(postId, userId);
+            return Ok(exists); 
         }
 
         [HttpGet("{postId}/likes")]

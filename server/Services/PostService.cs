@@ -84,7 +84,6 @@ namespace server.Services{
             }
         }
         
-
         public async Task<IEnumerable<PostModel>> GetPosts()
         {
             try
@@ -98,6 +97,19 @@ namespace server.Services{
             }
         }
         
+        public async Task<bool> LikeExists(string PostId, string LikerId)
+        {
+            try
+            {
+                return await _postRepository.LikeExists(PostId, LikerId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error checking if like exists");
+                return false;
+            }
+        }
+
 
         public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string postId)
         {
