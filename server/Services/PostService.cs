@@ -74,7 +74,7 @@ namespace server.Services{
         public async Task<IEnumerable<PostModel>> GetPostsByUserId(string authorId)
         {
             try
-            {
+            {   
                 return await _postRepository.GetPostsByUserId(authorId);
             }
             catch (Exception ex)

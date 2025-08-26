@@ -1,0 +1,111 @@
+<app-navigation />
+
+<button class="mb" (click)="viewForm()">
+    +
+</button>
+
+<div class="post-wrapper content">
+<div class="post-container" *ngFor="let post of posts" >
+    <button class="bt" (click)="viewPost(post.id)">
+    <div>
+        <p class="f-700">{{post.username}}</p>
+        <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
+    </div>
+    <p>{{post.content}}</p>
+    </button>
+    <hr>
+    <div class="react w-7rem">
+        <button class="parent bt" (click)="toggleLike(post)">
+            <i 
+            [ngClass]="isLiked(post.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="isLiked(post.id) ? 'red' : 'rgb(0,0,0,0.5)'"
+            >
+            </i>
+            <div class="child"  *ngIf="post.likes && post.likes.length > 0">
+                <strong>Liked by</strong>
+                <div class="p-10" *ngFor="let like of post.likes">
+                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                </div>
+            </div>
+        </button>
+        <button class="bt" (click)="viewPost(post.id)" [style.color]="'rgba(0,0,0,0.5)'">
+            <i class="fa-regular fa-comment" title="comment" ></i>
+        </button>
+    </div> 
+</div>
+</div>
+<!-- <br> -->
+
+
+<!-- post details -->
+<div class="backdrop" [class.hidden]="!showForm"></div>
+<div class="post-block" [class.hidden]="!showForm">
+    <div class="col">
+        <div>
+            <p class="f-700">{{loggedInUser?.username}}</p>
+        </div>
+        
+        <button class="bt" (click)="hideForm()">X</button>
+    </div>
+    <form (submit)="submitPost()" name="postForm" id="postForm">
+        <p 
+        class="p-i"
+        contenteditable="true"
+        placeholder="Type something..."
+        #postInput
+        >
+        </p>
+        <br>
+        <br>
+        <button type="submit" class="b">post</button>
+    </form> 
+</div>
+
+
+<div class="backdrop" [class.hidden]="!showPost"></div>
+<div class="post-block" [class.hidden]="!showPost" *ngIf="post">
+    <div class="col">
+        <div>
+            <p class="f-700">{{post.username}}</p>
+            <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
+        </div>
+        <button class="bt" (click)="hidePost()">X</button>
+    </div>
+    <p>{{post.content}}</p>
+    <hr>
+    <div class="react w-7rem">
+        <button class="parent bt" (click)="toggleLike(post)">
+            <i 
+            [ngClass]="isLiked(post.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="isLiked(post.id) ? 'red' : 'rgb(0,0,0,0.5)'"
+            >
+            </i>
+            <div class="child"  *ngIf="post.likes && post.likes.length > 0">
+                <strong>Liked by</strong>
+                <div class="p-10" *ngFor="let like of post.likes">
+                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                </div>
+            </div>
+        </button>
+    
+        <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
+    </div> 
+    <hr>
+    <div class="comments-container">
+        <div class="comment" *ngFor="let comment of comments"> 
+            <div class="comment-content">
+                <p class="f-700">{{comment.username}}</p>
+                <p>{{comment.content}}</p>
+                <p class="f-100 st">{{comment.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
+            </div>
+        </div>
+    </div>  
+    <div>
+      
+        <div class="brd">
+        <p class="p-i" contenteditable="true" placeholder="Add a comment..."  #commentInput> </p>
+        <button class="f-b" type="submit" (click)="submitComment(post.id)">post</button>
+        </div>
+
+    </div>
+</div>

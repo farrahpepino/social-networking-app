@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
-import { NavigationComponent } from '../../navigation/navigation.component';
-import { PostService } from '../../../services/PostService/post.service';
 import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
+import { PostService } from '../../../services/PostService/post.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { PostModel } from '../../../models/PostModel';
-import { CommonModule } from '@angular/common';
 import { UserModel } from '../../../models/UserModel';
-import { CommentModel } from '../../../models/CommentModel';
+import { PostModel } from '../../../models/PostModel';
 import { LikeModel } from '../../../models/LikeModel';
+import { CommentModel } from '../../../models/CommentModel';
+import { NavigationComponent } from '../../navigation/navigation.component';
+import { CommonModule } from '@angular/common';
 @Component({
-  selector: 'app-home',
-  standalone: true, 
+  selector: 'app-profile',
   imports: [NavigationComponent, CommonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css'
 })
-
-export class HomeComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
@@ -34,10 +32,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
-      this.loggedInUser = user;
-      this.loadPosts();
+      if (user) {   
+        this.loggedInUser = user;
+        this.loadPosts();
+      }
     });
   }
+  
 
   showPost = false;
   showForm = false;
@@ -47,7 +48,7 @@ export class HomeComponent implements OnInit {
 }
 
   loadPosts() {
-    this.postService.getPosts().subscribe({
+    this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {

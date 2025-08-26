@@ -63,7 +63,7 @@ export class PostService {
   }
 
   getPostsByUserId(userId: string): Observable<PostModel[]>{
-    return this.http.get<PostModel[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() })
+    return this.http.get<PostModel[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() });
   }
 
   isLiked(postId: string, likerId: string): Observable<boolean>{
