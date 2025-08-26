@@ -1,7 +1,7 @@
 body{
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    background-color: #171717;
+    background-color:  #FEF9F3;
     margin: 0;
 }
 
@@ -10,8 +10,11 @@ body{
     padding: 10px;
     border-radius: 20px;
     isolation: isolate;
-    background-color: rgb(255 255 255 / 25%);
-    color: rgb(255 255 255 / 90%);
+    background-color: transparent;
+    /* background-color: rgb(255 255 255 / 25%); */
+    /* color: rgb(255 255 255 / 90%); */
+    color: rgb(0 0 0 / 90%);
+    font-weight: 100;
     text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
     font-size: 1.25rem;
     /*box-shadow: 0 6px 6px rgb(0 0 0 / 20%), 0 0 20px rgb(0 0 0 / 10%);

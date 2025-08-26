@@ -25,7 +25,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center; 
-    align-items: center;     
+    align-items: center;  
+    color: rgb(0 0 0 / 90%);   
 }
 
 .toggle-b{
@@ -34,11 +35,11 @@
     outline: none;
     background: transparent;
     font-family: Arial;
-    color: white;
+    color: rgb(0, 0, 0, 0.4);
 }
 
 .toggle-b:hover{
-    color: rgb(255, 255, 255, 0.6)
+    color: rgb(0, 0, 0, 0.6);
 }
 
 @media (max-width: 500px) {

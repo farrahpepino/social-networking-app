@@ -1,6 +1,6 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" name="loginForm" id="loginForm">
     <label class="liquid-glass"> email
-    <input type="email" placeholder="johndoe@email.com" formControlName="email"/>
+    <input type="email" formControlName="email"/>
     </label>
     <label class="liquid-glass"> password
         <input type="password" formControlName="password"/>

@@ -1,15 +1,15 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" name="registerForm" id="registerForm">
     <label class="liquid-glass"> email
-    <input type="email" placeholder="johndoe@email.com" formControlName="email"/>
+    <input type="email" formControlName="email"/>
     </label>
     <label class="liquid-glass"> username
-        <input type="text" placeholder="johndoe" formControlName="username"/>
+        <input type="text"  formControlName="username"/>
     </label>
     <label class="liquid-glass"> password
         <input type="password" formControlName="password"/>
     </label>
-    <label class="liquid-glass"> 
-        <input type="password" placeholder="confirm password"  formControlName="confirmPassword"/>
+    <label class="liquid-glass"> confirm password
+        <input type="password"  formControlName="confirmPassword"/>
     </label>
     <button type="submit" [disabled]="registerForm.invalid">sign up</button>
 </form>

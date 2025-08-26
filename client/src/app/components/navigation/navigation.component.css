@@ -2,6 +2,7 @@
     display:flex;
     justify-content: space-between;
     align-items: center;
+    /* background-color: rgb(0, 0, 0, 0.2); */
     background-color: #0D0D0D;
     color: white;
     margin-bottom: 10px;
@@ -9,6 +10,7 @@
 
 .parent{
     position: relative;
+    right: 18px;
 }
 
 .child{

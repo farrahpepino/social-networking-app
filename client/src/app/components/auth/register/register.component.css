@@ -8,7 +8,8 @@ form{
 input{
     background: transparent;
     outline: none;
-    color: white;  
+    color: rgb(0 0 0 / 90%);
+    font-weight: 100;
     font-family: "Roboto", sans-serif;
     font-weight: normal;
     border: none;
@@ -24,7 +25,7 @@ input:-webkit-autofill {
 }
 
 input::placeholder{
-    color: white;
+    color: rgb(0 0 0 / 90%);
     font-weight: 100;
 }
 
