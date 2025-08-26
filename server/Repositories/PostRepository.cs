@@ -18,6 +18,7 @@ namespace server.Repositories{
         private const string InsertLikeQuery = @"INSERT IGNORE INTO likes (Id, PostId, LikerId, CreatedAt) VALUES (@Id, @PostId, @LikerId, @CreatedAt);";
         private const string DeleteLikeQuery = "DELETE FROM likes WHERE PostId = @PostId AND LikerId=@LikerId";
         private const string SelectLikesByPostIdQuery = "SELECT * FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
+        private const string LikeExistsQuery = "SELECT 1 FROM likes WHERE PostId=@PostId AND LikerId=@LikerId";
 
         public async Task InsertPost(PostModel post) {
             using var connection = _context.CreateConnection();
@@ -52,8 +53,8 @@ namespace server.Repositories{
         public async Task<int> UnlikePost(string PostId, string LikerId){
             using var connection = _context.CreateConnection();
             return await connection.ExecuteAsync(DeleteLikeQuery, new {PostId = PostId, LikerId = LikerId});
-        }
-        
+        } 
+
         public async Task<IEnumerable<LikeModel>> GetLikesByPostId(string PostId){
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<LikeModel>(SelectLikesByPostIdQuery, new { PostId = PostId });

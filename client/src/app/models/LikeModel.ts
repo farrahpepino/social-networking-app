@@ -4,7 +4,7 @@ export interface LikeModel
     postId: string,
     likerId?: string,
     createdAt?: string,
-    username?: string
+    username?: string 
 }
 
 

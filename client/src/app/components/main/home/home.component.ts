@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
 
   loggedInUser: UserModel | null = null;
   posts: PostModel[] = [];
-  likes: LikeModel[] = [];
   post: PostModel | null = null;
   comments: CommentModel[] = [];
   commentCount: number = 0;
@@ -43,11 +42,18 @@ export class HomeComponent implements OnInit {
   showPost = false;
   showForm = false;
 
+  
+
   loadPosts() {
     this.postService.getPosts().subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {
+          this.postService.getLikes(post.id).subscribe({
+            error: (err) => {
+             console.error("Error fetching likes:", err)
+            }
+          });
           this.commentService.getComments(post.id).subscribe({
             error: (err) => {
              console.error("Error fetching comments:", err)
@@ -58,9 +64,10 @@ export class HomeComponent implements OnInit {
       error: (err) => console.error("Error fetching posts:", err)
     });
   }
-  toggleLike(post: PostModel) {
-    if (!this.loggedInUser) return;
-  }
+
+
+  
+
   
   
   
@@ -70,6 +77,7 @@ export class HomeComponent implements OnInit {
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
+  
         this.commentService.getComments(data.id).subscribe({
           next: (comments) => {
             this.comments = Array.isArray(comments) ? comments : [comments];

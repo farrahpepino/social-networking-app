@@ -41,20 +41,6 @@ export class PostService {
     return this.http.get<PostModel[]>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
     );
   }
-
-  likePost(postId: string, likerId: string): Observable<LikeModel>{
-    return this.http.post<LikeModel>(`${environment.apiUrl}/post/like-post`,
-    {
-      PostId: postId,
-      LikerId: likerId
-    },
-    { headers: this.getAuthHeaders() });
-  }
-
-  unlikePost(PostId: string, LikerId: string): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/post/${PostId}/unlike-post/${LikerId}`, {
-      headers: this.getAuthHeaders()});
-  }
   
   getLikes(postId: string): Observable<LikeModel[]>{
     return this.http.get<LikeModel[]>(`${environment.apiUrl}/post/${postId}/likes`,  { headers: this.getAuthHeaders() });
@@ -63,4 +49,6 @@ export class PostService {
   getPostsByUserId(userId: string): Observable<PostModel[]>{
     return this.http.get<PostModel[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() })
   }
+
+ 
 }

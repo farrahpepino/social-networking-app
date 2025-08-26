@@ -17,11 +17,11 @@
     <div class="react w-7rem">
         <button class="parent bt" (click)="toggleLike(post)"> like
             <!-- <i 
-            [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
-            [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
+            [ngClass]="post.liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="post.liked ? 'red' : 'rgb(0,0,0,0.5)'"
             >
-            </i> -->
-            <!-- <div class="child"  *ngIf="post.likes && post.likes.length > 0">
+            </i>
+            <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <strong>Liked by</strong>
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
@@ -76,11 +76,11 @@
     <div class="react w-7rem">
         <button class="parent bt" (click)="toggleLike(post)"> like
             <!-- <i 
-            [ngClass]="post.likedByUser ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
-            [style.color]="post.likedByUser ? 'red' : 'rgb(0,0,0,0.5)'"
+            [ngClass]="post.liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+            [style.color]="post.liked ? 'red' : 'rgb(0,0,0,0.5)'"
             >
-            </i> -->
-            <!-- <div class="child"  *ngIf="post.likes && post.likes.length > 0">
+            </i>
+            <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <strong>Liked by</strong>
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
