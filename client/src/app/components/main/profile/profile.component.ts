@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
     });
   }
   
-
   showPost = false;
   showForm = false;
 
@@ -51,21 +50,27 @@ export class ProfileComponent implements OnInit {
     this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
       next: (data) => {
         this.posts = data;
+
         this.posts.forEach(post => {
+
           this.postService.getLikes(post.id).subscribe({
             next:(data)=>{
               post.likes = data;
             },
+
             error: (err) => {
              console.error("Error fetching likes:", err)
             }
           });
+
           this.postService.isLiked(post.id, this.loggedInUser!.id).subscribe({
             next: (data) => {
               this.likedPosts[post.id] = data;
             },
             error: (err) => console.error('Error checking post...', err)
           });
+
+
           this.commentService.getComments(post.id).subscribe({
             error: (err) => {
              console.error("Error fetching comments:", err)
@@ -73,6 +78,7 @@ export class ProfileComponent implements OnInit {
           });
         });
       },
+      
       error: (err) => console.error("Error fetching posts:", err)
     });
   }

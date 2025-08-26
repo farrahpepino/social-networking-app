@@ -24,13 +24,13 @@ namespace server.Repositories{
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
         }
+
         public async Task<bool> LikeExists(string PostId, string LikerId)
         {
             using var connection = _context.CreateConnection();
             var result = await connection.ExecuteScalarAsync<int?>(LikeExistsQuery, new { PostId, LikerId });
             return result.HasValue;
         }
-
 
         public async Task<int> DeletePost (string postId){
             using var connection = _context.CreateConnection();
@@ -66,7 +66,6 @@ namespace server.Repositories{
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<LikeDto>(SelectLikesByPostIdQuery, new { PostId = PostId });
         }
-
 
     }
 }
