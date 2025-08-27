@@ -12,6 +12,11 @@
         <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
     </div>
     <p>{{post.content}}</p>
+    <img
+    src="loop.png"
+    alt="uploaded image"
+    class="uploaded-img"
+    > 
     </button>
     <hr>
     <div class="react w-7rem">
@@ -22,7 +27,7 @@
             >
             </i>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
-                <strong>Liked by</strong>
+                <!-- <strong>Liked by</strong> -->
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
@@ -34,7 +39,6 @@
     </div> 
 </div>
 </div>
-<!-- <br> -->
 
 
 <!-- post details -->
@@ -55,9 +59,14 @@
         #postInput
         >
         </p>
+        <app-uploadimage />
+        
+        <div>
+            <button class="b-l" type="button">upload image</button>
+            <button type="submit" class="b">post</button>
+        </div>
         <br>
         <br>
-        <button type="submit" class="b">post</button>
     </form> 
 </div>
 
@@ -72,6 +81,11 @@
         <button class="bt" (click)="hidePost()">X</button>
     </div>
     <p>{{post.content}}</p>
+    <img
+    src="loop.png"
+    alt="uploaded image"
+    class="uploaded-img"
+    > 
     <hr>
     <div class="react w-7rem">
         <button class="parent bt" (click)="toggleLike(post)">
@@ -81,7 +95,7 @@
             >
             </i>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
-                <strong>Liked by</strong>
+                <!-- <strong>Liked by</strong> -->
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>

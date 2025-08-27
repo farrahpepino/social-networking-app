@@ -14,13 +14,20 @@
     padding-top: 15px;
     left: 25px;
     top: -15px;
-    background-color: black;
-    color: white;
-    width: 120px;
+    background-color: #0D0D0D;
+    width: 80px;
     max-height: 12rem;
     border-radius: 20px;
     z-index: 1008;
     overflow-y: scroll;
+}
+
+.child strong{
+    color: rgb(255, 255, 255, 0.6)
+}
+
+.child div{
+    color: rgb(255, 255, 255, 0.6)
 }
 
 .parent:hover .child {
@@ -45,6 +52,7 @@
 .contain{
     contain: content;
 }
+
 .post-block {
     position: fixed;
     width: 70%;
@@ -62,7 +70,6 @@
     max-height: 80vh;
 }
 
-
 .comments-container {
     display: flex;   
     flex-direction: column;     
@@ -70,7 +77,6 @@
     align-items: flex-start;
     gap: 6px;      
 }
-
 
 .comment{
     background-color: rgb(0,0,0,0.1);
@@ -87,8 +93,6 @@
     border-radius: 50%;
     border: none;
     outline: none;
-    //background-color: #0D0D0D;
-    //color: white;
     color: rgb(0, 0, 0, 0.8);
     position: fixed;
     right:10px;
@@ -120,6 +124,21 @@ form{
 .f-b:hover{
     background-color: #0D0D0D;
     color: white;
+}
+
+.b-l{
+    background-color: transparent;
+    outline: none;
+    color: black;
+    border: none;
+    padding: 7px 0px;
+    position: absolute; 
+    text-decoration: underline; 
+    z-index: 1009;
+}
+
+.b-l:hover{
+    color: rgb(0,0,0, 0.3);
 }
 
 .b{
@@ -164,7 +183,6 @@ p{
     text-align: left;
 }
 
-
 .bt{
     background-color: transparent;
     border: none;
@@ -182,6 +200,14 @@ p{
     color: rgb(0,0,0,0.5);
 }
 
+.uploaded-img{
+    width: 15rem;
+    height: auto;
+    margin: 10px 0px;
+    border-radius: 15px;
+    display: block;
+}
+
 @media(max-width: 1000px){
     .main{
         display: flex;
@@ -197,4 +223,9 @@ p{
         padding: 10px 10px;
     }
    
+    .uploaded-img{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }

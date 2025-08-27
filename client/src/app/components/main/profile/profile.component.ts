@@ -10,9 +10,10 @@ import { LikeDto } from '../../../dtos/LikeDto';
 import { CommentDto } from '../../../dtos/CommentDto';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
+import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 @Component({
   selector: 'app-profile',
-  imports: [NavigationComponent, CommonModule],
+  imports: [NavigationComponent, CommonModule, UploadimageComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

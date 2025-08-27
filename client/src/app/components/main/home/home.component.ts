@@ -10,10 +10,11 @@ import { CommonModule } from '@angular/common';
 import { UserDto } from '../../../dtos/UserDto';
 import { CommentDto } from '../../../dtos/CommentDto';
 import { LikeDto } from '../../../dtos/LikeDto';
+import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 @Component({
   selector: 'app-home',
   standalone: true, 
-  imports: [NavigationComponent, CommonModule],
+  imports: [NavigationComponent, CommonModule, UploadimageComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
