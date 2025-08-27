@@ -2,9 +2,10 @@
     display:flex;
     justify-content: space-between;
     align-items: center;
+    background-color: transparent;
     /* background-color: rgb(0, 0, 0, 0.2); */
-    background-color: #0D0D0D;
-    color: white;
+    /* background-color: #0D0D0D; */
+    color: rgb(0, 0, 0, 0.8);
     margin-bottom: 10px;
 }
 
@@ -47,7 +48,7 @@ ul {
 
 
 button{
-    color: white;
+    color: rgb(0, 0, 0, 0.8);
 }
 
 @media (max-width: 900px){

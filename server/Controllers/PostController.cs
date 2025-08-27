@@ -68,10 +68,10 @@ namespace server.Controllers{
 
         [HttpPost("like-post")]
         public async Task<IActionResult> LikePost([FromBody] LikeDto like){
-            var like = await _postService.LikePost(like);
-            if (like == null)
+            var liked = await _postService.LikePost(like);
+            if (liked == null)
                 return StatusCode(500, "Failed to like post.");
-            return Ok(like);  
+            return Ok(liked);  
         }
 
         [HttpGet("{postId}/liked-by/{userId}")]

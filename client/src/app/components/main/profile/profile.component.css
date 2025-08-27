@@ -87,8 +87,9 @@
     border-radius: 50%;
     border: none;
     outline: none;
-    background-color: #0D0D0D;
-    color: white;
+    //background-color: #0D0D0D;
+    //color: white;
+    color: rgb(0, 0, 0, 0.8);
     position: fixed;
     right:10px;
     bottom: 5%;
