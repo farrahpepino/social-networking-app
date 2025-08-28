@@ -13,7 +13,7 @@
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
         <button *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
-            <button class="child-right white" (click)="deletePost(post.id)">delete post</button>
+            <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
         </button>
     </div>
     <p>{{post.content}}</p>
@@ -86,7 +86,7 @@
         </div>
         <div class="col">
             <button *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
-                <button class="child-right white" (click)="deletePost(post.id)">delete post</button>
+                <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
             </button>
             <button class="bt" (click)="hidePost()">X</button>
         </div>

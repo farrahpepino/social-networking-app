@@ -1,6 +1,6 @@
 body{
     font-family: "Roboto", sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     /* background-color:  #FEF9F3; */
     margin: 0;
     font-weight: 100;
@@ -17,7 +17,7 @@ body{
     color: rgb(0 0 0 / 90%);
     font-weight: 100;
     text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-    font-size: 1.25rem;
+    font-size: 12px;
     /*box-shadow: 0 6px 6px rgb(0 0 0 / 20%), 0 0 20px rgb(0 0 0 / 10%);
     user-select: none;
     cursor: grab;
