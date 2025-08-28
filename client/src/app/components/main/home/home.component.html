@@ -6,10 +6,15 @@
 
 <div class="post-wrapper content">
 <div class="post-container" *ngFor="let post of posts" >
-    <button class="bt" (click)="viewPost(post.id)">
-    <div>
-        <p class="f-700">{{post.username}}</p>
-        <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
+   
+    <div class="post-header">
+        <div>
+            <p class="f-700">{{post.username}}</p>
+            <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
+        </div>
+        <button *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
+            <button class="child-right white" (click)="deletePost(post.id)">delete post</button>
+        </button>
     </div>
     <p>{{post.content}}</p>
     <img
@@ -17,7 +22,6 @@
     alt="uploaded image"
     class="uploaded-img"
     > 
-    </button>
     <hr>
     <div class="react w-7rem">
         <button class="parent bt" (click)="toggleLike(post)">
@@ -33,7 +37,7 @@
                 </div>
             </div>
         </button>
-        <button class="bt" (click)="viewPost(post.id)" [style.color]="'rgba(0,0,0,0.5)'">
+        <button class="bt" [style.color]="'rgba(0,0,0,0.5)'" (click)="viewPost(post.id)">
             <i class="fa-regular fa-comment" title="comment" ></i>
         </button>
     </div> 
@@ -61,7 +65,7 @@
         <app-uploadimage />
         
         <div>
-            <button class="b-l" type="button">upload image</button>
+            <button title="Upload Image" class="b-l" type="button"><i class="fa fa-image big-icon"></i></button>
             <button type="submit" class="b">post</button>
         </div>
         <br>
@@ -74,11 +78,18 @@
 <div class="backdrop" [class.hidden]="!showPost"></div>
 <div class="post-block" [class.hidden]="!showPost" *ngIf="post">
     <div class="col">
-        <div>
-            <p class="f-700">{{post.username}}</p>
-            <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
+        <div class="post-header">
+            <div>
+                <p class="f-700">{{post.username}}</p>
+                <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
+            </div>
         </div>
-        <button class="bt" (click)="hidePost()">X</button>
+        <div class="col">
+            <button *ngIf="post.username===loggedInUser?.username" class="bt parent" >•••
+                <button class="child-right white" (click)="deletePost(post.id)">delete post</button>
+            </button>
+            <button class="bt" (click)="hidePost()">X</button>
+        </div>
     </div>
     <p>{{post.content}}</p>
     <img

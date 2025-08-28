@@ -43,6 +43,12 @@ export class HomeComponent implements OnInit {
   showPost = false;
   showForm = false;
 
+  isClicked = false;
+
+  onClick() {
+    this.isClicked = true;
+  }
+
   isLiked(postId: string){
     return !!this.likedPosts[postId];
   }
@@ -77,7 +83,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
+  deletePost(id: string){
+    this.postService.deletePost(id).subscribe({
+      next: () => this.loadPosts(), 
+      error: (err) => console.error("Error deleting post:", err)
+    });
+  }
   
   toggleLike(post: PostDto) {
     const postId = post.id;
@@ -88,6 +99,7 @@ export class HomeComponent implements OnInit {
         next: () => {
           this.likedPosts[postId] = false;
           post.likes = post.likes?.filter(like => like.likerId !== userId) || [];
+          this.loadPosts();
         },
         error: (err) => console.error('Error unliking post', err)
       });
@@ -99,11 +111,11 @@ export class HomeComponent implements OnInit {
             ...like,
             username: this.loggedInUser!.username
           }];
+          this.loadPosts();
         },
         error: (err) => console.error('Error liking post', err)
       });
     }
-    this.loadPosts();
   }
   
   viewPost(id: string) {

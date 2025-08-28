@@ -39,13 +39,19 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
+  isClicked = false;
+
+  onClick() {
+    this.isClicked = true;
+  }
   
   showPost = false;
   showForm = false;
 
   isLiked(postId: string){
     return !!this.likedPosts[postId];
-}
+  }
 
   loadPosts() {
     this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
@@ -84,6 +90,12 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  deletePost(id: string){
+    this.postService.deletePost(id).subscribe({
+      next: () => this.loadPosts(), 
+      error: (err) => console.error("Error deleting post:", err)
+    });
+  }
 
   
   toggleLike(post: PostDto) {
@@ -95,6 +107,7 @@ export class ProfileComponent implements OnInit {
         next: () => {
           this.likedPosts[postId] = false;
           post.likes = post.likes?.filter(like => like.likerId !== userId) || [];
+          this.loadPosts();
         },
         error: (err) => console.error('Error unliking post', err)
       });
@@ -106,11 +119,12 @@ export class ProfileComponent implements OnInit {
             ...like,
             username: this.loggedInUser!.username
           }];
+          this.loadPosts();
+
         },
         error: (err) => console.error('Error liking post', err)
       });
     }
-    this.loadPosts();
   }
   
   viewPost(id: string) {

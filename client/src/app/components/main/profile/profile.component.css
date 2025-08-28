@@ -17,9 +17,49 @@
     background-color: #0D0D0D;
     width: 80px;
     max-height: 12rem;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     z-index: 1008;
     overflow-y: scroll;
+}
+
+.child-right{
+    position: absolute;
+    visibility: hidden;
+    text-align: left;
+    padding: 10px;
+    right: 5px;
+    top: 21px;
+    background-color: #0D0D0D;
+    width: 90px;
+    max-height: 12rem;
+    z-index: 1008;
+    overflow-y: scroll;
+    outline: none;
+    border: none;
+}
+
+.white{
+    color: rgb(255, 255, 255, 0.6)
+}
+
+.parent:hover .child-right  {
+    visibility: visible;
+}
+
+.uploaded-img{
+    width: 15rem;
+    height: auto;
+    margin: 10px 0px;
+    border-radius: 15px;
+    display: block;
+}
+
+.post-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
 }
 
 .child strong{
@@ -34,6 +74,7 @@
     visibility: visible;
 }
 
+
 .post-container{
     width: 70%;
     padding: 10px 15px;
@@ -42,7 +83,7 @@
     border-radius: 20px;
     /* contain: content; */
     z-index: 1;
-    margin: 10px 10px;
+    margin: 10px auto;
 }
 
 .red{
@@ -95,7 +136,7 @@
     outline: none;
     color: rgb(0, 0, 0, 0.8);
     position: fixed;
-    right:10px;
+    right:20px;
     bottom: 5%;
     font-size: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
@@ -126,21 +167,6 @@ form{
     color: white;
 }
 
-.b-l{
-    background-color: transparent;
-    outline: none;
-    color: black;
-    border: none;
-    padding: 7px 0px;
-    position: absolute; 
-    text-decoration: underline; 
-    z-index: 1009;
-}
-
-.b-l:hover{
-    color: rgb(0,0,0, 0.3);
-}
-
 .b{
     background-color: rgb(0,0,0,0.1);
     outline: none;
@@ -150,8 +176,25 @@ form{
     padding: 7px 10px;
     position: absolute;  
     right: 15px;         
-    bottom: 10px;   
 }
+
+.b-l{
+    background-color: transparent;
+    outline: none;
+    color: #0d0d0d;
+    border: none;
+    padding: 7px 0px;
+    position: absolute; 
+    z-index: 1009;
+}
+
+.b-l:hover{
+    color: rgb(0,0,0, 0.3);
+}
+
+.big-icon {
+    font-size: 20px;  
+  }
 
 .b:hover{
     background-color: #0D0D0D;
@@ -200,14 +243,6 @@ p{
     color: rgb(0,0,0,0.5);
 }
 
-.uploaded-img{
-    width: 15rem;
-    height: auto;
-    margin: 10px 0px;
-    border-radius: 15px;
-    display: block;
-}
-
 @media(max-width: 1000px){
     .main{
         display: flex;
@@ -224,8 +259,9 @@ p{
     }
    
     .uploaded-img{
-        width: 100%;
+        width: 70%;
         display: flex;
-        justify-content: center;
+        margin: 0 auto;
     }
+
 }

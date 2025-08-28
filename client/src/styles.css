@@ -1,8 +1,9 @@
 body{
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    background-color:  #FEF9F3;
+    /* background-color:  #FEF9F3; */
     margin: 0;
+    font-weight: 100;
 }
 
 .liquid-glass {
