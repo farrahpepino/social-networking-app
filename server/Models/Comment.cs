@@ -1,6 +1,6 @@
-namespace server.Dtos{
+namespace server.Models{
 
-    public class CommentDto{
+    public class Comment{
         public required string AuthorId {get; set;}
         public required string Content {get; set;}
         public required string PostId {get; set;}

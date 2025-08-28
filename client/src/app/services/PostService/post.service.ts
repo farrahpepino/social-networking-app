@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PostDto } from '../../dtos/PostDto';
+import { Post } from '../../Models/Post';
 import { environment } from '../../../environments/environment';
-import { LikeDto } from '../../dtos/LikeDto';
+import { Like } from '../../Models/Like';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +18,8 @@ export class PostService {
     });
   }
 
-  createPost(authorId: string, content: string): Observable<PostDto> {
-    return this.http.post<PostDto>(`${environment.apiUrl}/post`, {
+  createPost(authorId: string, content: string): Observable<Post> {
+    return this.http.post<Post>(`${environment.apiUrl}/post`, {
       AuthorId: authorId, 
       Content: content    
     },
@@ -32,18 +32,18 @@ export class PostService {
     );
   }
 
-  getPost(id: string): Observable<PostDto>{
-    return this.http.get<PostDto>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
+  getPost(id: string): Observable<Post>{
+    return this.http.get<Post>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
     );
   }
 
-  getPosts(): Observable<PostDto[]>{
-    return this.http.get<PostDto[]>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
+  getPosts(): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.apiUrl}/post`, { headers: this.getAuthHeaders() }
     );
   }
 
-  likePost(postId: string, likerId: string): Observable<LikeDto>{
-    return this.http.post<LikeDto>(`${environment.apiUrl}/post/like-post`,
+  likePost(postId: string, likerId: string): Observable<Like>{
+    return this.http.post<Like>(`${environment.apiUrl}/post/like-post`,
     {
       PostId: postId,
       LikerId: likerId
@@ -58,12 +58,12 @@ export class PostService {
 
   }
   
-  getLikes(postId: string): Observable<LikeDto[]>{
-    return this.http.get<LikeDto[]>(`${environment.apiUrl}/post/${postId}/likes`,  { headers: this.getAuthHeaders() });
+  getLikes(postId: string): Observable<Like[]>{
+    return this.http.get<Like[]>(`${environment.apiUrl}/post/${postId}/likes`,  { headers: this.getAuthHeaders() });
   }
 
-  getPostsByUserId(userId: string): Observable<PostDto[]>{
-    return this.http.get<PostDto[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() });
+  getPostsByUserId(userId: string): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() });
   }
 
   isLiked(postId: string, likerId: string): Observable<boolean>{

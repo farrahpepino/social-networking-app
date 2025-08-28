@@ -1,5 +1,5 @@
 using server.Data;
-using server.Dtos;
+using server.Models;
 using Dapper;
 
 namespace server.Repositories{
@@ -20,7 +20,7 @@ namespace server.Repositories{
         private const string SelectLikesByPostIdQuery = "SELECT likes.CreatedAt, likes.Id, likes.LikerId, likes.PostId, users.Username  FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
         private const string LikeExistsQuery = "SELECT 1 FROM likes WHERE PostId=@PostId AND LikerId=@LikerId";
 
-        public async Task InsertPost(PostDto post) {
+        public async Task InsertPost(Post post) {
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertPostQuery, post);
         }
@@ -37,22 +37,22 @@ namespace server.Repositories{
             return await connection.ExecuteAsync(DeletePostByIdQuery, new {Id = postId}); 
         }
 
-        public async Task<PostDto?> GetPostById(string postId){    
+        public async Task<Post?> GetPostById(string postId){    
             using var connection = _context.CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<PostDto>(SelectPostByIdQuery, new { Id = postId });
+            return await connection.QuerySingleOrDefaultAsync<Post>(SelectPostByIdQuery, new { Id = postId });
         }
 
-        public async Task<IEnumerable<PostDto>> GetPostsByUserId(string authorId){
+        public async Task<IEnumerable<Post>> GetPostsByUserId(string authorId){
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<PostDto>(SelectPostsByUserIdQuery, new { AuthorId = authorId });
+            return await connection.QueryAsync<Post>(SelectPostsByUserIdQuery, new { AuthorId = authorId });
         }
 
-        public async Task<IEnumerable<PostDto>> GetPosts(){
+        public async Task<IEnumerable<Post>> GetPosts(){
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<PostDto>(SelectPostsQuery);
+            return await connection.QueryAsync<Post>(SelectPostsQuery);
         }
 
-        public async Task LikePost(LikeDto like){
+        public async Task LikePost(Like like){
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(InsertLikeQuery, like);
         }
@@ -62,9 +62,9 @@ namespace server.Repositories{
             return await connection.ExecuteAsync(DeleteLikeQuery, new {PostId = PostId, LikerId = LikerId});
         } 
 
-        public async Task<IEnumerable<LikeDto>> GetLikesByPostId(string PostId){
+        public async Task<IEnumerable<Like>> GetLikesByPostId(string PostId){
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<LikeDto>(SelectLikesByPostIdQuery, new { PostId = PostId });
+            return await connection.QueryAsync<Like>(SelectLikesByPostIdQuery, new { PostId = PostId });
         }
 
     }

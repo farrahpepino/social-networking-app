@@ -1,11 +1,11 @@
-import { LikeDto } from "./LikeDto";
-import { CommentDto } from "./CommentDto";
-export interface PostDto {
+import { Like } from "./Like";
+import { Comment } from "./Comment";
+export interface Post {
     id: string;
     authorId: string;
     content: string;
     createdAt: Date;
     username?: string;
-    likes?: LikeDto[];
+    likes?: Like[];
     likedByCurrentUser?: boolean;
 }

@@ -1,6 +1,6 @@
-namespace server.Dtos{
+namespace server.Models{
 
-    public class LikeDto{
+    public class Like{
         public string Id {get; set;} = Guid.NewGuid().ToString();
         public string PostId {get; set;} = string.Empty;
         public string LikerId {get; set;} = string.Empty;

@@ -1,5 +1,5 @@
-namespace server.Dtos{
-    public class LoginDto{
+namespace server.Models{
+    public class Login{
         public required string Email {get; set;}
         public required string Password {get; set;}
     }

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using server.Dtos;
+using server.Models;
 using server.Services;
 using Microsoft.Extensions.Logging;
 
@@ -16,7 +16,7 @@ namespace server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegistrationDto newUser){
+        public async Task<IActionResult> RegisterUser([FromBody] Registration newUser){
             try {
                 var token = await _authService.RegisterUser(newUser);
                 if (token!=null){
@@ -31,7 +31,7 @@ namespace server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginDto user){
+        public async Task<IActionResult> LoginUser([FromBody] Login user){
             try{
                 var token = await _authService.LoginUser(user);
                 if (token == null)

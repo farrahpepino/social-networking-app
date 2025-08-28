@@ -5,11 +5,11 @@ import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { PostDto } from '../../../dtos/PostDto';
+import { Post } from '../../../Models/Post';
 import { CommonModule } from '@angular/common';
-import { UserDto } from '../../../dtos/UserDto';
-import { CommentDto } from '../../../dtos/CommentDto';
-import { LikeDto } from '../../../dtos/LikeDto';
+import { User } from '../../../Models/User';
+import { Comment } from '../../../Models/Comment';
+import { Like } from '../../../Models/Like';
 import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 @Component({
   selector: 'app-home',
@@ -25,11 +25,11 @@ export class HomeComponent implements OnInit {
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
-  loggedInUser: UserDto | null = null;
-  posts: PostDto[] = [];
-  post: PostDto | null = null;
-  comments: CommentDto[] = [];
-  likes: LikeDto[] = []
+  loggedInUser: User | null = null;
+  posts: Post[] = [];
+  post: Post | null = null;
+  comments: Comment[] = [];
+  likes: Like[] = []
   commentCount: number = 0;
   likedPosts: { [postId: string]: boolean } = {};
 
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
     });
   }
   
-  toggleLike(post: PostDto) {
+  toggleLike(post: Post) {
     const postId = post.id;
     const userId = this.loggedInUser!.id;
   

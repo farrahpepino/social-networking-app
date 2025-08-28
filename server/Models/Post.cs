@@ -1,10 +1,10 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace server.Dtos
+namespace server.Models
 {
 
-    public class PostDto{
+    public class Post{
         public string Id {get; set;} = Guid.NewGuid().ToString();
         public required string AuthorId {get; set;} = string.Empty;
         public required string Content {get; set;} = string.Empty;

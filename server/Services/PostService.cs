@@ -1,5 +1,5 @@
 using server.Data;
-using server.Dtos;
+using server.Models;
 using server.Repositories;
 using Dapper; 
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ namespace server.Services{
             _postRepository = postRepository;
         }
     
-        public async Task<PostDto?> CreatePost(PostDto post){
+        public async Task<Post?> CreatePost(Post post){
             try{
         
             post.Id = Guid.NewGuid().ToString();
@@ -61,7 +61,7 @@ namespace server.Services{
 
         }
 
-        public async Task<PostDto?> GetPost(string postId){
+        public async Task<Post?> GetPost(string postId){
             try{
                 return await _postRepository.GetPostById(postId);
             }
@@ -71,7 +71,7 @@ namespace server.Services{
             }
         }
 
-        public async Task<IEnumerable<PostDto>> GetPostsByUserId(string authorId)
+        public async Task<IEnumerable<Post>> GetPostsByUserId(string authorId)
         {
             try
             {   
@@ -80,11 +80,11 @@ namespace server.Services{
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching posts");
-                return Enumerable.Empty<PostDto>();
+                return Enumerable.Empty<Post>();
             }
         }
         
-        public async Task<IEnumerable<PostDto>> GetPosts()
+        public async Task<IEnumerable<Post>> GetPosts()
         {
             try
             {
@@ -93,7 +93,7 @@ namespace server.Services{
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching posts");
-                return Enumerable.Empty<PostDto>();
+                return Enumerable.Empty<Post>();
             }
         }
         
@@ -111,7 +111,7 @@ namespace server.Services{
         }
 
 
-        public async Task<IEnumerable<LikeDto>> GetLikesByPostId(string postId)
+        public async Task<IEnumerable<Like>> GetLikesByPostId(string postId)
         {
             try
             {
@@ -120,11 +120,11 @@ namespace server.Services{
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching the like from post");
-                return Enumerable.Empty<LikeDto>();
+                return Enumerable.Empty<Like>();
             }
         }
 
-        public async Task<LikeDto> LikePost(LikeDto like){
+        public async Task<Like> LikePost(Like like){
             try
             {
                 like.Id = Guid.NewGuid().ToString();

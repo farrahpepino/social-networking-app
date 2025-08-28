@@ -4,6 +4,83 @@
     "/Users/farrahpepino/Documents/GitHub/loop-social/server/server.csproj": {}
   },
   "projects": {
+    "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj",
+        "projectName": "AwsS3",
+        "projectPath": "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj",
+        "packagesPath": "/Users/farrahpepino/.nuget/packages/",
+        "outputPath": "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/farrahpepino/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AWSSDK.S3": {
+              "target": "Package",
+              "version": "[4.0.6.10, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/Users/farrahpepino/Documents/GitHub/loop-social/server/server.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -25,7 +102,11 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj": {
+                "projectPath": "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

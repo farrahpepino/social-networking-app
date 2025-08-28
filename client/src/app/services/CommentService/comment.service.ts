@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { CommentDto } from '../../dtos/CommentDto';
+import { Comment } from '../../Models/Comment';
 import { HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
@@ -18,12 +18,12 @@ export class CommentService {
       'Authorization': `Bearer ${token}`
     });
   }
-  getComments(postId: string): Observable<CommentDto>{
-    return this.http.get<CommentDto>(`${environment.apiUrl}/comment/${postId}`, { headers: this.getAuthHeaders() });
+  getComments(postId: string): Observable<Comment>{
+    return this.http.get<Comment>(`${environment.apiUrl}/comment/${postId}`, { headers: this.getAuthHeaders() });
   }
 
-  createComment(authorId: string, content: string, postId: string): Observable<CommentDto>{
-    return this.http.post<CommentDto>(`${environment.apiUrl}/comment`, {
+  createComment(authorId: string, content: string, postId: string): Observable<Comment>{
+    return this.http.post<Comment>(`${environment.apiUrl}/comment`, {
       AuthorId: authorId,
       Content: content,
       PostId: postId
