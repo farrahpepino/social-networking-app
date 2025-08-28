@@ -1,9 +1,51 @@
-.parent{
-    position: relative;
+.b{
+    background-color: rgb(0,0,0,0.1);
+    outline: none;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 10px;
+    position: absolute;  
+    right: 15px;         
 }
 
-.p-10{
-    padding-left: 10px;
+.b:hover{
+    background-color: #0D0D0D;
+    color: white;
+}
+
+.b-l{
+    background-color: transparent;
+    outline: none;
+    color: #0d0d0d;
+    border: none;
+    padding: 7px 0px;
+    position: absolute; 
+    z-index: 1009;
+}
+
+.b-l:hover{
+    color: rgb(0,0,0, 0.3);
+}
+
+.big-icon {
+    font-size: 20px;  
+}
+
+.brd{
+    outline: none;
+    width: 97.5%;
+    font-family: Arial;
+    border-radius: 20px;
+    border: solid 0.5px rgb(0,0,0,0.1);
+    padding: 10px;
+    contain: content;
+}
+
+.bt{
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
 
 .child{
@@ -17,7 +59,6 @@
     background-color: #0D0D0D;
     width: 80px;
     max-height: 12rem;
-    /* border-radius: 20px; */
     z-index: 1008;
     overflow-y: scroll;
 }
@@ -38,77 +79,13 @@
     border: none;
 }
 
-.white{
-    color: rgb(255, 255, 255, 0.6)
-}
-
-.parent:hover .child-right  {
-    visibility: visible;
-}
-
-.uploaded-img{
-    width: 15rem;
-    height: auto;
-    margin: 10px 0px;
-    border-radius: 15px;
-    display: block;
-}
-
-.post-header{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-   
-}
-
-.child strong{
-    color: rgb(255, 255, 255, 0.6)
-}
-
-.child div{
-    color: rgb(255, 255, 255, 0.6)
-}
-
-.parent:hover .child {
-    visibility: visible;
-}
-
-
-.post-container{
-    width: 70%;
-    padding: 10px 15px;
-    padding-top: 20px;
-    background-color: white;
+.comment{
+    background-color: rgb(0,0,0,0.1);
+    padding: 10px;
     border-radius: 20px;
-    /* contain: content; */
-    z-index: 1;
-    margin: 10px auto;
-}
-
-.red{
-    color: #F73644;
-}
-
-.contain{
-    contain: content;
-}
-
-.post-block {
-    position: fixed;
-    width: 70%;
-    background-color: white;
-    contain: content;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    z-index: 1005; 
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    padding: 5px 15px;
-    padding-top: 20px;
-    overflow-y: scroll; 
-    max-height: 80vh;
+    display: inline-flex;      
+    max-width: 80%;         
+    word-wrap: break-word;
 }
 
 .comments-container {
@@ -119,33 +96,8 @@
     gap: 6px;      
 }
 
-.comment{
-    background-color: rgb(0,0,0,0.1);
-    padding: 10px;
-    border-radius: 20px;
-    display: inline-flex;      
-    max-width: 80%;         
-    word-wrap: break-word;
-}
-
-.mb{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    color: rgb(0, 0, 0, 0.8);
-    position: fixed;
-    right:20px;
-    bottom: 5%;
-    font-size: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    z-index: 1004;
-} 
-
-form{
-    margin-top: 5px;
-    z-index: 1002;
+.contain{
+    contain: content;
 }
 
 .f-b{
@@ -167,38 +119,75 @@ form{
     color: white;
 }
 
-.b{
-    background-color: rgb(0,0,0,0.1);
-    outline: none;
-    color: black;
-    border: none;
-    border-radius: 20px;
-    padding: 7px 10px;
-    position: absolute;  
-    right: 15px;         
+form{
+    margin-top: 5px;
+    z-index: 1002;
 }
 
-.b-l{
-    background-color: transparent;
-    outline: none;
-    color: #0d0d0d;
-    border: none;
-    padding: 7px 0px;
-    position: absolute; 
-    z-index: 1009;
+.hidden{
+    visibility: hidden;
 }
 
-.b-l:hover{
-    color: rgb(0,0,0, 0.3);
+.img-wrapper {
+    position: relative; 
+    display: inline-block;
 }
 
-.big-icon {
-    font-size: 20px;  
-  }
-
-.b:hover{
-    background-color: #0D0D0D;
+.img-wrapper button {
+    position: absolute;
+    top: 20px;   
+    right: 8px; 
+    background: rgba(0,0,0,0.6);
     color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.img-wrapper img {
+    width: 15rem;
+    height: auto;
+    margin: 15px 0;
+    border-radius: 15px;
+    display: block;
+}
+
+.mb{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 0, 0.8);
+    position: fixed;
+    right:20px;
+    bottom: 5%;
+    font-size: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 1004;
+} 
+
+p{
+    margin: 0;
+    text-align: left;
+}
+
+.p-10{
+    padding-left: 10px;
+}
+
+.parent{
+    position: relative;
+}
+
+.parent:hover .child {
+    visibility: visible;
+}
+
+.parent:hover .child-right  {
+    visibility: visible;
 }
 
 .p-i{
@@ -210,30 +199,53 @@ form{
     content: attr(placeholder);
     opacity: 20%; 
 }
-  
-.brd{
-    outline: none;
-    width: 97.5%;
-    font-family: Arial;
-    border-radius: 20px;
-    border: solid 0.5px rgb(0,0,0,0.1);
-    padding: 10px;
+
+.post-block {
+    position: fixed;
+    width: 70%;
+    background-color: white;
     contain: content;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1005; 
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 5px 15px;
+    padding-top: 20px;
+    overflow-y: scroll; 
+    max-height: 80vh;
 }
 
-p{
-    margin: 0;
-    text-align: left;
+.post-container{
+    width: 70%;
+    padding: 10px 15px;
+    padding-top: 20px;
+    background-color: white;
+    border-radius: 20px;
+    /* contain: content; */
+    z-index: 1;
+    margin: 10px auto;
 }
 
-.bt{
-    background-color: transparent;
-    border: none;
-    outline: none;
+.post-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
 }
 
-.hidden{
-    visibility: hidden;
+.uploaded-img{
+    width: 15rem;
+    height: auto;
+    margin: 10px 0px;
+    border-radius: 15px;
+    display: block;
+}
+
+.white{
+    color: rgb(255, 255, 255, 0.6)
 }
 
 .react{
@@ -243,7 +255,22 @@ p{
     color: rgb(0,0,0,0.5);
 }
 
+.red{
+    color: #F73644;
+}
+
 @media(max-width: 1000px){
+      
+    .img-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    
+    .img-wrapper img {
+        width: 100%;
+    }
+
     .main{
         display: flex;
         flex-direction: column;

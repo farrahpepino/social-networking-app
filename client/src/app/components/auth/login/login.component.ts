@@ -19,7 +19,6 @@ export class LoginComponent {
   });
 
   onSubmit(){
-    
     if (this.loginForm.valid){
       const {email, password} = this.loginForm.value;
       this.authService.loginUser(email!, password!)
@@ -35,7 +34,6 @@ export class LoginComponent {
         }  
       })
     }
-
   }
 
 

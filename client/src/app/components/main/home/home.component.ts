@@ -5,12 +5,13 @@ import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { Post } from '../../../Models/Post';
+import { Post } from '../../../models/Post';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../Models/User';
-import { Comment } from '../../../Models/Comment';
-import { Like } from '../../../Models/Like';
+import { User } from '../../../models/User';
+import { Comment } from '../../../models/Comment';
+import { Like } from '../../../models/Like';
 import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   standalone: true, 
@@ -21,7 +22,8 @@ import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 
 export class HomeComponent implements OnInit {
 
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
+  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router, private http: HttpClient) {}
+  
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
@@ -32,25 +34,15 @@ export class HomeComponent implements OnInit {
   likes: Like[] = []
   commentCount: number = 0;
   likedPosts: { [postId: string]: boolean } = {};
+  showPost = false;
+  showForm = false;
+  isClicked = false;
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
       this.loggedInUser = user;
       this.loadPosts();
     });
-  }
-
-  showPost = false;
-  showForm = false;
-
-  isClicked = false;
-
-  onClick() {
-    this.isClicked = true;
-  }
-
-  isLiked(postId: string){
-    return !!this.likedPosts[postId];
   }
 
   loadPosts() {
@@ -89,7 +81,15 @@ export class HomeComponent implements OnInit {
       error: (err) => console.error("Error deleting post:", err)
     });
   }
-  
+
+  onClick() {
+    this.isClicked = true;
+  }
+
+  isLiked(postId: string){
+    return !!this.likedPosts[postId];
+  }
+
   toggleLike(post: Post) {
     const postId = post.id;
     const userId = this.loggedInUser!.id;
@@ -151,8 +151,7 @@ export class HomeComponent implements OnInit {
   }
 
   viewForm() { this.showForm = true; }
-  hideForm() { this.showForm = false;
-  }
+  hideForm() { this.showForm = false; }
  
 
   submitPost() {

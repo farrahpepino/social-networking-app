@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { PostService } from '../../../services/PostService/post.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { User } from '../../../Models/User';
-import { Post } from '../../../Models/Post';
-import { Like } from '../../../Models/Like';
-import { Comment } from '../../../Models/Comment';
+import { User } from '../../../models/User';
+import { Post } from '../../../models/Post';
+import { Like } from '../../../models/Like';
+import { Comment } from '../../../models/Comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
 import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
@@ -30,6 +30,9 @@ export class ProfileComponent implements OnInit {
   likes: Like[] = []
   commentCount: number = 0;
   likedPosts: { [postId: string]: boolean } = {};
+  showPost = false;
+  showForm = false;
+  isClicked = false;
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -38,19 +41,6 @@ export class ProfileComponent implements OnInit {
         this.loadPosts();
       }
     });
-  }
-
-  isClicked = false;
-
-  onClick() {
-    this.isClicked = true;
-  }
-  
-  showPost = false;
-  showForm = false;
-
-  isLiked(postId: string){
-    return !!this.likedPosts[postId];
   }
 
   loadPosts() {
@@ -97,7 +87,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  
+  onClick() {
+    this.isClicked = true;
+  }
+
+  isLiked(postId: string){
+    return !!this.likedPosts[postId];
+  }
+
   toggleLike(post: Post) {
     const postId = post.id;
     const userId = this.loggedInUser!.id;
@@ -160,10 +157,8 @@ export class ProfileComponent implements OnInit {
   }
 
   viewForm() { this.showForm = true; }
-  hideForm() { this.showForm = false;
-  }
+  hideForm() { this.showForm = false; }
  
-
   submitPost() {
     const authorId = this.loggedInUser!.id;
     
@@ -190,8 +185,6 @@ export class ProfileComponent implements OnInit {
         this.commentInput.nativeElement.innerText = ''; 
       },
       error: (err)=> { console.error(err, "Error creating comment."); }
-    });
-    
+    });  
   }
-
 }

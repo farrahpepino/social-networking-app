@@ -12,9 +12,9 @@
             <p class="f-700">{{post.username}}</p>
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
-        <button *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
+        <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
             <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
-        </button>
+        </div>
     </div>
     <p>{{post.content}}</p>
     <img
@@ -24,19 +24,20 @@
     > 
     <hr>
     <div class="react w-7rem">
-        <button class="parent bt" (click)="toggleLike(post)">
+        <div class="parent">
+            <button type="button" class="bt" title="like" (click)="toggleLike(post)">
             <i 
             [ngClass]="isLiked(post.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
             [style.color]="isLiked(post.id) ? 'red' : 'rgb(0,0,0,0.5)'"
             >
             </i>
+            </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
-                <!-- <strong>Liked by</strong> -->
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
-        </button>
+        </div>
         <button class="bt" [style.color]="'rgba(0,0,0,0.5)'" (click)="viewPost(post.id)">
             <i class="fa-regular fa-comment" title="comment" ></i>
         </button>
@@ -44,7 +45,6 @@
 </div>
 </div>
 
-<!-- post details -->
 <div class="backdrop" [class.hidden]="!showForm"></div>
 <div class="post-block" [class.hidden]="!showForm">
     <div class="col">
@@ -62,10 +62,11 @@
         #postInput
         >
         </p>
-        <app-uploadimage />
-        
+        <app-uploadimage/>
+          
         <div>
-            <button title="Upload Image" class="b-l" type="button"><i class="fa fa-image big-icon"></i></button>
+            <button 
+                title="Upload Image" class="b-l" type="button"><i class="fa fa-image big-icon"></i></button>
             <button type="submit" class="b">post</button>
         </div>
         <br>
@@ -85,9 +86,9 @@
             </div>
         </div>
         <div class="col">
-            <button *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
+            <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
                 <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
-            </button>
+            </div>
             <button class="bt" (click)="hidePost()">X</button>
         </div>
     </div>
@@ -99,19 +100,20 @@
     > 
     <hr>
     <div class="react w-7rem">
-        <button class="parent bt" (click)="toggleLike(post)">
+        <div class="parent">
+            <button type="button" class="bt" title="like" (click)="toggleLike(post)">
             <i 
             [ngClass]="isLiked(post.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
             [style.color]="isLiked(post.id) ? 'red' : 'rgb(0,0,0,0.5)'"
             >
             </i>
+            </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
-                <!-- <strong>Liked by</strong> -->
                 <div class="p-10" *ngFor="let like of post.likes">
                     <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
-        </button>
+        </div>
     
         <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
     </div> 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtService } from '../JwtService/jwt.service';
-import { User } from '../../Models/User';
+import { User } from '../../models/User';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -8,10 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
   private loggedInUserSubject = new BehaviorSubject<User | null>(null);
-
-
-
   loggedInUser$ = this.loggedInUserSubject.asObservable();
+
   constructor(private jwtService: JwtService) {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('loggedInUser');
