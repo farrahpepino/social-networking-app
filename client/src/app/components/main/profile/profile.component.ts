@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { PostService } from '../../../services/PostService/post.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { User } from '../../../models/User';
-import { Post } from '../../../models/Post';
-import { Like } from '../../../models/Like';
-import { Comment } from '../../../models/Comment';
+import { User } from '../../../models/user';
+import { Post } from '../../../models/post';
+import { Like } from '../../../models/like';
+import { Comment } from '../../../models/comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
 @Component({

@@ -1,5 +1,5 @@
-import { Like } from "./Like";
-import { Comment } from "./Comment";
+import { Like } from "./like";
+import { Comment } from "./comment";
 export interface Post {
     id: string;
     authorId: string;

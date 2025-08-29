@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtService } from '../JwtService/jwt.service';
-import { User } from '../../models/User';
+import { User } from '../../models/user';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

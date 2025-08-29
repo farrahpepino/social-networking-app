@@ -5,11 +5,11 @@ import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/UserService/user.service';
 import { CommentService } from '../../../services/CommentService/comment.service';
-import { Post } from '../../../models/Post';
+import { Post } from '../../../models/post';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../models/User';
-import { Comment } from '../../../models/Comment';
-import { Like } from '../../../models/Like';
+import { User } from '../../../models/user';
+import { Comment } from '../../../models/comment';
+import { Like } from '../../../models/like';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

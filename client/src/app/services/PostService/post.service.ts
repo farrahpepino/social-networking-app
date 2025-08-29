@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Post } from '../../models/Post';
+import { Post } from '../../models/post';
 import { environment } from '../../../environments/environment';
-import { Like } from '../../models/Like';
+import { Like } from '../../models/like';
 import { S3Response } from '../../models/S3Response';
 @Injectable({
   providedIn: 'root'
