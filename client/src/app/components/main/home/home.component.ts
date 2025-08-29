@@ -10,12 +10,11 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/User';
 import { Comment } from '../../../models/Comment';
 import { Like } from '../../../models/Like';
-import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   standalone: true, 
-  imports: [NavigationComponent, CommonModule, UploadimageComponent],
+  imports: [NavigationComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -37,12 +36,32 @@ export class HomeComponent implements OnInit {
   showPost = false;
   showForm = false;
   isClicked = false;
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
+
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
       this.loggedInUser = user;
       this.loadPosts();
     });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  unselectFile() {
+    this.selectedFile = null;
+    this.previewUrl = null;
   }
 
   loadPosts() {
@@ -156,9 +175,19 @@ export class HomeComponent implements OnInit {
 
   submitPost() {
     const authorId = this.loggedInUser!.id;
-    
+    if (this.selectedFile!=null) {
+      const formData = new FormData();
+      formData.append("file", this.selectedFile);
+      this.postService.uploadImage(formData, this.loggedInUser!.id).subscribe({
+        next: (res) => {
+          this.selectedFile = null;
+          this.previewUrl = null;
+        },
+        error: (err) => console.error("Upload error", err)
+      });
+    }
     const content = this.postInput.nativeElement.innerText.trim();
-    if (!content) return;
+    if (!content || this.selectedFile!=null) return;
 
     this.postService.createPost(authorId, content).subscribe({
       error: (err) => {

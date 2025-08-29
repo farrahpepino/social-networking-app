@@ -24,31 +24,38 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost(Name = "UploadFile")]
+    public async Task<IActionResult> UploadFile(IFormFile file, [FromForm] string UserId)
+    {  
+    if (file == null || file.Length == 0)
+        return BadRequest("No file uploaded");
 
-    public async Task<IActionResult> UploadFile(IFormFile file)
+    await using var memoryStream = new MemoryStream();
+    await file.CopyToAsync(memoryStream);
+    memoryStream.Position = 0;
+
+    var fileExt = Path.GetExtension(file.FileName);
+    var docName = $"{Guid.NewGuid()}{fileExt}";
+
+    var s3Key = $"{UserId}/{docName}";
+
+    var s3Obj = new S3Object()
     {
-        // Process file
-        await using var memoryStream = new MemoryStream();
-        await file.CopyToAsync(memoryStream);
+        BucketName = "loop-social",
+        InputStream = memoryStream,
+        Name = s3Key
+    };
 
-        var fileExt = Path.GetExtension(file.FileName);
-        var docName = $"{Guid.NewGuid}.{fileExt}";
-        // call server
+    var cred = new AwsCredentials()
+    {
+        AccessKey = _config["AwsConfiguration:AWSAccessKey"],
+        SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+    };
 
-        var s3Obj = new S3Object() {
-            BucketName = "live-demo-bucket821",
-            InputStream = memoryStream,
-            Name = docName
-        };
+    var result = await _storageService.UploadFileAsync(s3Obj, cred);
 
-        var cred = new AwsCredentials() {
-            AccessKey = _config["AwsConfiguration:AWSAccessKey"],
-            SecretKey = _config["AwsConfiguration:AWSSecretKey"]
-        };
+    var fileUrl = $"https://{s3Obj.BucketName}.s3.amazonaws.com/{s3Key}";
 
-        var result = await _storageService.UploadFileAsync(s3Obj, cred);
-        // 
-       return Ok(result);
-
+    return Ok(new { result.StatusCode, result.Message, Url = fileUrl });
     }
+
 }

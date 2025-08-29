@@ -10,10 +10,9 @@ import { Like } from '../../../models/Like';
 import { Comment } from '../../../models/Comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
-import { UploadimageComponent } from '../../uploadimage/uploadimage.component';
 @Component({
   selector: 'app-profile',
-  imports: [NavigationComponent, CommonModule, UploadimageComponent],
+  imports: [NavigationComponent, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -33,6 +32,8 @@ export class ProfileComponent implements OnInit {
   showPost = false;
   showForm = false;
   isClicked = false;
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -41,6 +42,34 @@ export class ProfileComponent implements OnInit {
         this.loadPosts();
       }
     });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  unselectFile() {
+    this.selectedFile = null;
+    this.previewUrl = null;
+  }
+  
+  upload() {
+    if (!this.selectedFile) {
+      console.error("No file selected");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", this.selectedFile);
+
   }
 
   loadPosts() {

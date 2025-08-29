@@ -20,13 +20,11 @@ public class StorageService : IStorageService
     {
         //var awsCredentialsValues = _config.ReadS3Credentials();
 
-        Console.WriteLine($"Key: {awsCredentialsValues.AccessKey}, Secret: {awsCredentialsValues.SecretKey}");
-
         var credentials = new BasicAWSCredentials(awsCredentialsValues.AccessKey, awsCredentialsValues.SecretKey);
 
         var config = new AmazonS3Config() 
         {
-            RegionEndpoint = Amazon.RegionEndpoint.EUWest2
+            RegionEndpoint = Amazon.RegionEndpoint.USEast1
         };
 
         var response = new S3ResponseDto();

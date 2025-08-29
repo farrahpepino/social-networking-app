@@ -5,6 +5,8 @@ using server.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //for authentication
 using Microsoft.IdentityModel.Tokens; // for signing credentials
 using System.Text; // for encoding 
+using AwsS3.Models;
+using AwsS3.Services;
 
 /* DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in c#
 
@@ -29,6 +31,7 @@ builder.Services.AddScoped<PostService>();// tells asp.net how PostService is pr
 builder.Services.AddScoped<AuthService>(); 
 builder.Services.AddScoped<CommentService>();
 builder.Services.AddScoped<IJwtService, JwtService>(); //
+builder.Services.AddScoped<IStorageService, StorageService>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<CommentRepository>();

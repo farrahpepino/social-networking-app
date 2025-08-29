@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Post } from '../../models/Post';
 import { environment } from '../../../environments/environment';
 import { Like } from '../../models/Like';
+import { Form } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +28,11 @@ export class PostService {
     );
   }
   
+  uploadImage(form: FormData, userId: string){
+    form.append("UserId", userId);
+    return this.http.post(`${environment.apiUrl}/image`, form,  { headers: this.getAuthHeaders() });
+  }
+
   deletePost(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
     );

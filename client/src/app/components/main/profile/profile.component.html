@@ -62,11 +62,25 @@
         #postInput
         >
         </p>
-        <app-uploadimage/>
+        <div>
+            <div class="img-wrapper">
+                <img *ngIf="previewUrl" [src]="previewUrl" alt="Uploaded image"/>
+                <button type="button" (click)="unselectFile()">X</button>
+            </div>            
+        </div>
           
         <div>
-            <button 
-                title="Upload Image" class="b-l" type="button"><i class="fa fa-image big-icon"></i></button>
+            <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            hidden
+            />
+            <label for="fileInput" class="upload-label">
+                <i class="fa fa-image big-icon"></i>
+            </label>
+        
             <button type="submit" class="b">post</button>
         </div>
         <br>
