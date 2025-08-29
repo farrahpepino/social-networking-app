@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Post } from '../../models/post';
 import { environment } from '../../../environments/environment';
 import { Like } from '../../models/like';
-import { S3Response } from '../../models/S3Response';
+import { S3Response } from '../../models/s3response';
 @Injectable({
   providedIn: 'root'
 })
