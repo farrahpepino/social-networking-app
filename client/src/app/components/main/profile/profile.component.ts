@@ -61,29 +61,16 @@ export class ProfileComponent implements OnInit {
     this.previewUrl = null;
   }
   
-  upload() {
-    if (!this.selectedFile) {
-      console.error("No file selected");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", this.selectedFile);
-
-  }
 
   loadPosts() {
     this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
       next: (data) => {
         this.posts = data;
-
         this.posts.forEach(post => {
-
           this.postService.getLikes(post.id).subscribe({
             next:(data)=>{
               post.likes = data;
             },
-
             error: (err) => {
              console.error("Error fetching likes:", err)
             }
@@ -190,15 +177,39 @@ export class ProfileComponent implements OnInit {
  
   submitPost() {
     const authorId = this.loggedInUser!.id;
+    const content = this.postInput.nativeElement.innerText.trim() || '';
     
-    const content = this.postInput.nativeElement.innerText.trim();
-    if (!content) return;
+    if (this.selectedFile!=null) {
+      const formData = new FormData();
+      formData.append("File", this.selectedFile);
+      formData.append("UserId",  this.loggedInUser!.id);
 
-    this.postService.createPost(authorId, content).subscribe({
-      error: (err) => {
-        console.error('Error creating post:', err);
-      }
-    });
+      this.postService.uploadImage(formData)
+    .subscribe(
+        res => { 
+         this.postService.createPost(authorId, content, res.url).subscribe({
+          next:()=>{this.selectedFile = null;
+            this.previewUrl = null;
+            this.postInput.nativeElement.innerText = '';
+            this.hideForm();
+            this.loadPosts();
+          },
+           error: (err)=>{console.error("Error", err);}
+         });
+        },
+        err => { console.error("Error", err);}
+      );
+    } 
+    else {
+      this.postService.createPost(authorId, content, null).subscribe({
+        next: (post) => {
+          this.postInput.nativeElement.innerText = '';
+          this.hideForm();
+          this.loadPosts(); 
+        },
+        error: (err) => console.error("Error creating post:", err)
+      });
+    }  
   }
 
   submitComment(postId: string){

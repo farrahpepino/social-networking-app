@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { Post } from '../../models/Post';
 import { environment } from '../../../environments/environment';
 import { Like } from '../../models/Like';
-import { Form } from '@angular/forms';
+import { S3Response } from '../../models/S3Response';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
 
   constructor(private http: HttpClient) {}
@@ -19,20 +20,20 @@ export class PostService {
     });
   }
 
-  createPost(authorId: string, content: string): Observable<Post> {
+  createPost(authorId: string, content: string, imageUrl?: string | null): Observable<Post> {
     return this.http.post<Post>(`${environment.apiUrl}/post`, {
       AuthorId: authorId, 
-      Content: content    
+      Content: content,
+      ImageUrl: imageUrl
     },
     { headers: this.getAuthHeaders() }
     );
   }
   
-  uploadImage(form: FormData, userId: string){
-    form.append("UserId", userId);
-    return this.http.post(`${environment.apiUrl}/image`, form,  { headers: this.getAuthHeaders() });
+  uploadImage(formData: FormData): Observable<S3Response> {
+    return this.http.post<S3Response>(`${environment.apiUrl}/image`, formData);
   }
-
+  
   deletePost(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/post/${id}`, { headers: this.getAuthHeaders() }
     );
@@ -55,7 +56,6 @@ export class PostService {
       LikerId: likerId
     },
     { headers: this.getAuthHeaders() });
-
   }
 
   unlikePost(PostId: string, LikerId: string): Observable<void> {
@@ -75,5 +75,4 @@ export class PostService {
   isLiked(postId: string, likerId: string): Observable<boolean>{
     return this.http.get<boolean>(`${environment.apiUrl}/post/${postId}/liked-by/${likerId}`,  { headers: this.getAuthHeaders() });
   }
-  
 }

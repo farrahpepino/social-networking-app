@@ -18,10 +18,10 @@
     </div>
     <p>{{post.content}}</p>
     <img
-    src="loop.png"
+    *ngIf="post.imageUrl"
+    [src]="post.imageUrl"
     alt="uploaded image"
-    class="uploaded-img"
-    > 
+    class="uploaded-img"> 
     <hr>
     <div class="react w-7rem">
         <div class="parent">
@@ -34,7 +34,7 @@
             </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                    <p class="white">{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
         </div>
@@ -54,39 +54,34 @@
         
         <button class="bt" (click)="hideForm()">X</button>
     </div>
-    <form (submit)="submitPost()" name="postForm" id="postForm">
+    <div class="post-wrapper">
         <p 
-        class="p-i"
-        contenteditable="true"
-        placeholder="Type something..."
-        #postInput
-        >
+          class="p-i"
+          contenteditable="true"
+          placeholder="Type something..."
+          #postInput>
         </p>
-        <div>
-            <div class="img-wrapper">
-                <img *ngIf="previewUrl" [src]="previewUrl" alt="Uploaded image"/>
-                <button type="button" (click)="unselectFile()" *ngIf="previewUrl">X</button>
-            </div>            
+      
+        <div class="img-wrapper" *ngIf="previewUrl">
+          <img [src]="previewUrl" alt="Uploaded image"/>
+          <button type="button" (click)="unselectFile()">X</button>
         </div>
-          
-        <div>
-            <input
+      
+          <input
             type="file"
             id="fileInput"
             accept="image/*"
             (change)="onFileSelected($event)"
             hidden
-            />
-            <label for="fileInput" class="upload-label">
-                <i class="fa fa-image big-icon"></i>
-            </label>
-            <!-- <button type="button" (click)="upload()">upload image</button> -->
-            <button type="submit" class="b">post</button>
-        </div>
+          />
         <br>
-        <br>
-    </form> 
-
+    </div>
+    <div class="post-div">
+        <label for="fileInput" class="upload-label">
+            <i class="fa fa-image big-icon"></i>
+        </label>
+        <button type="button" class="b" (click)="submitPost()">Post</button>
+    </div>
 </div>
 
 
@@ -108,10 +103,10 @@
     </div>
     <p>{{post.content}}</p>
     <img
-    src="loop.png"
+    *ngIf="post.imageUrl"
+    [src]="post.imageUrl"
     alt="uploaded image"
-    class="uploaded-img"
-    > 
+    class="uploaded-img"> 
     <hr>
     <div class="react w-7rem">
         <div class="parent">
@@ -124,7 +119,7 @@
             </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p>{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                    <p class="white">{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
         </div>
@@ -142,11 +137,9 @@
         </div>
     </div>  
     <div>
-      
         <div class="brd">
         <p class="p-i" contenteditable="true" placeholder="Add a comment..."  #commentInput> </p>
         <button class="f-b" type="submit" (click)="submitComment(post.id)">post</button>
         </div>
-
     </div>
 </div>

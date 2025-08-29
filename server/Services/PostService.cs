@@ -27,11 +27,14 @@ namespace server.Services{
     
         public async Task<Post?> CreatePost(Post post){
             try{
-        
+            
+            post.ImageUrl.ToString();
             post.Id = Guid.NewGuid().ToString();
             post.CreatedAt = DateTime.Now;
+            
         
             await _postRepository.InsertPost(post);
+            
             return post;
             }
             catch (Exception ex){

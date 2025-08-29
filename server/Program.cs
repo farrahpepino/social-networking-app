@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens; // for signing credentials
 using System.Text; // for encoding 
 using AwsS3.Models;
 using AwsS3.Services;
+using Microsoft.AspNetCore.Http.Features;
 
 /* DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in c#
 
@@ -31,7 +32,7 @@ builder.Services.AddScoped<PostService>();// tells asp.net how PostService is pr
 builder.Services.AddScoped<AuthService>(); 
 builder.Services.AddScoped<CommentService>();
 builder.Services.AddScoped<IJwtService, JwtService>(); //
-builder.Services.AddScoped<IStorageService, StorageService>();
+builder.Services.AddScoped<IStorageService, StorageService>();//
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<CommentRepository>();
@@ -41,8 +42,13 @@ builder.Services.AddControllers();  //turn on controllers. or else [ApiControlle
 builder.Services.AddSwaggerGen(); // 
 
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = long.MaxValue; 
+});
 
 //configure cors
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev",
@@ -50,6 +56,7 @@ builder.Services.AddCors(options =>
             .WithOrigins("*") 
             .AllowAnyHeader()
             .AllowAnyMethod());
+            
 });
 
 
@@ -71,6 +78,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+
 //build app
 var app = builder.Build(); 
 
@@ -89,8 +98,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseAuthentication(); 
 app.UseAuthorization();
+
 app.MapControllers(); // connects controller routes
 
 app.Run();

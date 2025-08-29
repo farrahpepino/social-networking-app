@@ -11,6 +11,7 @@ import { User } from '../../../models/User';
 import { Comment } from '../../../models/Comment';
 import { Like } from '../../../models/Like';
 import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-home',
   standalone: true, 
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
-
+  s3Url: string | null = null;
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe(user => {
@@ -171,31 +172,44 @@ export class HomeComponent implements OnInit {
 
   viewForm() { this.showForm = true; }
   hideForm() { this.showForm = false; }
- 
 
   submitPost() {
     const authorId = this.loggedInUser!.id;
+    const content = this.postInput.nativeElement.innerText.trim() || '';
+    
     if (this.selectedFile!=null) {
       const formData = new FormData();
-      formData.append("file", this.selectedFile);
-      this.postService.uploadImage(formData, this.loggedInUser!.id).subscribe({
-        next: (res) => {
-          this.selectedFile = null;
-          this.previewUrl = null;
+      formData.append("File", this.selectedFile);
+      formData.append("UserId",  this.loggedInUser!.id);
+
+      this.postService.uploadImage(formData)
+    .subscribe(
+        res => { 
+         this.postService.createPost(authorId, content, res.url).subscribe({
+          next:()=>{this.selectedFile = null;
+            this.previewUrl = null;
+            this.postInput.nativeElement.innerText = '';
+            this.hideForm();
+            this.loadPosts();
+          },
+           error: (err)=>{console.error("Error", err);}
+         });
         },
-        error: (err) => console.error("Upload error", err)
+        err => { console.error("Error", err);}
+      );
+    } 
+    else {
+      this.postService.createPost(authorId, content, null).subscribe({
+        next: (post) => {
+          this.postInput.nativeElement.innerText = '';
+          this.hideForm();
+          this.loadPosts(); 
+        },
+        error: (err) => console.error("Error creating post:", err)
       });
-    }
-    const content = this.postInput.nativeElement.innerText.trim();
-    if (!content || this.selectedFile!=null) return;
-
-    this.postService.createPost(authorId, content).subscribe({
-      error: (err) => {
-        console.error('Error creating post:', err);
-      }
-    });
+    }  
   }
-
+  
   submitComment(postId: string){
     const authorId = this.loggedInUser!.id;
     const content = this.commentInput.nativeElement.innerText.trim();

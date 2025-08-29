@@ -29,7 +29,7 @@
 }
 
 .big-icon {
-    font-size: 20px;  
+    font-size: 22px;  
 }
 
 .brd{
@@ -61,6 +61,10 @@
     max-height: 12rem;
     z-index: 1008;
     overflow-y: scroll;
+}
+
+.child p{
+    color: (255, 255, 255, 0.6);
 }
 
 .child-right{
@@ -228,6 +232,12 @@ p{
     margin: 10px auto;
 }
 
+.post-div{
+    padding: 6px 0px;
+    display: flex;
+    align-items: center;
+}
+
 .post-header{
     width: 100%;
     display: flex;
@@ -290,5 +300,4 @@ p{
         display: flex;
         margin: 0 auto;
     }
-
 }

@@ -1,6 +1,6 @@
 @server_HostAddress = http://localhost:5003
 
-GET {{server_HostAddress}}/weatherforecast/
+POST {{server_HostAddress}}/image
 Accept: application/json
 
 ###

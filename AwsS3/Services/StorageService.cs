@@ -5,7 +5,7 @@ using AwsS3.Configurations;
 using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 
-namespace AwsS3.Services;
+namespace AwsS3.Services{
 
 public class StorageService : IStorageService
 {
@@ -18,19 +18,16 @@ public class StorageService : IStorageService
 
     public async Task<S3ResponseDto> UploadFileAsync(S3Object obj, AwsCredentials awsCredentialsValues)
     {
-        //var awsCredentialsValues = _config.ReadS3Credentials();
-
         var credentials = new BasicAWSCredentials(awsCredentialsValues.AccessKey, awsCredentialsValues.SecretKey);
-
-        var config = new AmazonS3Config() 
+        var config = new AmazonS3Config
         {
-            RegionEndpoint = Amazon.RegionEndpoint.USEast1
+            RegionEndpoint = Amazon.RegionEndpoint.USEast1 // 👈 change if needed
         };
 
         var response = new S3ResponseDto();
         try
         {
-            var uploadRequest = new TransferUtilityUploadRequest()
+            var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = obj.InputStream,
                 Key = obj.Name,
@@ -38,29 +35,31 @@ public class StorageService : IStorageService
                 CannedACL = S3CannedACL.NoACL
             };
 
-            // initialise client
             using var client = new AmazonS3Client(credentials, config);
-
-            // initialise the transfer/upload tools
             var transferUtility = new TransferUtility(client);
 
-            // initiate the file upload
             await transferUtility.UploadAsync(uploadRequest);
 
             response.StatusCode = 201;
-            response.Message = $"{obj.Name} has been uploaded sucessfully";
+            response.Message = $"{obj.Name} has been uploaded successfully";
+            response.Url = $"https://loop-social.s3.us-east-1.amazonaws.com/{obj.Name}";
+
         }
-        catch(AmazonS3Exception s3Ex)
+        catch (AmazonS3Exception s3Ex)
         {
             response.StatusCode = (int)s3Ex.StatusCode;
             response.Message = s3Ex.Message;
+            response.Url = "";
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             response.StatusCode = 500;
             response.Message = ex.Message;
+            response.Url = "";
         }
-
         return response;
     }
+
+}
 }
