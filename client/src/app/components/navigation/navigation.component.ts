@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/UserService/user.service';
 import { UserSearchResponse } from '../../models/usersearchresponse';
+import { ViewChild, ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-navigation',
@@ -13,6 +15,7 @@ import { UserSearchResponse } from '../../models/usersearchresponse';
   styleUrls: ['./navigation.component.css'] 
 })
 export class NavigationComponent {
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLElement>;
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
   searchQuery: string = "";
@@ -31,6 +34,15 @@ export class NavigationComponent {
   }
 
   onSearch(){
+    
+    if(this.searchQuery === "") {
+      this.users = [];
+      if(this.searchInput) {
+        this.searchInput.nativeElement.style.visibility = 'hidden';
+      }
+      return;
+    }
+
     this.userService.searchUser(this.searchQuery).subscribe({
       next : (data) => {
         this.users = data;
