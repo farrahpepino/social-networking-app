@@ -1,9 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace server.Models
-{
-
+namespace server.Models{
     public class Post{
         public string Id {get; set;} = Guid.NewGuid().ToString();
         public required string AuthorId {get; set;} = string.Empty;

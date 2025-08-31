@@ -9,7 +9,6 @@ namespace server.Controllers{
     [ApiController]
     [Route("[controller]")]
     [Authorize] 
-
     public class CommentController: ControllerBase{
 
         private readonly CommentService _commentService;

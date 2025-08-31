@@ -1,5 +1,4 @@
 namespace server.Models{
-
     public class Comment{
         public required string AuthorId {get; set;}
         public required string Content {get; set;}

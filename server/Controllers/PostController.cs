@@ -1,7 +1,6 @@
 using server.Models;
 using server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
@@ -9,7 +8,6 @@ namespace server.Controllers{
     [ApiController]
     [Route("[controller]")]
     [Authorize] 
-
     public class PostController: ControllerBase{
         
         private readonly PostService _postService;

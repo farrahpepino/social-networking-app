@@ -3,11 +3,11 @@ using server.Models;
 using server.Services;
 using Microsoft.Extensions.Logging;
 
-namespace server.Controllers
-{
+namespace server.Controllers{
+
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase{
+    public class AuthController: ControllerBase{
         private readonly AuthService _authService;
 
         public AuthController(AuthService authService)

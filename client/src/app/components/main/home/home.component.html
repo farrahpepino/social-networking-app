@@ -9,7 +9,7 @@
    
     <div class="post-header">
         <div>
-            <p class="f-700">{{post.username}}</p>
+            <p class="f-300">{{post.username}}</p>
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
         <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
@@ -49,7 +49,7 @@
 <div class="post-block" [class.hidden]="!showForm">
     <div class="col">
         <div>
-            <p class="f-700">{{loggedInUser?.username}}</p>
+            <p class="f-300">{{loggedInUser?.username}}</p>
         </div>
         
         <button class="bt" (click)="hideForm()">X</button>
@@ -90,7 +90,7 @@
     <div class="col">
         <div class="post-header">
             <div>
-                <p class="f-700">{{post.username}}</p>
+                <p class="f-300">{{post.username}}</p>
                 <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
             </div>
         </div>
@@ -130,7 +130,7 @@
     <div class="comments-container">
         <div class="comment" *ngFor="let comment of comments"> 
             <div class="comment-content">
-                <p class="f-700">{{comment.username}}</p>
+                <p class="f-300">{{comment.username}}</p>
                 <p>{{comment.content}}</p>
                 <p class="f-100 st">{{comment.createdAt | date: 'MMM d, y \'at\' h:mm a'}}</p>
             </div>

@@ -25,8 +25,7 @@ input{
     outline: none;
     color: rgb(0 0 0 / 90%);
     font-weight: 100;
-    font-family: "Roboto", sans-serif;
-    font-weight: normal;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
     border: none;
     text-align: left;
     padding: 0px 10px;
@@ -35,6 +34,7 @@ input{
 input::placeholder{
     color: rgb(0 0 0 / 90%);
     font-weight: 100;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
 input:-webkit-autofill {
@@ -42,6 +42,7 @@ input:-webkit-autofill {
     box-shadow: 0 0 0 1000px transparent inset !important;
     -webkit-text-fill-color:  rgb(0 0 0 / 90%)    !important;
     transition: background-color 5000s ease-in-out 0s !important;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
 label{

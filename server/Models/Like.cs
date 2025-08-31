@@ -1,5 +1,4 @@
 namespace server.Models{
-
     public class Like{
         public string Id {get; set;} = Guid.NewGuid().ToString();
         public string PostId {get; set;} = string.Empty;

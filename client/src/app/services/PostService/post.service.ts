@@ -31,7 +31,7 @@ export class PostService {
   }
   
   uploadImage(formData: FormData): Observable<S3Response> {
-    return this.http.post<S3Response>(`${environment.apiUrl}/image`, formData);
+    return this.http.post<S3Response>(`${environment.apiUrl}/image`, formData,  { headers: this.getAuthHeaders() });
   }
   
   deletePost(id: string): Observable<void> {

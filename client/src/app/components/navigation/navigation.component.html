@@ -1,10 +1,16 @@
 <div class="container">
   <button class="bt" (click)="navigateToHome()">
-    <div class="logo">
-        <p>LOOP</p>
+    <div class="logo parent">
+      LOOP
     </div>
   </button>
-    <div class="parent">
+  <div class="parent">
+  <input type="text" id="search" title="search" placeholder="SEARCH USERNAME" (input)="onSearch()" [(ngModel)]="searchQuery"/>
+  <div class="child-search" *ngIf="users.length > 0">
+    <p *ngFor="let user of users">{{user.username}}</p>
+  </div>
+  </div>
+    <div class="parent p-r">
         PROFILE
         <div class="child">
             <ul>
@@ -12,7 +18,12 @@
                     <button class="bt" (click)="viewProfile()">
                       VIEW PROFILE
                     </button>
-                  </li>
+                </li>
+                <li>
+                  <button class="bt">
+                    EDIT PROFILE
+                  </button>
+                </li>
                 <li>
                   <button class="bt" (click)="logout()">
                     SIGN OUT

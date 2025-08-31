@@ -5,6 +5,7 @@ using Dapper;
 namespace server.Repositories{
 
     public class UserRepository{
+
         private readonly DapperContext _context;
 
         public UserRepository(DapperContext context){
@@ -12,7 +13,8 @@ namespace server.Repositories{
         }
 
         private const string InsertUserQuery = @"INSERT INTO users (Id, Username, Email, HashedPassword, CreatedAt) VALUES (@Id, @Username, @Email, @HashedPassword, @CreatedAt)";
-        private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email";
+        private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email LIMIT 1";
+        private const string SearchQuery = "SELECT Id, Username FROM users WHERE LOWER(Username) LIKE LOWER(@Username) LIMIT 6";
 
         public async Task InsertUser(Registration newUser) {
             using var connection = _context.CreateConnection();
@@ -23,6 +25,11 @@ namespace server.Repositories{
             using var connection = _context.CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Registration>(
                 SelectUserByEmailQuery, new { Email = email });
+        }
+
+        public async Task<IEnumerable<UserSearchResult>> SearchUsers(string query){
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<UserSearchResult>(SearchQuery, new { Username = $"%{query}%" });
         }
 
     }    
