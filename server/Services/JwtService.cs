@@ -12,7 +12,7 @@ namespace server.Services{
 
         public JwtService (IConfiguration configuration){
             _configuration = configuration;
-            _secret = configuration["Jwt:Secret"] ?? throw new ArgumentNullException("Jwt:Secret is missing from config");
+            _secret = configuration["Jwt:Secret"] ?? throw new ArgumentNullException("Jwt:Secret is missing from configuration.");
         }
 
         public string GenerateToken(string userId, string username, string email)

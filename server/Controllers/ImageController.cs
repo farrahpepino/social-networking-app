@@ -36,10 +36,20 @@ namespace server.Controllers{
             Name = s3Key
         };
 
-        var cred = new AwsCredentials(){
-            AccessKey = _config["AwsConfiguration:AWSAccessKey"],
-            SecretKey = _config["AwsConfiguration:AWSSecretKey"]
+        var accessKey = _config["AwsConfiguration:AWSAccessKey"];
+        if (accessKey == null)
+            throw new ArgumentNullException("AwsConfiguration:AWSAccessKey is not in configuration.");
+
+        var secretKey = _config["AwsConfiguration:AWSSecretKey"];
+        if (secretKey == null)
+            throw new ArgumentNullException("AwsConfiguration:AWSSecretKey is not in configuration.");
+
+        var cred = new AwsCredentials()
+        {
+            AccessKey = accessKey,
+            SecretKey = secretKey
         };
+
 
         var result = await _storageService.UploadFileAsync(s3Obj, cred);
         return Ok(new { message = "Uploaded successfully", url = result.Url });

@@ -1,0 +1,13 @@
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/bin/Release/net9.0/AwsS3.deps.json
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/bin/Release/net9.0/AwsS3.dll
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/bin/Release/net9.0/AwsS3.pdb
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.csproj.AssemblyReference.cache
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.GeneratedMSBuildEditorConfig.editorconfig
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.AssemblyInfoInputs.cache
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.AssemblyInfo.cs
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.csproj.CoreCompileInputs.cache
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.sourcelink.json
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.dll
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/refint/AwsS3.dll
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/AwsS3.pdb
+/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/obj/Release/net9.0/ref/AwsS3.dll
