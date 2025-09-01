@@ -22,7 +22,6 @@
     [src]="post.imageUrl"
     alt="uploaded image"
     class="uploaded-img"> 
-    <hr>
     <div class="react w-7rem">
         <div class="parent">
             <button type="button" class="bt" title="like" (click)="toggleLike(post)">
@@ -74,7 +73,6 @@
             (change)="onFileSelected($event)"
             hidden
           />
-        <br>
     </div>
     <div class="post-div">
         <label for="fileInput" class="upload-label">

@@ -12,6 +12,7 @@
             <p class="f-300">{{post.username}}</p>
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
+        <br>
         <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
             <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
         </div>
@@ -22,7 +23,6 @@
     [src]="post.imageUrl"
     alt="uploaded image"
     class="uploaded-img"> 
-    <hr>
     <div class="react w-7rem">
         <div class="parent">
             <button type="button" class="bt" title="like" (click)="toggleLike(post)">
@@ -127,6 +127,7 @@
         <p><i class="fa-regular fa-comment" title="comment" ></i>({{commentCount}})</p>
     </div> 
     <hr>
+    <br>
     <div class="comments-container">
         <div class="comment" *ngFor="let comment of comments"> 
             <div class="comment-content">

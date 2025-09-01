@@ -40,6 +40,7 @@
     border: solid 0.5px rgb(0,0,0,0.1);
     padding: 10px;
     contain: content;
+    margin-top: 8px;
 }
 
 .bt{
@@ -215,7 +216,7 @@ p{
     z-index: 1005; 
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    padding: 5px 15px;
+    padding: 15px 10px;
     padding-top: 20px;
     overflow-y: scroll; 
     max-height: 80vh;
@@ -249,7 +250,7 @@ p{
 .uploaded-img{
     width: 15rem;
     height: auto;
-    margin: 10px 0px;
+    margin: 17px 0px;
     border-radius: 15px;
     display: block;
 }
