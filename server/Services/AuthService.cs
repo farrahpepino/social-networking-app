@@ -32,8 +32,7 @@ namespace server.Services{
         }   
 
         public async Task<string?> LoginUser(Login user)
-        {
-           
+        {  
             var existingUser = await _userRepository.GetUserByEmail(user.Email);
             if (existingUser == null)
             {

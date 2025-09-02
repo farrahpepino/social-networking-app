@@ -17,26 +17,15 @@ namespace server.Services{
         }
 
         public async Task<Comment?> CreateComment(Comment comment){
-                try{
-                        comment.Id = Guid.NewGuid().ToString();
-                        comment.CreatedAt = DateTime.Now;
-                        await _commentRepository.InsertComment(comment);
-                        return comment;
-                }
-                catch (Exception ex){
-                        _logger.LogError($"Error creating comment: {ex.Message}");
-                        throw;
-                }
+                comment.Id = Guid.NewGuid().ToString();
+                comment.CreatedAt = DateTime.Now;
+                await _commentRepository.InsertComment(comment);
+                return comment;
+            
         }
 
         public async Task<IEnumerable<Comment>> GetComments(string postId){
-                try{
-                        return await _commentRepository.GetComments(postId);     
-                }
-                catch (Exception ex){
-                        _logger.LogError(ex, $"Error fetching comments");
-                        return Enumerable.Empty<Comment>();
-                }
+                return await _commentRepository.GetComments(postId);     
         }
    
     }

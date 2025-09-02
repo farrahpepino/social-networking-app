@@ -1,6 +1,7 @@
 using server.Data; //needed for dapper
 using server.Services; //needed for Dependency Injection
 using server.Models; //for jwtsettings
+using server.Middlewares;
 using server.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer; //for authentication
 using Microsoft.IdentityModel.Tokens; // for signing credentials
@@ -86,10 +87,7 @@ var app = builder.Build();
 
 
 //configure middlewares
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseCors("AllowAngularDev");
 
@@ -102,7 +100,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication(); 
 app.UseAuthorization();
-
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.MapControllers(); // connects controller routes
 
 app.Run();

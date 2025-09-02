@@ -18,7 +18,6 @@ namespace server.Controllers{
         {
             if (string.IsNullOrWhiteSpace(query))
                 return BadRequest("Query cannot be empty");
-
             var users = await _userService.SearchUsers(query); 
             if (users.Any())
                 return Ok(users);  

@@ -26,24 +26,15 @@ namespace server.Services{
         }
     
         public async Task<Post?> CreatePost(Post post){
-            try{
-
             post.ImageUrl?.ToString();
             post.Id = Guid.NewGuid().ToString();
             post.CreatedAt = DateTime.Now;
             await _postRepository.InsertPost(post);
             
             return post;
-            }
-            catch (Exception ex){
-                _logger.LogError(ex, "Error creating post");
-                throw;
-            }
         }
 
         public async Task<bool> DeletePost(string postId){
-           try{
-
             var affectedRows = await _postRepository.DeletePost(postId);
 
             if (affectedRows > 0){
@@ -54,103 +45,47 @@ namespace server.Services{
                 _logger.LogWarning("No post found with that Id.");
                 return false;
             }
-            }
-            catch (Exception ex){
-                _logger.LogError(ex, "Error deleting post");
-                return false;
-            }
 
         }
 
         public async Task<Post?> GetPost(string postId){
-            try{
-                return await _postRepository.GetPostById(postId);
-            }
-            catch (Exception ex){
-                _logger.LogError(ex, "Error fetching post");
-                throw;
-            }
+
+            return await _postRepository.GetPostById(postId);
+            
         }
 
         public async Task<IEnumerable<Post>> GetPostsByUserId(string authorId)
         {
-            try
-            {   
-                return await _postRepository.GetPostsByUserId(authorId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching posts");
-                return Enumerable.Empty<Post>();
-            }
+            return await _postRepository.GetPostsByUserId(authorId);
         }
         
         public async Task<IEnumerable<Post>> GetPosts()
         {
-            try
-            {
-                return await _postRepository.GetPosts();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching posts");
-                return Enumerable.Empty<Post>();
-            }
+            return await _postRepository.GetPosts();
         }
         
         public async Task<bool> LikeExists(string PostId, string LikerId)
         {
-            try
-            {
-                return await _postRepository.LikeExists(PostId, LikerId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error checking if like exists");
-                return false;
-            }
+            return await _postRepository.LikeExists(PostId, LikerId);
         }
 
 
         public async Task<IEnumerable<Like>> GetLikesByPostId(string postId)
         {
-            try
-            {
-                return await _postRepository.GetLikesByPostId(postId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching the like from post");
-                return Enumerable.Empty<Like>();
-            }
+            return await _postRepository.GetLikesByPostId(postId);
         }
 
         public async Task<Like> LikePost(Like like){
-            try
-            {
-                like.Id = Guid.NewGuid().ToString();
-                like.CreatedAt = DateTime.Now;
-                await _postRepository.LikePost(like);
-                return like;
-            }
-
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error liking the post");
-                throw;
-            }
+            like.Id = Guid.NewGuid().ToString();
+            like.CreatedAt = DateTime.Now;
+            await _postRepository.LikePost(like);
+            return like;
+            
         }
 
         public async Task<bool> UnlikePost(string PostId, string LikerId){
-            try{
-                var affectedRows =  await _postRepository.UnlikePost(PostId, LikerId);
-                return (affectedRows > 0);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error unliking the post");
-                return false;
-            }
+            var affectedRows =  await _postRepository.UnlikePost(PostId, LikerId);
+            return (affectedRows > 0);
         }
     
     }
