@@ -1,9 +1,9 @@
 namespace server.Models{
     public class Interest{
-        public string Id {get; set;}
-        public string UserId1 {get; set;}
-        public string UserId2 {get; set;}
-        public required DateTime CreatedAt {get; set;} 
+        public string Id {get; set;} = string.Empty;
+        public required string UserId1 {get; set;}
+        public required string UserId2 {get; set;}
+        public DateTime CreatedAt {get; set;} 
     }
 }
 

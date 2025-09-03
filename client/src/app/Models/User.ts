@@ -3,4 +3,8 @@ export interface User{
     username: string,
     email: string,
     createdAt?: Date
+    age: number;
+    city: string;
+    interests: [];
+
 }

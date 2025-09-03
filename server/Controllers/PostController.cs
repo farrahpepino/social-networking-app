@@ -19,8 +19,6 @@ namespace server.Controllers{
         [HttpPost]
         public async Task<IActionResult> CreatePost([FromBody] Post post){
             var createdPost = await _postService.CreatePost(post);
-            if (createdPost == null)
-                return StatusCode(500, "Failed to create post.");
             return Ok(createdPost); 
         }
 
@@ -67,8 +65,6 @@ namespace server.Controllers{
         [HttpPost("like-post")]
         public async Task<IActionResult> LikePost([FromBody] Like like){
             var liked = await _postService.LikePost(like);
-            if (liked == null)
-                return StatusCode(500, "Failed to like post.");
             return Ok(liked);  
         }
 
