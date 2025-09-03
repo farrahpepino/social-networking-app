@@ -11,7 +11,7 @@
     <button class="bt center"><strong>follow</strong></button> | <button class="underline bt">8 INTERESTS</button>
     </div>
 </div>
-<div class="post-wrapper content">
+<div class="post-wrapper content" *ngIf="posts.length>0; else noPost">
 <div class="post-container" *ngFor="let post of posts" >
    
     <div class="post-header">
@@ -148,3 +148,8 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #noPost>
+    <p class="center y-center">No post yet.</p>
+</ng-template>
