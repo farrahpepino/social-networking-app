@@ -19,7 +19,7 @@
             <p class="f-300">{{post.username}}</p>
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
-        <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
+        <div *ngIf="post.username===sessionUser?.username" class="bt parent menu">•••
             <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
         </div>
     </div>
@@ -40,7 +40,7 @@
             </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p class="white">{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                    <p class="white">{{like.username===sessionUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
 <div class="post-block" [class.hidden]="!showForm">
     <div class="col">
         <div>
-            <p class="f-300">{{loggedInUser?.username}}</p>
+            <p class="f-300">{{sessionUser?.username}}</p>
         </div>
         
         <button class="bt" (click)="hideForm()">X</button>
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="col">
-            <div *ngIf="post.username===loggedInUser?.username" class="bt parent menu">•••
+            <div *ngIf="post.username===sessionUser?.username" class="bt parent menu">•••
                 <button class="child-right white" (click)="deletePost(post.id)">DELETE POST</button>
             </div>
             <button class="bt" (click)="hidePost()">X</button>
@@ -124,7 +124,7 @@
             </button>
             <div class="child"  *ngIf="post.likes && post.likes.length > 0">
                 <div class="p-10" *ngFor="let like of post.likes">
-                    <p class="white">{{like.username===loggedInUser?.username ? "You" : like.username}}</p>
+                    <p class="white">{{like.username===sessionUser?.username ? "You" : like.username}}</p>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
-  loggedInUser: User | null = null;
+  sessionUser: User | null = null;
   posts: Post[] = [];
   post: Post | null = null;
   comments: Comment[] = [];
@@ -36,9 +36,9 @@ export class ProfileComponent implements OnInit {
   previewUrl: string | null = null;
 
   ngOnInit(): void {
-    this.userService.loggedInUser$.subscribe(user => {
+    this.userService.sessionUser$.subscribe(user => {
       if (user) {   
-        this.loggedInUser = user;
+        this.sessionUser = user;
         this.loadPosts();
       }
     });
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
   
 
   loadPosts() {
-    this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
+    this.postService.getPostsByUserId(this.sessionUser!.id).subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {
@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
             }
           });
 
-          this.postService.isLiked(post.id, this.loggedInUser!.id).subscribe({
+          this.postService.isLiked(post.id, this.sessionUser!.id).subscribe({
             next: (data) => {
               this.likedPosts[post.id] = data;
             },
@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit {
 
   toggleLike(post: Post) {
     const postId = post.id;
-    const userId = this.loggedInUser!.id;
+    const userId = this.sessionUser!.id;
   
     if (this.likedPosts[postId]) {
       this.postService.unlikePost(postId, userId).subscribe({
@@ -129,7 +129,7 @@ export class ProfileComponent implements OnInit {
           this.likedPosts[postId] = true;
           post.likes = [...(post.likes || []), {
             ...like,
-            username: this.loggedInUser!.username
+            username: this.sessionUser!.username
           }];
           this.loadPosts();
 
@@ -175,13 +175,13 @@ export class ProfileComponent implements OnInit {
   hideForm() { this.showForm = false; }
  
   submitPost() {
-    const authorId = this.loggedInUser!.id;
+    const authorId = this.sessionUser!.id;
     const content = this.postInput.nativeElement.innerText.trim() || '';
     
     if (this.selectedFile!=null) {
       const formData = new FormData();
       formData.append("File", this.selectedFile);
-      formData.append("UserId",  this.loggedInUser!.id);
+      formData.append("UserId",  this.sessionUser!.id);
 
       this.postService.uploadImage(formData)
     .subscribe(
@@ -212,13 +212,13 @@ export class ProfileComponent implements OnInit {
   }
 
   submitComment(postId: string){
-    const authorId = this.loggedInUser!.id;
+    const authorId = this.sessionUser!.id;
     const content = this.commentInput.nativeElement.innerText.trim();
     if (!content) return;
 
     this.commentService.createComment(authorId, content, postId ).subscribe({
       next: (data) => {
-        data.username = this.loggedInUser!.username; 
+        data.username = this.sessionUser!.username; 
         this.commentCount = this.comments.length+1;
         this.comments.push(data); 
         this.commentInput.nativeElement.innerText = ''; 

@@ -10,14 +10,14 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-  private loggedInUserSubject = new BehaviorSubject<User | null>(null);
-  loggedInUser$ = this.loggedInUserSubject.asObservable();
+  private sessionUserSubject = new BehaviorSubject<User | null>(null);
+  sessionUser$ = this.sessionUserSubject.asObservable();
 
   constructor(private jwtService: JwtService, private http: HttpClient) {
     if (typeof window !== 'undefined') {
-      const storedUser = localStorage.getItem('loggedInUser');
+      const storedUser = localStorage.getItem('sessionUser');
       if (storedUser) {
-        this.loggedInUserSubject.next(JSON.parse(storedUser));
+        this.sessionUserSubject.next(JSON.parse(storedUser));
       }
     }
   }
@@ -36,16 +36,16 @@ export class UserService {
       username: decoded.unique_name,
       email: decoded.email
     };
-    this.setLoggedInUser(user);
+    this.setsessionUser(user);
   }
 
-  setLoggedInUser(user: User) {
-    this.loggedInUserSubject.next(user);
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  setsessionUser(user: User) {
+    this.sessionUserSubject.next(user);
+    localStorage.setItem('sessionUser', JSON.stringify(user));
   }
 
-  getLoggedInUser(): User | null {
-    return this.loggedInUserSubject.value;
+  getsessionUser(): User | null {
+    return this.sessionUserSubject.value;
   }
 
   searchUser(query: string): Observable<UserSearchResponse[]> {
