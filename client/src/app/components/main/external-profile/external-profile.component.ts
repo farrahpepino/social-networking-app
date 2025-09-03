@@ -27,7 +27,7 @@ export class ExternalProfileComponent implements OnInit {
 
   sessionUser: User | null = null;
   user: User | null = null;
-  userId: string = "";
+  username: string = "";
   posts: Post[] = [];
   post: Post | null = null;
   comments: Comment[] = [];
@@ -41,16 +41,17 @@ export class ExternalProfileComponent implements OnInit {
   previewUrl: string | null = null;
 
   ngOnInit(): void {
-    this.userId = this.route.snapshot.paramMap.get('id') || '';
-    this.userService.sessionUser$.subscribe(user => {
-      if (user) {   
-        this.sessionUser = user;
+    this.username = this.route.snapshot.paramMap.get('username') || '';
+    console.log(this.username);
+    this.userService.sessionUser$.subscribe(data => {
+      if (data) {   
+        this.sessionUser = data;
         this.loadPosts();
       }
     });
-    this.userService.getUserInformation(this.userId).subscribe(user => {
-      if (user) {   
-        this.user = user;
+    this.userService.getUserInformation(this.username).subscribe(data => {
+      if (data) {   
+        this.user = data;
         this.loadPosts();
       }
     });
@@ -75,7 +76,7 @@ export class ExternalProfileComponent implements OnInit {
   
 
   loadPosts() {
-    this.postService.getPostsByUserId(this.userId).subscribe({
+    this.postService.getPostsByUserId(this.user!.id).subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {

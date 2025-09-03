@@ -13,8 +13,8 @@ namespace server.Services{
             return await _userRepository.SearchUsers(query);
         }
 
-        public async Task<User> GetUserInfo(string userId){
-            return await _userRepository.GetUserInfo(userId);
+        public async Task<User> GetUserInfo(string username){
+            return await _userRepository.GetUserInfo(username);
         }
 
     }

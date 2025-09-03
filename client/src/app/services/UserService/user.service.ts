@@ -52,8 +52,8 @@ export class UserService {
     return this.http.get<UserSearchResponse[]>(`${environment.apiUrl}/user/search`, {params: { query }});
   }
 
-  getUserInformation(userId: string): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}/user`, {params: { userId }});
+  getUserInformation(username: string): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/user`, {params: { username }});
   }
   
 }

@@ -51,8 +51,8 @@ export class NavigationComponent {
     });
   }
 
-  visitProfile(userId: string){
-    this.router.navigateByUrl(`/profile/${userId}`); 
+  visitProfile(username: string){
+    this.router.navigateByUrl(`/profile/${username}`); 
   }
 
 }

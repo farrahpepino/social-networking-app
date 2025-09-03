@@ -15,7 +15,7 @@ namespace server.Repositories{
         private const string InsertUserQuery = @"INSERT INTO users (Id, Username, Email, HashedPassword, CreatedAt) VALUES (@Id, @Username, @Email, @HashedPassword, @CreatedAt)";
         private const string SelectUserByEmailQuery = "SELECT * FROM users WHERE Email=@Email LIMIT 1";
         private const string SearchQuery = "SELECT Id, Username FROM users WHERE LOWER(Username) LIKE LOWER(@Username) LIMIT 6";
-        private const string SelectUserByIdQuery = "SELECT * FROM users WHERE Id=@Id LIMIT 1";
+        private const string SelectUserByUsernameQuery = "SELECT * FROM users WHERE Username=@Username LIMIT 1";
 
         public async Task InsertUser(Registration newUser) {
             using var connection = _context.CreateConnection();
@@ -33,9 +33,9 @@ namespace server.Repositories{
             return await connection.QueryAsync<UserSearchResult>(SearchQuery, new { Username = $"%{query}%" });
         }
 
-        public async Task<User> GetUserInfo(string userId){
+        public async Task<User> GetUserInfo(string username){
             using var connection = _context.CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<User>(SelectUserByIdQuery, new { Id = userId }) ?? throw new InvalidOperationException("User not found.");
+            return await connection.QuerySingleOrDefaultAsync<User>(SelectUserByUsernameQuery, new { Username = username }) ?? throw new InvalidOperationException("User not found.");
         }
 
     }    

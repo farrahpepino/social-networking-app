@@ -26,9 +26,9 @@ namespace server.Controllers{
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetUserInfo(string userId)
+        public async Task<IActionResult> GetUserInfo(string username)
         {
-            var user = await _userService.GetUserInfo(userId); 
+            var user = await _userService.GetUserInfo(username); 
             return Ok(user);  
             
         }
