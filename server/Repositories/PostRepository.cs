@@ -19,6 +19,7 @@ namespace server.Repositories{
         private const string DeleteLikeQuery = "DELETE FROM likes WHERE PostId = @PostId AND LikerId=@LikerId";
         private const string SelectLikesByPostIdQuery = "SELECT likes.CreatedAt, likes.Id, likes.LikerId, likes.PostId, users.Username  FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
         private const string LikeExistsQuery = "SELECT 1 FROM likes WHERE PostId=@PostId AND LikerId=@LikerId";
+        private const string SelectFeedPost = "SELECT posts.Id, posts.AuthorId, posts.Content, posts.ImageUrl, posts.CreatedAt, users.Username FROM posts JOIN users ON users.Id = posts.AuthorId WHERE posts.AuthorId IN ((SELECT UserId1 FROM interests WHERE UserId1 = @UserId1), (SELECT UserId2 FROM interests WHERE UserId1 = @UserId1)) ORDER BY posts.CreatedAt DESC;";
 
         public async Task InsertPost(Post post) {
             using var connection = _context.CreateConnection();
@@ -45,6 +46,11 @@ namespace server.Repositories{
         public async Task<IEnumerable<Post>> GetPostsByUserId(string authorId){
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<Post>(SelectPostsByUserIdQuery, new { AuthorId = authorId });
+        }
+
+        public async Task<IEnumerable<Post>> GetFeedPosts(string userId1){
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<Post>(SelectFeedPost, new { UserId1 = userId1 });
         }
 
         public async Task<IEnumerable<Post>> GetPosts(){

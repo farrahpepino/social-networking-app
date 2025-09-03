@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadPosts() {
-    this.postService.getPosts().subscribe({
+    this.postService.getFeedPost(this.sessionUser!.id).subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {

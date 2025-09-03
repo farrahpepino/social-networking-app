@@ -58,6 +58,11 @@ namespace server.Services{
         {
             return await _postRepository.GetPostsByUserId(authorId);
         }
+
+        public async Task<IEnumerable<Post>> GetFeedPosts(string userId1)
+        {
+            return await _postRepository.GetFeedPosts(userId1);
+        }
         
         public async Task<IEnumerable<Post>> GetPosts()
         {

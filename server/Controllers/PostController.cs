@@ -46,6 +46,15 @@ namespace server.Controllers{
             return Ok(posts);
         }
 
+
+        [HttpGet("{userId1}/feed")]
+        public async Task<IActionResult> GetFeedPosts(string userId1){
+            var posts = await _postService.GetFeedPosts(userId1);
+            if(posts == null)
+                return NotFound();
+            return Ok(posts);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(string id){
             var success = await _postService.DeletePost(id);

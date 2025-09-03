@@ -72,6 +72,10 @@ export class PostService {
     return this.http.get<Post[]>(`${environment.apiUrl}/post/${userId}/posts`,  { headers: this.getAuthHeaders() });
   }
 
+  getFeedPost(userId: string): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.apiUrl}/post/${userId}/feed`,  { headers: this.getAuthHeaders() });
+  }
+
   isLiked(postId: string, likerId: string): Observable<boolean>{
     return this.http.get<boolean>(`${environment.apiUrl}/post/${postId}/liked-by/${likerId}`,  { headers: this.getAuthHeaders() });
   }
