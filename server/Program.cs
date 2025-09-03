@@ -33,11 +33,14 @@ builder.Services.AddScoped<PostService>();// tells asp.net how PostService is pr
 builder.Services.AddScoped<AuthService>(); 
 builder.Services.AddScoped<UserService>(); 
 builder.Services.AddScoped<CommentService>();
+builder.Services.AddScoped<InterestService>(); 
 builder.Services.AddScoped<IJwtService, JwtService>(); //
 builder.Services.AddScoped<IStorageService, StorageService>();//
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<CommentRepository>();
+builder.Services.AddScoped<InterestRepository>();
+
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddControllers();  //turn on controllers. or else [ApiController] won't work

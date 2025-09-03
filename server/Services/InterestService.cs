@@ -20,17 +20,17 @@ namespace server.Services{
             _interestRepository = interestRepository;
         }
     
-        public async Task<Interest> CreateInterest(string userId1, string userId2){
-            var interest = new Interest
+        public async Task<Interest> CreateInterest(InterestDto interest){
+            var newInterest = new Interest
             {
                 Id = Guid.NewGuid().ToString(),
-                UserId1 = userId1,
-                UserId2 = userId2,
+                UserId1 = interest.UserId1,
+                UserId2 = interest.UserId2,
                 CreatedAt = DateTime.Now
             };
 
-            await _interestRepository.CreateInterest(interest); 
-            return interest;
+            await _interestRepository.CreateInterest(newInterest); 
+            return newInterest;
         }
     }
 }

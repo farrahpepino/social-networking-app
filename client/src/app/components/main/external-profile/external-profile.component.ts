@@ -12,6 +12,7 @@ import { Comment } from '../../../models/comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { InterestsService } from '../../../services/interests.service';
 
 @Component({
   selector: 'app-external-profile',
@@ -21,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExternalProfileComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private interestService: InterestsService, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
@@ -238,5 +239,14 @@ export class ExternalProfileComponent implements OnInit {
       },
       error: (err)=> { console.error(err, "Error creating comment."); }
     });  
+  }
+
+  follow(){
+    this.interestService.follow(this.sessionUser!.id, this.user!.id).subscribe(
+    { error: (err) => {
+      alert("meow");
+    }}
+    );
+    
   }
 }
