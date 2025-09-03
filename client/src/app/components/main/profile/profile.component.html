@@ -8,7 +8,7 @@
 <div class="center"> {{sessionUser?.username?.toUpperCase()}}. 18. BASED IN BALI.</div>
 <div class="center">
     <div class="flex">
-    <button class="underline bt">8 INTERESTS</button>
+    <button class="underline bt">{{ sessionUser?.interests?.length ?? 0 }} INTERESTS</button>
     </div>
 </div>
 

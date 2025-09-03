@@ -52,6 +52,7 @@ export class NavigationComponent {
   }
 
   visitProfile(username: string){
+    alert(username)
     this.router.navigateByUrl(`/profile/${username}`); 
   }
 

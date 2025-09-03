@@ -42,8 +42,7 @@ export class ExternalProfileComponent implements OnInit {
   previewUrl: string | null = null;
 
   ngOnInit(): void {
-    this.username = this.route.snapshot.paramMap.get('username') || '';
-    console.log(this.username);
+    this.username = this.route.snapshot.paramMap.get('username') ?? '';
     this.userService.sessionUser$.subscribe(data => {
       if (data) {   
         this.sessionUser = data;

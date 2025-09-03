@@ -8,7 +8,7 @@
 <div class="center"> {{user!.username.toUpperCase()}}. 18. BASED IN MANILA.</div>
 <div class="center">
     <div class="flex">
-    <button class="bt center" (click)="follow()"><strong>follow</strong></button> | <button class="underline bt">8 INTERESTS</button>
+    <button class="bt center" (click)="follow()"><strong>follow</strong></button> | <button class="underline bt">{{ user!.interests?.length ?? 0 }} INTERESTS </button>
     </div>
 </div>
 <div class="post-wrapper content" *ngIf="posts.length>0; else noPost">
