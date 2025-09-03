@@ -35,7 +35,7 @@ export class RegisterComponent{
       this.authService.registerUser(username!, password!, email!)
       .subscribe({
         next: ()=>{
-          const token = localStorage.getItem('token');
+          const token = localStorage.getItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26');
           this.userService.initializeUser(token!);
         },
         error: (err) => 

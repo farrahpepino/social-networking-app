@@ -10,6 +10,8 @@ import { Like } from '../../../models/like';
 import { Comment } from '../../../models/comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
+import { InterestsService } from '../../../services/InterestService/interests.service';
+import { InterestResponse } from '../../../models/interestresponse';
 @Component({
   selector: 'app-profile',
   imports: [NavigationComponent, CommonModule],
@@ -18,7 +20,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
+  constructor(private interestService: InterestsService, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
@@ -31,15 +33,25 @@ export class ProfileComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
+  showInterest = false;
   isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  interests: InterestResponse[] = [];
+
 
   ngOnInit(): void {
     this.userService.sessionUser$.subscribe(user => {
       if (user) {   
         this.sessionUser = user;
         this.loadPosts();
+        this.interestService.getInterests(user.id).subscribe(
+          {
+            next: (i: InterestResponse[])=>{
+              this.interests = i;
+            }
+          }
+        );
       }
     });
   }
@@ -173,6 +185,8 @@ export class ProfileComponent implements OnInit {
 
   viewForm() { this.showForm = true; }
   hideForm() { this.showForm = false; }
+  viewInterest() {  this.showInterest = true;  }
+  hideInterest(){ this.showInterest = false;  }
  
   submitPost() {
     const authorId = this.sessionUser!.id;

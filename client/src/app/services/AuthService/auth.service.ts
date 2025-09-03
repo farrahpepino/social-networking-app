@@ -19,7 +19,7 @@ export class AuthService {
     })
     .pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26', response.token);
         this.router.navigate(['home']);
       })
     );
@@ -32,20 +32,20 @@ export class AuthService {
     })
     .pipe(
       tap(response=>{
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26', response.token);
         this.router.navigate(['home']);
       })
     );
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26');
     this.router.navigate([''],{ replaceUrl: true });
   }
 
   isLoggedIn(): boolean {
     if (typeof window === 'undefined') return false;
-    return !!localStorage.getItem('token'); 
+    return !!localStorage.getItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26'); 
   }
 
 }

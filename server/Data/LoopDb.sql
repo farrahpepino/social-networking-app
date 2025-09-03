@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS LoopDb;
 CREATE DATABASE IF NOT EXISTS LoopDb
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -10,11 +11,9 @@ CREATE TABLE users (
     Email VARCHAR(255) NOT NULL UNIQUE,
     HashedPassword VARCHAR(255) NOT NULL,
     CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Bio TEXT NULL,
-    Location VARCHAR(255) NULL,
-    Interests JSON NULL
+    Age TEXT NULL,
+    Location VARCHAR(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 CREATE TABLE interests (
     Id VARCHAR(36) NOT NULL PRIMARY KEY,
@@ -22,7 +21,8 @@ CREATE TABLE interests (
     UserId2 VARCHAR(36) NOT NULL,
     CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UserId1) REFERENCES users(Id),
-    FOREIGN KEY (UserId2) REFERENCES users(Id)
+    FOREIGN KEY (UserId2) REFERENCES users(Id),
+    UNIQUE KEY unique_pair (UserId1, UserId2)
 );
 
 CREATE TABLE posts (
@@ -36,31 +36,52 @@ CREATE TABLE posts (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
 CREATE TABLE comments(
-	AuthorId VARCHAR(36) NOT NULL,
+    AuthorId VARCHAR(36) NOT NULL,
     Content VARCHAR(1000) NOT NULL,
     PostId VARCHAR(36) NOT NULL,
     Id VARCHAR(36) NOT NULL PRIMARY KEY,
     CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (AuthorId) REFERENCES users(Id)
-		ON DELETE CASCADE
+        ON DELETE CASCADE
         ON UPDATE CASCADE,
-	FOREIGN KEY (PostId) REFERENCES posts(Id)
-		ON DELETE CASCADE
+    FOREIGN KEY (PostId) REFERENCES posts(Id)
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
 CREATE TABLE likes(
-	Id VARCHAR(36) NOT NULL PRIMARY KEY UNIQUE,
+    Id VARCHAR(36) NOT NULL PRIMARY KEY UNIQUE,
     PostId VARCHAR(36) NOT NULL,
     LikerId VARCHAR(36) NOT NULL,
     CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (PostId) REFERENCES posts(Id)
-		ON DELETE CASCADE
+        ON DELETE CASCADE
         ON UPDATE CASCADE,
-	FOREIGN KEY (LikerId) REFERENCES users(Id)
-		ON DELETE CASCADE
+    FOREIGN KEY (LikerId) REFERENCES users(Id)
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+DELIMITER //
+
+CREATE PROCEDURE CreateInterest(
+    IN p_userId1 VARCHAR(36),
+    IN p_userId2 VARCHAR(36),
+    IN p_interestId VARCHAR(36),
+    IN p_createdAt TIMESTAMP
+)
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM interests
+        WHERE UserId1 = p_userId1
+          AND UserId2 = p_userId2
+        LIMIT 1
+    ) THEN
+        INSERT INTO interests (Id, UserId1, UserId2, CreatedAt)
+        VALUES (p_interestId, p_userId1, p_userId2, p_createdAt);
+    END IF;
+END//
+
+DELIMITER ;

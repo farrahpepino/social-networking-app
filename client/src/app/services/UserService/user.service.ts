@@ -23,7 +23,7 @@ export class UserService {
   }
 
    private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -49,11 +49,12 @@ export class UserService {
   }
 
   searchUser(query: string): Observable<UserSearchResponse[]> {
-    return this.http.get<UserSearchResponse[]>(`${environment.apiUrl}/user/search`, {params: { query }});
+    return this.http.get<UserSearchResponse[]>(`${environment.apiUrl}/user/search`, {params: { query }
+  , headers: this.getAuthHeaders(), responseType: 'json'  });
   }
 
   getUserInformation(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}/user`, {params: { username }});
+    return this.http.get<User>(`${environment.apiUrl}/user`, {params: { username }, headers: this.getAuthHeaders(), responseType: 'json'  });
   }
   
 }

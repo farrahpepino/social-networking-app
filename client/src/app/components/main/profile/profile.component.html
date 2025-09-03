@@ -5,10 +5,10 @@
 </button>
 <br>
 <br>
-<div class="center"> {{sessionUser?.username?.toUpperCase()}}. 18. BASED IN BALI.</div>
+<div class="center"> {{sessionUser?.username?.toUpperCase()}}</div>
 <div class="center">
     <div class="flex">
-    <button class="underline bt">{{ sessionUser?.interests?.length ?? 0 }} INTERESTS</button>
+    <button class="underline bt" (click)="viewInterest()">{{ interests!.length}} INTERESTS</button>
     </div>
 </div>
 
@@ -153,5 +153,17 @@
 
 
 <ng-template #noPost>
-    <p class="center y-center">Tell us what you love.</p>
+    <p class="center y-center">Tell us what you love quietly.</p>
 </ng-template>
+
+<div class="backdrop" [class.hidden]="!showInterest">
+    <div class="interest-block" *ngIf="interests" [class.hidden]="!showInterest">
+        <button class="bt white right" (click)="hideInterest()"><</button>
+        <strong class="center">INTERESTS</strong>
+        <br><br>
+        <div *ngIf="interests.length>0">
+            <p *ngFor="let interest of interests" class="white center">{{interest!.username.toUpperCase()}}</p>
+        </div>
+        <p *ngIf="interests.length===0" class="white center">NO INTERESTS</p>
+    </div>
+</div>

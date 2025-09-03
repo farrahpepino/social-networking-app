@@ -12,7 +12,8 @@ import { Comment } from '../../../models/comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { InterestsService } from '../../../services/interests.service';
+import { InterestsService } from '../../../services/InterestService/interests.service';
+import { InterestResponse } from '../../../models/interestresponse';
 
 @Component({
   selector: 'app-external-profile',
@@ -37,9 +38,14 @@ export class ExternalProfileComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
+  showInterest = false;
   isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  interests: InterestResponse[] = [];
+  sessionUserInterests : InterestResponse[] = [];
+  isFollowing = false;
+  
 
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username') ?? '';
@@ -53,9 +59,31 @@ export class ExternalProfileComponent implements OnInit {
       if (data) {   
         this.user = data;
         this.loadPosts();
+        
+        this.interestService.getInterests(data.id).subscribe(
+          {
+            next: (i: InterestResponse[])=>{
+              this.interests = i;
+            }
+          }
+        );
+
+
+        this.interestService.getInterests(this.sessionUser!.id).subscribe(
+          {
+            next: (i: InterestResponse[])=>{
+              this.sessionUserInterests = i;
+              for (const interest of this.sessionUserInterests){
+                if(interest.userId1 === this.sessionUser?.id){
+                  this.isFollowing = true;
+                }
+              }
+            }
+          }
+        );
       }
     });
-  }
+   }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -186,6 +214,8 @@ export class ExternalProfileComponent implements OnInit {
 
   viewForm() { this.showForm = true; }
   hideForm() { this.showForm = false; }
+  viewInterest() {  this.showInterest = true;  }
+  hideInterest(){ this.showInterest = false;  }
  
   submitPost() {
     const authorId = this.sessionUser!.id;
@@ -241,11 +271,26 @@ export class ExternalProfileComponent implements OnInit {
   }
 
   follow(){
+
+    if(this.sessionUser!.id != this.user!.id){
+     if (this.isFollowing===true){
+      this.interestService.deleteInterest(this.sessionUser!.id, this.user!.id).subscribe({
+        next: ()=>{
+          this.isFollowing = false;
+        }
+      });
+     }
+     else{
     this.interestService.follow(this.sessionUser!.id, this.user!.id).subscribe(
-    { error: (err) => {
-      alert("meow");
+    { 
+      next: () => { this.isFollowing = true; },
+      error: (err) => {
+      console.error(err, "Error following user."); 
     }}
     );
+  }
+  }
+  
     
   }
 }

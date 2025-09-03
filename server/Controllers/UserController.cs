@@ -1,11 +1,13 @@
 using server.Services;
 using server.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers{
 
     [ApiController]
     [Route("[controller]")]
+    [Authorize] 
     public class UserController: ControllerBase{
         private readonly UserService _userService;
 
@@ -25,13 +27,15 @@ namespace server.Controllers{
                 return NotFound();
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetUserInfo(string username)
         {
             var user = await _userService.GetUserInfo(username); 
             return Ok(user);  
             
         }
+
+        
 
 
     }

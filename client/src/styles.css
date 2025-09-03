@@ -98,3 +98,8 @@ input::placeholder{
   display: flex;
 }
 
+.right{
+  text-align: right;
+  display: flex;
+}
+

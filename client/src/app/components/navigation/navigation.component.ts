@@ -51,9 +51,16 @@ export class NavigationComponent {
     });
   }
 
-  visitProfile(username: string){
-    alert(username)
-    this.router.navigateByUrl(`/profile/${username}`); 
+  //FORCED. FIX LATER
+  visitProfile(username: string) {
+    if (this.router.url === `/profile/${username}`) {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigateByUrl(`/profile/${username}`);
+      });
+    } else {
+      this.router.navigateByUrl(`/profile/${username}`);
+    }
   }
+  
 
 }

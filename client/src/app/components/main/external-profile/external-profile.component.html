@@ -5,10 +5,10 @@
 </button>
 <br>
 <br>
-<div class="center"> {{user!.username.toUpperCase()}}. 18. BASED IN MANILA.</div>
+<div class="center"> {{user!.username.toUpperCase()}}</div>
 <div class="center">
     <div class="flex">
-    <button class="bt center" (click)="follow()"><strong>follow</strong></button> | <button class="underline bt">{{ user!.interests?.length ?? 0 }} INTERESTS </button>
+    <button class="bt center" (click)="follow()" *ngIf="user!.username !== sessionUser!.username"><strong>{{isFollowing ? "following" : "follow"}}</strong></button> <p *ngIf="user!.username !== sessionUser!.username">|</p> <button class="underline bt" (click)="viewInterest()">{{ interests!.length }} INTERESTS </button>
     </div>
 </div>
 <div class="post-wrapper content" *ngIf="posts.length>0; else noPost">
@@ -153,3 +153,16 @@
 <ng-template #noPost>
     <p class="center y-center">No post yet.</p>
 </ng-template>
+
+<div class="backdrop" [class.hidden]="!showInterest">
+    <div class="interest-block" *ngIf="interests" [class.hidden]="!showInterest">
+        <button class="bt white right" (click)="hideInterest()"><</button>
+        <strong class="center">INTERESTS</strong>
+        <br><br>
+        <div *ngIf="interests.length>0">
+            <p *ngFor="let interest of interests" class="white center">{{interest!.username.toUpperCase()}}</p>
+        </div>
+        <p *ngIf="interests.length===0" class="white center">NO INTERESTS</p>
+
+    </div>
+</div>

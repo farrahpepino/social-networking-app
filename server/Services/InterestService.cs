@@ -32,5 +32,14 @@ namespace server.Services{
             await _interestRepository.CreateInterest(newInterest); 
             return newInterest;
         }
+        
+         public async Task<IEnumerable<InterestResponse>> GetInterests(string userId){
+            var response = await _interestRepository.GetInterests(userId); 
+            return response;
+        }
+
+        public async Task DeleteInterest(InterestDto interest){
+            await _interestRepository.DeleteInterest(interest);
+        }
     }
 }

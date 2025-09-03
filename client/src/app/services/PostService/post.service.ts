@@ -14,7 +14,7 @@ export class PostService {
   constructor(private http: HttpClient) {}
   
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('5a6f9c4c-1b88-4d9f-b62f-9fcb9e91db26');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });

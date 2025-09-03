@@ -3,7 +3,11 @@
 <button class="mb" (click)="viewForm()">
     +
 </button>
-
+<br>
+<br>
+<div class="center">HOME</div>
+<br>
+<br>
 <div class="post-wrapper content" *ngIf="posts.length>0; else noPost">
 <div class="post-container" *ngFor="let post of posts" >
    
@@ -148,3 +152,4 @@
 <ng-template #noPost>
     <p class="center y-center">No post yet.</p>
 </ng-template>
+
