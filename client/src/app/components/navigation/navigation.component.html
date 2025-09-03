@@ -7,7 +7,8 @@
   <div class="parent">
   <input type="text" id="search" title="search" placeholder="SEARCH USERNAME" (input)="onSearch()" [(ngModel)]="searchQuery"/>
   <div class="child-search" *ngIf="users.length > 0" #searchInput>
-    <p *ngFor="let user of users">{{user.username}}</p>
+    <p *ngFor="let user of users"><button class="bt white" (click)="visitProfile(user.id)">{{user.username}}</button></p>
+
   </div>
   </div>
     <div class="parent p-r">

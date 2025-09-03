@@ -4,6 +4,7 @@ import { HomeComponent } from './components/main/home/home.component';
 import { ProfileComponent } from './components/main/profile/profile.component';
 import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
+import { ExternalProfileComponent } from './components/main/external-profile/external-profile.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,11 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [authGuard]
-    }
+    },
+    {
+        path: 'profile/:id',
+        component: ExternalProfileComponent,
+        canActivate: [authGuard]
+      }
 
 ];

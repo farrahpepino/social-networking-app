@@ -26,7 +26,7 @@ namespace server.Middlewares{
                     status = context.Response.StatusCode,
                     error = "An unexpected error occurred",
                     detail = ex.Message,
-                    timestamp = DateTime.UtcNow
+                    timestamp = DateTime.Now
                 };
                 await context.Response.WriteAsJsonAsync(errorResponse);
             }

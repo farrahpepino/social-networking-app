@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,23 +11,27 @@ import { Like } from '../../../models/like';
 import { Comment } from '../../../models/comment';
 import { NavigationComponent } from '../../navigation/navigation.component';
 import { CommonModule } from '@angular/common';
-@Component({
-  selector: 'app-profile',
-  imports: [NavigationComponent, CommonModule],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
-})
-export class ProfileComponent implements OnInit {
+import { ActivatedRoute } from '@angular/router';
 
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
+@Component({
+  selector: 'app-external-profile',
+  imports: [NavigationComponent, CommonModule],
+  templateUrl: './external-profile.component.html',
+  styleUrl: './external-profile.component.css'
+})
+export class ExternalProfileComponent implements OnInit {
+
+  constructor(private route: ActivatedRoute, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
 
   loggedInUser: User | null = null;
+  user: User | null = null;
+  userId: string = "";
   posts: Post[] = [];
   post: Post | null = null;
   comments: Comment[] = [];
-  likes: Like[] = []
+  likes: Like[] = [];
   commentCount: number = 0;
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
@@ -36,9 +41,16 @@ export class ProfileComponent implements OnInit {
   previewUrl: string | null = null;
 
   ngOnInit(): void {
+    this.userId = this.route.snapshot.paramMap.get('id') || '';
     this.userService.loggedInUser$.subscribe(user => {
       if (user) {   
         this.loggedInUser = user;
+        this.loadPosts();
+      }
+    });
+    this.userService.getUserInformation(this.userId).subscribe(user => {
+      if (user) {   
+        this.user = user;
         this.loadPosts();
       }
     });
@@ -63,7 +75,7 @@ export class ProfileComponent implements OnInit {
   
 
   loadPosts() {
-    this.postService.getPostsByUserId(this.loggedInUser!.id).subscribe({
+    this.postService.getPostsByUserId(this.userId).subscribe({
       next: (data) => {
         this.posts = data;
         this.posts.forEach(post => {

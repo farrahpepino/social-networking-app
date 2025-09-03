@@ -5,15 +5,13 @@
 </button>
 <br>
 <br>
-<div class="center"> {{loggedInUser?.username?.toUpperCase()}}. 18. BASED IN BALI.</div>
+<div class="center"> {{user!.username.toUpperCase()}}. 18. BASED IN MANILA.</div>
 <div class="center">
     <div class="flex">
-    <button class="underline bt">8 INTERESTS</button>
+    <button class="bt center"><strong>follow</strong></button> | <button class="underline bt">8 INTERESTS</button>
     </div>
 </div>
-
-
-<div class="post-wrapper content" *ngIf="posts.length>0; else noPost">
+<div class="post-wrapper content">
 <div class="post-container" *ngFor="let post of posts" >
    
     <div class="post-header">
@@ -150,8 +148,3 @@
         </div>
     </div>
 </div>
-
-
-<ng-template #noPost>
-    <p class="center y-center">Tell us what you love.</p>
-</ng-template>

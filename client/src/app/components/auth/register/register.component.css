@@ -29,13 +29,14 @@ input{
     text-align: left;
     padding: 0px 10px;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
-
+    font-size: 12px;
 }
 
 input::placeholder{
     color: rgb(0 0 0 / 90%);
     font-weight: 100;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+    font-size: 12px;
 }
 
 input:-webkit-autofill {
@@ -45,6 +46,7 @@ input:-webkit-autofill {
     transition: background-color 5000s ease-in-out 0s !important;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     font-weight: 100;
+    font-size: 12px;
 }
 
 label{

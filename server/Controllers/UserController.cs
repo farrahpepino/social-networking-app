@@ -25,6 +25,13 @@ namespace server.Controllers{
                 return NotFound();
         }
 
+        [HttpGet()]
+        public async Task<IActionResult> GetUserInfo(string userId)
+        {
+            var user = await _userService.GetUserInfo(userId); 
+            return Ok(user);  
+            
+        }
 
 
     }
