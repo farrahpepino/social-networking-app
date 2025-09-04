@@ -5,6 +5,5 @@ namespace AwsS3.Models
         public MemoryStream InputStream { get; set; } = null!;
         public string BucketName { get; set; } = null!;
         public string Name { get; set; } = null!;
-
     }
 }

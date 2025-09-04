@@ -10,16 +10,16 @@ namespace server.Repositories{
             _context = context;
         }
 
-        private const string InsertPostQuery = @"INSERT INTO posts (Id, AuthorId, Content, ImageUrl, CreatedAt) VALUES (@Id, @AuthorId, @Content, @ImageUrl, @CreatedAt);";
+        private const string InsertPostQuery = @"INSERT INTO posts (Id, AuthorId, Content, ImageUrl, ImageKey, CreatedAt) VALUES (@Id, @AuthorId, @Content, @ImageUrl, @ImageKey, @CreatedAt);";
         private const string DeletePostByIdQuery = "DELETE FROM posts WHERE Id = @Id";
-        private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE posts.Id = @Id ";
-        private const string SelectPostsByUserIdQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE AuthorId = @AuthorId ORDER BY posts.CreatedAt DESC";
-        private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId ORDER BY posts.CreatedAt DESC";
+        private const string SelectPostByIdQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, ImageKey, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE posts.Id = @Id ";
+        private const string SelectPostsByUserIdQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, ImageKey, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId WHERE AuthorId = @AuthorId ORDER BY posts.CreatedAt DESC";
+        private const string SelectPostsQuery = "SELECT posts.Id, AuthorId, Content, ImageUrl, ImageKey, posts.CreatedAt, users.Username FROM posts JOIN users on users.Id = posts.AuthorId ORDER BY posts.CreatedAt DESC";
         private const string InsertLikeQuery = @"INSERT IGNORE INTO likes (Id, PostId, LikerId, CreatedAt) VALUES (@Id, @PostId, @LikerId, @CreatedAt);";
         private const string DeleteLikeQuery = "DELETE FROM likes WHERE PostId = @PostId AND LikerId=@LikerId";
         private const string SelectLikesByPostIdQuery = "SELECT likes.CreatedAt, likes.Id, likes.LikerId, likes.PostId, users.Username  FROM likes JOIN users on users.Id = likes.likerId WHERE PostId=@PostId ORDER BY likes.CreatedAt ASC";
         private const string LikeExistsQuery = "SELECT 1 FROM likes WHERE PostId=@PostId AND LikerId=@LikerId";
-        private const string SelectFeedPost = "SELECT posts.Id, posts.AuthorId, posts.Content, posts.ImageUrl, posts.CreatedAt, users.Username FROM posts JOIN users ON users.Id = posts.AuthorId WHERE posts.AuthorId IN ((SELECT UserId1 FROM interests WHERE UserId1 = @UserId1), (SELECT UserId2 FROM interests WHERE UserId1 = @UserId1)) ORDER BY posts.CreatedAt DESC;";
+        private const string SelectFeedPost = "SELECT posts.Id, posts.AuthorId, posts.Content, posts.ImageUrl, posts.ImageKey, posts.CreatedAt, users.Username FROM posts JOIN users ON users.Id = posts.AuthorId WHERE posts.AuthorId IN ( SELECT UserId2 FROM interests WHERE UserId1 = @UserId1 UNION SELECT @UserId1) ORDER BY posts.CreatedAt DESC;";
 
         public async Task InsertPost(Post post) {
             using var connection = _context.CreateConnection();

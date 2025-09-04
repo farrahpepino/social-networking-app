@@ -7,6 +7,7 @@ namespace server.Models{
         public required string AuthorId {get; set;} = string.Empty;
         public required string Content {get; set;} = string.Empty;
         public string? ImageUrl {get; set;} 
+        public string? ImageKey {get; set;} 
         public DateTime CreatedAt {get; set;} = DateTime.Now;
         public string Username {get; set;} = string.Empty;
     }

@@ -3,6 +3,8 @@ using server.Models;
 using server.Repositories;
 using Dapper; 
 using Microsoft.Extensions.Logging;
+using AwsS3.Models;
+using AwsS3.Services;
 
 /*
 I've learned using just one connection for all methods is 
@@ -19,14 +21,20 @@ namespace server.Services{
 
         private readonly ILogger<PostService> _logger;
         private readonly PostRepository _postRepository;
+        private readonly IConfiguration _config;
+         private readonly IStorageService _storageService;
+
     
-        public PostService(ILogger<PostService> logger, PostRepository postRepository){
+        public PostService(IConfiguration config, ILogger<PostService> logger, PostRepository postRepository, IStorageService storageService){
             _logger = logger;
             _postRepository = postRepository;
+            _storageService = storageService;
+            _config = config;
         }
     
         public async Task<Post?> CreatePost(Post post){
             post.ImageUrl?.ToString();
+            post.ImageKey?.ToString();
             post.Id = Guid.NewGuid().ToString();
             post.CreatedAt = DateTime.Now;
             await _postRepository.InsertPost(post);
@@ -35,6 +43,9 @@ namespace server.Services{
         }
 
         public async Task<bool> DeletePost(string postId){
+
+
+
             var affectedRows = await _postRepository.DeletePost(postId);
 
             if (affectedRows > 0){

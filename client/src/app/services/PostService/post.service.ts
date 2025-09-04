@@ -5,6 +5,7 @@ import { Post } from '../../models/post';
 import { environment } from '../../../environments/environment';
 import { Like } from '../../models/like';
 import { S3Response } from '../../models/s3response';
+import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,11 +21,12 @@ export class PostService {
     });
   }
 
-  createPost(authorId: string, content: string, imageUrl?: string | null): Observable<Post> {
+  createPost(authorId: string, content: string, imageUrl?: string | null, imageKey?: string | null): Observable<Post> {
     return this.http.post<Post>(`${environment.apiUrl}/post`, {
       AuthorId: authorId, 
       Content: content,
-      ImageUrl: imageUrl
+      ImageUrl: imageUrl,
+      ImageKey: imageKey
     },
     { headers: this.getAuthHeaders() }
     );
@@ -32,6 +34,13 @@ export class PostService {
   
   uploadImage(formData: FormData): Observable<S3Response> {
     return this.http.post<S3Response>(`${environment.apiUrl}/image`, formData,  { headers: this.getAuthHeaders() });
+  }
+
+  deleteImage(key: string, userId: string) {
+    return this.http.delete(
+      `${environment.apiUrl}/image/${userId}/${key}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
   
   deletePost(id: string): Observable<void> {

@@ -74,7 +74,7 @@ export class ExternalProfileComponent implements OnInit {
             next: (i: InterestResponse[])=>{
               this.sessionUserInterests = i;
               for (const interest of this.sessionUserInterests){
-                if(interest.userId1 === this.sessionUser?.id){
+                if(interest.userId2 === this.user?.id){
                   this.isFollowing = true;
                 }
               }
@@ -136,11 +136,28 @@ export class ExternalProfileComponent implements OnInit {
     });
   }
 
-  deletePost(id: string){
-    this.postService.deletePost(id).subscribe({
-      next: () => this.loadPosts(), 
-      error: (err) => console.error("Error deleting post:", err)
-    });
+
+  deletePost(id: string, key: string){
+    if(key!==null){
+      this.postService.deleteImage(key, this.sessionUser!.id).subscribe({
+        next: () => {
+          this.postService.deletePost(id).subscribe({
+            next: () => {
+              this.loadPosts();
+            },
+            error: (err) => console.error("Error deleting post:", err)});
+        },
+        error: (err) => console.error("Error deleting image:", err)
+      })
+    }
+    else{
+      this.postService.deletePost(id).subscribe({
+        next: () => {
+          this.loadPosts();
+        },
+        error: (err) => console.error("Error deleting post:", err)
+      });
+    }
   }
 
   onClick() {
@@ -229,7 +246,7 @@ export class ExternalProfileComponent implements OnInit {
       this.postService.uploadImage(formData)
     .subscribe(
         res => { 
-         this.postService.createPost(authorId, content, res.url).subscribe({
+          this.postService.createPost(authorId, content, res.url, res.key).subscribe({
           next:()=>{this.selectedFile = null;
             this.previewUrl = null;
             this.postInput.nativeElement.innerText = '';
@@ -243,7 +260,7 @@ export class ExternalProfileComponent implements OnInit {
       );
     } 
     else {
-      this.postService.createPost(authorId, content, null).subscribe({
+      this.postService.createPost(authorId, content, null, null).subscribe({
         next: (post) => {
           this.postInput.nativeElement.innerText = '';
           this.hideForm();

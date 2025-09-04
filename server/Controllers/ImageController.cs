@@ -14,10 +14,13 @@ namespace server.Controllers{
     public class ImageController: ControllerBase{
         private readonly IStorageService _storageService;
         private readonly IConfiguration _config;
+        private readonly ILogger<ImageController> _logger;
 
-        public ImageController(IConfiguration config, IStorageService storageService){
+
+        public ImageController(IConfiguration config, IStorageService storageService, ILogger<ImageController> logger){
             _config = config;
             _storageService = storageService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -52,7 +55,28 @@ namespace server.Controllers{
 
 
         var result = await _storageService.UploadFileAsync(s3Obj, cred);
-        return Ok(new { message = "Uploaded successfully", url = result.Url });
+        return Ok(new { message = "Uploaded successfully", url = result.Url, key=docName });
+        }
+
+        [HttpDelete("{userId}/{*key}")]
+        public async Task<IActionResult> DeleteFile(string userId, string key)
+        {
+                var s3Obj = new S3Object()
+                {
+                    BucketName = "loop-social",
+                    Name = $"{userId}/{key}"  
+                };
+
+                var accessKey = _config["AwsConfiguration:AWSAccessKey"];
+                var secretKey = _config["AwsConfiguration:AWSSecretKey"];
+                var cred = new AwsCredentials()
+                {
+                    AccessKey = accessKey,
+                    SecretKey = secretKey
+                };
+
+                var result = await _storageService.DeleteFileAsync(s3Obj, cred);
+                return Ok(result);
         }
     }
 }

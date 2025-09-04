@@ -5,6 +5,7 @@ export interface Post {
     authorId: string;
     content: string;
     imageUrl?: string | null;
+    imageKey?: string | null;
     createdAt: Date;
     username?: string;
     likes?: Like[];
