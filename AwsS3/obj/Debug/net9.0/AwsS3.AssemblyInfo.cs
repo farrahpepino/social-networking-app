@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AwsS3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fff9110a36b7b76f38e5274c2126352119b84a9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+295bebe0ad66c53623d13bce53920a727d13a8ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("AwsS3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AwsS3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

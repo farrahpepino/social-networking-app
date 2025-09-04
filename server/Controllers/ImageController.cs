@@ -29,7 +29,8 @@ namespace server.Controllers{
         await using var memoryStream = new MemoryStream();
         await File.CopyToAsync(memoryStream);
 
-        var fileExt = Path.GetExtension(File.FileName); var docName = $"{Guid.NewGuid()}{fileExt}"; 
+        var fileExt = Path.GetExtension(File.FileName); 
+        var docName = $"{Guid.NewGuid()}{fileExt}"; 
         var s3Key = $"{UserId}/{docName}";
 
         var s3Obj = new S3Object()
