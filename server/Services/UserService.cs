@@ -9,7 +9,7 @@ namespace server.Services{
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<UserSearchResult>> SearchUsers(string query){ 
+        public async Task<IEnumerable<UserSearchResponse>> SearchUsers(string query){ 
             return await _userRepository.SearchUsers(query);
         }
 

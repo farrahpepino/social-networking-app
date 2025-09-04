@@ -68,7 +68,13 @@ namespace server.Controllers{
                 };
 
                 var accessKey = _config["AwsConfiguration:AWSAccessKey"];
+                if (accessKey == null)
+                    throw new ArgumentNullException("AwsConfiguration:AWSAccessKey is not in configuration.");
+
                 var secretKey = _config["AwsConfiguration:AWSSecretKey"];
+                if (secretKey == null)
+                    throw new ArgumentNullException("AwsConfiguration:AWSSecretKey is not in configuration.");
+
                 var cred = new AwsCredentials()
                 {
                     AccessKey = accessKey,

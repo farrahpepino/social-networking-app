@@ -1,6 +1,5 @@
 using System;
 using System.Text.Json.Serialization;
-
 namespace server.Models{
     public class Post{
         public string Id {get; set;} = Guid.NewGuid().ToString();
@@ -11,5 +10,4 @@ namespace server.Models{
         public DateTime CreatedAt {get; set;} = DateTime.Now;
         public string Username {get; set;} = string.Empty;
     }
-
 }

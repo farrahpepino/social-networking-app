@@ -28,9 +28,9 @@ namespace server.Repositories{
                 SelectUserByEmailQuery, new { Email = email });
         }
 
-        public async Task<IEnumerable<UserSearchResult>> SearchUsers(string query){
+        public async Task<IEnumerable<UserSearchResponse>> SearchUsers(string query){
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<UserSearchResult>(SearchQuery, new { Username = $"%{query}%" });
+            return await connection.QueryAsync<UserSearchResponse>(SearchQuery, new { Username = $"%{query}%" });
         }
 
         public async Task<User> GetUserInfo(string username){

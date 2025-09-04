@@ -1,5 +1,5 @@
 namespace server.Models{
-    public class Registration{
+    public class Registration {
         public required string Username {get; set;}
         public required string HashedPassword { get; set; }
         public required string Email {get; set;}
