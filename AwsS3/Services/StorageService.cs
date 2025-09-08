@@ -74,15 +74,14 @@ namespace AwsS3.Services
                 var deleteRequest = new DeleteObjectRequest
                 {
                     BucketName = obj.BucketName,
-                    Key = obj.Name
+                    Key = obj.Name,
                 };
 
                 using var client = new AmazonS3Client(credentials, config);
+                
                 await client.DeleteObjectAsync(deleteRequest);
-
                 response.StatusCode = 200;
                 response.Message = $"{obj.Name} has been deleted successfully";
-                response.Url = $"https://{obj.BucketName}.s3.us-east-1.amazonaws.com/{obj.Name}";
             }
             catch (AmazonS3Exception s3Ex)
             {

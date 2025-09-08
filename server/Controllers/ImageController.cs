@@ -30,7 +30,7 @@ namespace server.Controllers{
         await File.CopyToAsync(memoryStream);
 
         var fileExt = Path.GetExtension(File.FileName); 
-        var docName = $"{Guid.NewGuid()}{fileExt}"; 
+        var docName = $"{Guid.NewGuid().ToString()}{fileExt}"; 
         var s3Key = $"{UserId}/{docName}";
 
         var s3Obj = new S3Object()
@@ -82,8 +82,10 @@ namespace server.Controllers{
                     SecretKey = secretKey
                 };
 
-                var result = await _storageService.DeleteFileAsync(s3Obj, cred);
-                return Ok(result);
+            
+                var response = await _storageService.DeleteFileAsync(s3Obj, cred);
+                Console.WriteLine(response.Message);
+                return Ok(response);
         }
     }
 }
