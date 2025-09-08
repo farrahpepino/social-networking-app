@@ -1,22 +1,16 @@
-//delete interest
-//create interest
-
 using server.Data;
 using server.Models;
 using server.Repositories;
 using Dapper; 
-using Microsoft.Extensions.Logging;
 
 
 namespace server.Services{
 
     public class InterestService{
 
-        private readonly ILogger<InterestService> _logger;
         private readonly InterestRepository _interestRepository;
     
-        public InterestService(ILogger<InterestService> logger, InterestRepository interestRepository){
-            _logger = logger;
+        public InterestService(InterestRepository interestRepository){
             _interestRepository = interestRepository;
         }
     

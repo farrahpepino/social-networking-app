@@ -5,7 +5,6 @@ import { Post } from '../../models/post';
 import { environment } from '../../../environments/environment';
 import { Like } from '../../models/like';
 import { S3Response } from '../../models/s3response';
-import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -70,7 +69,6 @@ export class PostService {
   unlikePost(PostId: string, LikerId: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/post/${PostId}/unlike-post/${LikerId}`, {
       headers: this.getAuthHeaders()});
-
   }
   
   getLikes(postId: string): Observable<Like[]>{

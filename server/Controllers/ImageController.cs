@@ -14,13 +14,10 @@ namespace server.Controllers{
     public class ImageController: ControllerBase{
         private readonly IStorageService _storageService;
         private readonly IConfiguration _config;
-        private readonly ILogger<ImageController> _logger;
 
-
-        public ImageController(IConfiguration config, IStorageService storageService, ILogger<ImageController> logger){
+        public ImageController(IConfiguration config, IStorageService storageService){
             _config = config;
             _storageService = storageService;
-            _logger = logger;
         }
 
         [HttpPost]
@@ -82,9 +79,7 @@ namespace server.Controllers{
                     SecretKey = secretKey
                 };
 
-            
                 var response = await _storageService.DeleteFileAsync(s3Obj, cred);
-                Console.WriteLine(response.Message);
                 return Ok(response);
         }
     }
