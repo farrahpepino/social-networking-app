@@ -6,15 +6,6 @@ using Microsoft.Extensions.Logging;
 using AwsS3.Models;
 using AwsS3.Services;
 
-/*
-I've learned using just one connection for all methods is 
-not thread-safe. If API handles multiple requests at the same time, it
-can cause errors.
-
-Additionally, you must open and close it properly. It shouldn't be 
-open for the entire app lifetime.
-*/
-
 namespace server.Services{
 
     public class PostService{

@@ -20,6 +20,17 @@ export class NavigationComponent {
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
   searchQuery: string = "";
   users: UserSearchResponse[] =  [];
+  showMenu = false;
+
+  toggleMenu(){
+    if(this.showMenu==true){
+      this.showMenu = false;
+    }
+    else{
+      this.showMenu = true;
+
+    }
+  }
 
   logout() {
     this.authService.logout();

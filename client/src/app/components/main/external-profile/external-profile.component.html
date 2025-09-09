@@ -3,6 +3,7 @@
 <button class="mb" (click)="viewForm()">
     +
 </button>
+
 <br>
 <br>
 <div class="center"> {{user!.username.toUpperCase()}}</div>
@@ -19,8 +20,11 @@
             <p class="f-300">{{post.username}}</p>
             <p class="f-100 st">{{post.createdAt | date: 'MMM d, y \'at\' h:mm a' }}</p>
         </div>
-        <div *ngIf="post.username===sessionUser?.username" class="bt parent menu">•••
-            <button class="child-right white" (click)="deletePost(post.id, post.imageKey!)">DELETE POST</button>
+        <div class="parent">
+            <button *ngIf="post.username===sessionUser?.username" class="bt menu" (click)="toggleDropdown(1)">•••</button>
+            <ul class="child-right" [class.hidden]="!outerDropdown">
+                <li><button (click)="deletePost(post.id, post.imageKey!)" class="bt white">DELETE POST</button></li>
+            </ul>
         </div>
     </div>
     <p>{{post.content}}</p>
@@ -85,6 +89,7 @@
         <label for="fileInput" class="upload-label">
             <i class="fa fa-image big-icon"></i>
         </label>
+        <br>
         <button type="button" class="b" (click)="submitPost()">Post</button>
     </div>
 </div>
@@ -100,8 +105,12 @@
             </div>
         </div>
         <div class="col">
-            <div *ngIf="post.username===sessionUser?.username" class="bt parent menu">•••
-                <button class="child-right white" (click)="deletePost(post.id, post.imageKey!)">DELETE POST</button>
+            <div class="parent">
+                <button *ngIf="post.username===sessionUser?.username" class="bt menu" (click)="toggleDropdown(2)">•••</button>
+                <ul class="child-right" [class.hidden]="!innerDropdown
+                ">
+                    <li><button (click)="deletePost(post.id, post.imageKey!)" class="bt white">DELETE POST</button></li>
+                </ul>
             </div>
             <button class="bt" (click)="hidePost()">X</button>
         </div>

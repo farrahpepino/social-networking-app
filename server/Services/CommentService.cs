@@ -8,7 +8,7 @@ namespace server.Services{
         private readonly DapperContext _context;
         private readonly CommentRepository _commentRepository;
 
-        public CommentService(DapperContext context CommentRepository commentRepository){
+        public CommentService(DapperContext context, CommentRepository commentRepository){
                 _context = context;
                 _commentRepository = commentRepository;
         }

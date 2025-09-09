@@ -4,12 +4,14 @@
     outline: none;
     padding: 0px !important;
     margin: 0px !important;
-    color: rgb(255, 255, 255, 0.6);
+}
+
+button{
+    font-weight: 100;
 }
 
 .child{
     position: absolute;
-    visibility: hidden;
     text-align: left;
     padding-left: 15px;
     padding-top: 15px;
@@ -19,6 +21,8 @@
     width: 120px;
     height: 50px;
     z-index: 1001;
+    outline: none;
+    border: none;
 }
 
 .child-search{
@@ -78,13 +82,13 @@ input:-webkit-autofill {
     position: relative;
 }
 
-.parent:hover .child {
-    visibility: visible;
-}
-
 ul {
     list-style-type: none;
     margin: 0 auto;
+}
+
+.white{
+    color: rgb(255, 255, 255, 0.6);
 }
 
 @media (max-width: 900px){

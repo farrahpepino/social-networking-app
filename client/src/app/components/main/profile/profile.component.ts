@@ -33,6 +33,8 @@ export class ProfileComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
+  outerDropdown = false;
+  innerDropdown = false;
   showInterest = false;
   isClicked = false;
   selectedFile: File | null = null;
@@ -170,6 +172,9 @@ export class ProfileComponent implements OnInit {
   
   viewPost(id: string) {
     this.showPost = true; 
+    this.outerDropdown = false;
+    this.showForm = false; 
+    this.showInterest = false;
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
@@ -197,13 +202,42 @@ export class ProfileComponent implements OnInit {
   hidePost() { 
     this.post = null;
     this.showPost = false; 
+    this.outerDropdown = false;
+    this.innerDropdown = false;
     this.loadPosts();
   }
 
-  viewForm() { this.showForm = true; }
+  viewForm() {  
+    this.outerDropdown=false;
+    this.showForm = true;
+    this.showPost = false; 
+    this.showInterest = false;
+  }
   hideForm() { this.showForm = false; }
-  viewInterest() {  this.showInterest = true;  }
+  viewInterest() {  
+    this.outerDropdown=false;
+    this.showInterest = true;  
+  }
   hideInterest(){ this.showInterest = false;  }
+  toggleDropdown(i: number){
+    if(i==1){
+      if(this.outerDropdown == true){
+        this.outerDropdown = false;
+      }
+      else{
+        this.outerDropdown = true;
+      }
+    }
+    else{
+      if(this.innerDropdown == true){
+        this.innerDropdown = false;
+      }
+      else{
+        this.innerDropdown = true;
+      }
+    }
+    
+  }
  
   submitPost() {
     const authorId = this.sessionUser!.id;

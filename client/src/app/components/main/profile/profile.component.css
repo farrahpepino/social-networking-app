@@ -34,13 +34,14 @@
 
 .brd{
     outline: none;
-    width: 97.5%;
+    width: 97%;
     font-family: Arial;
     border-radius: 20px;
     border: solid 0.5px rgb(0,0,0,0.1);
     padding: 10px;
     contain: content;
     margin-top: 8px;
+    margin: 0 auto;
 }
 
 .bt{
@@ -72,11 +73,10 @@
 
 .child-right{
     position: absolute;
-    visibility: hidden;
     text-align: left;
     padding: 10px;
     right: 5px;
-    top: 12px;
+    top: 10px;
     background-color: #0D0D0D;
     width: 120px;
     max-height: 12rem;
@@ -114,8 +114,8 @@
     border: none;
     border-radius: 20px;
     position: fixed;
-    right: 5px;
-    bottom: 3px;
+    right: 2px;
+    bottom: 2px;
     margin-top: 10px;
     z-index: 1003;
     padding: 7px 10px;
@@ -211,10 +211,6 @@ p{
     visibility: visible;
 }
 
-.parent:hover .child-right  {
-    visibility: visible;
-}
-
 .p-i{
     outline: none;
     width: 87%;
@@ -290,12 +286,17 @@ p{
     color: #F73644;
 }
 
+.y-center{
+    height: 90%;
+}
+
+
 @media(max-width: 1000px){
 
-    .child-right{
-        top: 21px;   
+    .brd {
+        width: 92%;
     }
-      
+
     .img-wrapper {
         width: 100%;
         display: flex;
@@ -328,12 +329,3 @@ p{
 }
 
 
-.y-center{
-    height: 90%;
-}
-
-@media(max-width: 1500px){
-    .child-right{
-        top: 21px;   
-    }
-}

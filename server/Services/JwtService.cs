@@ -4,7 +4,6 @@ using System.IdentityModel.Tokens.Jwt; // for building the token and serializing
 using System.Security.Claims; // for defining claims
 using System.Text; // for encoding strings into bytes
 
-//This is responsible for generating JWTs
 namespace server.Services{
     public class JwtService: IJwtService{
         private readonly IConfiguration _configuration;

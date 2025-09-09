@@ -11,26 +11,19 @@
 
   </div>
   </div>
-    <div class="parent p-r">
-        PROFILE
-        <div class="child">
-            <ul>
-                <li>
-                    <button class="bt" (click)="viewProfile()">
-                      VIEW PROFILE
-                    </button>
-                </li>
-                <li>
-                  <!-- <button class="bt">
-                    EDIT PROFILE
-                  </button> -->
-                </li>
-                <li>
-                  <button class="bt" (click)="logout()">
-                    SIGN OUT
+    <div class="parent">
+        <button class="bt p-r" (click)="toggleMenu()">PROFILE</button>
+          <ul class="child" [hidden]="!showMenu"> 
+              <li>
+                  <button class="bt white" (click)="viewProfile()">
+                     VIEW PROFILE
                   </button>
-                </li>
-            </ul>              
-        </div>
+              </li>
+              <li>
+                <button class="bt white" (click)="logout()">
+                    SIGN OUT
+                </button>
+              </li>
+          </ul>              
     </div>
 </div>

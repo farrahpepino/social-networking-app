@@ -2,7 +2,7 @@ using server.Data;
 using server.Models;
 using server.Repositories;
 using Microsoft.Extensions.Logging;
-using BCrypt.Net; // for hashing password and verification
+using BCrypt.Net;
 
 namespace server.Services{
     public class AuthService{
