@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
-  isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   s3Url: string | null = null;
@@ -124,10 +123,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onClick() {
-    this.isClicked = true;
-  }
-
   isLiked(postId: string){
     return !!this.likedPosts[postId];
   }
@@ -196,7 +191,9 @@ export class HomeComponent implements OnInit {
     this.showForm = true;
     this.showPost = false; 
   }
-  hideForm() { this.showForm = false; }
+  hideForm() { 
+    this.showForm = false; 
+  }
   toggleDropdown(post: Post, i: number){
     if(i==1){
       if(post!.outerDropdown===true){

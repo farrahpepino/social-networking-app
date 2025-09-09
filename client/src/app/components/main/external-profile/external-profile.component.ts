@@ -39,7 +39,6 @@ export class ExternalProfileComponent implements OnInit {
   showPost = false;
   showForm = false;
   showInterest = false;
-  isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   interests: InterestResponse[] = [];
@@ -164,10 +163,6 @@ export class ExternalProfileComponent implements OnInit {
         error: (err) => console.error("Error deleting post:", err)
       });
     }
-  }
-
-  onClick() {
-    this.isClicked = true;
   }
 
   isLiked(postId: string){

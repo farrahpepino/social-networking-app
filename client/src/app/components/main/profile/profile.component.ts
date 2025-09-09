@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
   constructor(private interestService: InterestsService, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
-  @ViewChild('hide') hide!: ElementRef<HTMLElement>;
 
   sessionUser: User | null = null;
   posts: Post[] = [];
@@ -35,11 +34,9 @@ export class ProfileComponent implements OnInit {
   showPost = false;
   showForm = false;
   showInterest = false;
-  isClicked = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   interests: InterestResponse[] = [];
-
 
   ngOnInit(): void {
     this.userService.sessionUser$.subscribe(user => {
@@ -134,10 +131,6 @@ export class ProfileComponent implements OnInit {
         error: (err) => console.error("Error deleting post:", err)
       });
     }
-  }
-
-  onClick() {
-    this.isClicked = true;
   }
 
   isLiked(postId: string){
