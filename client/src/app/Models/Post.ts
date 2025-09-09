@@ -10,4 +10,6 @@ export interface Post {
     username?: string;
     likes?: Like[];
     likedByCurrentUser?: boolean;
+    outerDropdown?: boolean;
+    innerDropdown?: boolean;
 }

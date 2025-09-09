@@ -65,6 +65,10 @@
     overflow-y: scroll;
 }
 
+.parent:hover .child{
+    visibility: visible;
+}
+
 .child p{
     color: (255, 255, 255, 0.6);
 }
@@ -78,7 +82,7 @@
     background-color: #0D0D0D;
     width: 120px;
     max-height: 12rem;
-    z-index: 1008;
+    z-index: 995;
     overflow-y: scroll;
     outline: none;
     border: none;

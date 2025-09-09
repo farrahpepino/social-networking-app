@@ -38,8 +38,6 @@ export class ExternalProfileComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
-  outerDropdown = false;
-  innerDropdown = false;
   showInterest = false;
   isClicked = false;
   selectedFile: File | null = null;
@@ -108,7 +106,13 @@ export class ExternalProfileComponent implements OnInit {
   loadPosts() {
     this.postService.getPostsByUserId(this.user!.id).subscribe({
       next: (data) => {
-        this.posts = data;
+        this.posts = data.map(
+          post => ({
+            ...post, 
+            outerDropdown: false,
+            innerDropdown: false
+          })
+        )
         this.posts.forEach(post => {
           this.postService.getLikes(post.id).subscribe({
             next:(data)=>{
@@ -203,8 +207,6 @@ export class ExternalProfileComponent implements OnInit {
     this.showPost = true; 
     this.showInterest = false;
     this.showForm = false;
-    this.outerDropdown = false;
-    this.innerDropdown = false;
     this.postService.getPost(id).subscribe({
       next: (data) => {
         this.post = data;
@@ -232,41 +234,37 @@ export class ExternalProfileComponent implements OnInit {
   hidePost() { 
     this.post = null;
     this.showPost = false; 
-    this.outerDropdown = false;
-    this.innerDropdown = false;
     this.loadPosts();
   }
 
   viewForm() {  
-    this.outerDropdown=false;
     this.showForm = true;
     this.showPost = false; 
     this.showInterest = false;
   }
   hideForm() { this.showForm = false; }
   viewInterest() {  
-    this.outerDropdown=false;
     this.showInterest = true;  
     this.showPost = false; 
     this.showForm = false;
   }
   hideInterest(){ this.showInterest = false;  }
-  toggleDropdown(i: number){
+  toggleDropdown(post: Post, i: number){
 
     if(i==1){
-    if(this.outerDropdown == true){
-      this.outerDropdown = false;
+    if(post.outerDropdown == true){
+      post.outerDropdown = false;
     }
     else{
-      this.outerDropdown = true;
+      post.outerDropdown = true;
     }
     }
     else{
-      if(this.innerDropdown == true){
-        this.innerDropdown = false;
+      if(post.innerDropdown == true){
+        post.innerDropdown = false;
       }
       else{
-        this.innerDropdown = true;
+        post.innerDropdown = true;
       }
     }
   }

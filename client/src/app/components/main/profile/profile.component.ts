@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   constructor(private interestService: InterestsService, private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {}
   @ViewChild('postInput') postInput!: ElementRef<HTMLElement>;
   @ViewChild('commentInput') commentInput!: ElementRef<HTMLElement>;
+  @ViewChild('hide') hide!: ElementRef<HTMLElement>;
 
   sessionUser: User | null = null;
   posts: Post[] = [];
@@ -33,8 +34,6 @@ export class ProfileComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
-  outerDropdown = false;
-  innerDropdown = false;
   showInterest = false;
   isClicked = false;
   selectedFile: File | null = null;
@@ -79,7 +78,11 @@ export class ProfileComponent implements OnInit {
   loadPosts() {
     this.postService.getPostsByUserId(this.sessionUser!.id).subscribe({
       next: (data) => {
-        this.posts = data;
+        this.posts = data.map(post=>({
+          ...post,
+          outerDropdown: false,
+          innterDropdown: false
+        }));
         this.posts.forEach(post => {
           this.postService.getLikes(post.id).subscribe({
             next:(data)=>{
@@ -172,7 +175,6 @@ export class ProfileComponent implements OnInit {
   
   viewPost(id: string) {
     this.showPost = true; 
-    this.outerDropdown = false;
     this.showForm = false; 
     this.showInterest = false;
     this.postService.getPost(id).subscribe({
@@ -202,38 +204,34 @@ export class ProfileComponent implements OnInit {
   hidePost() { 
     this.post = null;
     this.showPost = false; 
-    this.outerDropdown = false;
-    this.innerDropdown = false;
     this.loadPosts();
   }
 
   viewForm() {  
-    this.outerDropdown=false;
     this.showForm = true;
     this.showPost = false; 
     this.showInterest = false;
   }
   hideForm() { this.showForm = false; }
   viewInterest() {  
-    this.outerDropdown=false;
     this.showInterest = true;  
   }
   hideInterest(){ this.showInterest = false;  }
-  toggleDropdown(i: number){
+  toggleDropdown(post: Post, i: number){
     if(i==1){
-      if(this.outerDropdown == true){
-        this.outerDropdown = false;
+      if(post.outerDropdown == true){
+        post.outerDropdown = false;
       }
       else{
-        this.outerDropdown = true;
+        post.outerDropdown = true;
       }
     }
     else{
-      if(this.innerDropdown == true){
-        this.innerDropdown = false;
+      if(post.innerDropdown == true){
+        post.innerDropdown = false;
       }
       else{
-        this.innerDropdown = true;
+        post.innerDropdown = true;
       }
     }
     
