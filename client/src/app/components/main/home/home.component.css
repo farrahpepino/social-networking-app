@@ -191,10 +191,6 @@ p{
     position: relative;
 }
 
-.parent:hover .child {
-    visibility: visible;
-}
-
 .p-i{
     outline: none;
     width: 87%;
