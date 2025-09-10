@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit {
   likedPosts: { [postId: string]: boolean } = {};
   showPost = false;
   showForm = false;
+  showImage = false;
+  selectedImage: any = "";
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   s3Url: string | null = null;
@@ -194,6 +196,24 @@ export class HomeComponent implements OnInit {
   hideForm() { 
     this.showForm = false; 
   }
+
+  viewImage(id: string){
+    this.showImage = true;
+    this.postService.getPost(id).subscribe({
+      next: (data) => {
+        this.selectedImage = data.imageUrl;
+      },
+      error: (err) => {
+        console.error('Error fetching image: ', err);
+      }
+    });
+  }
+  
+  hideImage(){
+    this.showImage = false;
+  }
+ 
+
   toggleDropdown(post: Post, i: number){
     if(i==1){
       if(post!.outerDropdown===true){

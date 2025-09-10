@@ -1,6 +1,6 @@
 <app-navigation />
 
-<button class="mb" (click)="viewForm()">
+<button class="mb" (click)="viewForm()" [class.hidden]="showImage">
     +
 </button>
 
@@ -28,11 +28,14 @@
         </div>
     </div>
     <p>{{post.content}}</p>
-    <img
-    *ngIf="post.imageUrl"
-    [src]="post.imageUrl"
-    alt="uploaded image"
-    class="uploaded-img"> 
+    <button class="bt" (click)="viewImage(post.id)">
+        <img
+        *ngIf="post.imageUrl"
+        [src]="post.imageUrl"
+        alt="uploaded image"
+        class="uploaded-img"> 
+    </button>
+
     <div class="react w-7rem">
         <div class="parent">
             <button type="button" class="bt" title="like" (click)="toggleLike(post)">
@@ -173,4 +176,16 @@
         <p *ngIf="interests.length===0" class="white center">NO INTERESTS</p>
 
     </div>
+</div>
+
+
+<div class="backdrop" [class.hidden]="!showImage"></div>
+    <div class="fullscreen-bg" [class.hidden]="!showImage">
+        <button type="button" (click)="hideImage()">X</button>
+        <img
+        *ngIf="selectedImage"
+        [src]="selectedImage"
+        alt="uploaded image"
+        class="fullscreen-img"
+        >
 </div>

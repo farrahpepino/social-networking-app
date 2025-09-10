@@ -39,6 +39,8 @@ export class ExternalProfileComponent implements OnInit {
   showPost = false;
   showForm = false;
   showInterest = false;
+  showImage = false;
+  selectedImage: any = "";
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   interests: InterestResponse[] = [];
@@ -191,7 +193,6 @@ export class ExternalProfileComponent implements OnInit {
             username: this.sessionUser!.username
           }];
           this.loadPosts();
-
         },
         error: (err) => console.error('Error liking post', err)
       });
@@ -225,6 +226,23 @@ export class ExternalProfileComponent implements OnInit {
       }
     });
     }
+
+    viewImage(id: string){
+      this.showImage = true;
+      this.postService.getPost(id).subscribe({
+        next: (data) => {
+          this.selectedImage = data.imageUrl;
+        },
+        error: (err) => {
+          console.error('Error fetching image: ', err);
+        }
+      });
+    }
+    
+    hideImage(){
+      this.showImage = false;
+    }
+   
 
   hidePost() { 
     this.post = null;

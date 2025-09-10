@@ -34,6 +34,8 @@ export class ProfileComponent implements OnInit {
   showPost = false;
   showForm = false;
   showInterest = false;
+  showImage = false;
+  selectedImage: any = "";
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   interests: InterestResponse[] = [];
@@ -199,6 +201,23 @@ export class ProfileComponent implements OnInit {
     this.showPost = false; 
     this.loadPosts();
   }
+
+  viewImage(id: string){
+    this.showImage = true;
+    this.postService.getPost(id).subscribe({
+      next: (data) => {
+        this.selectedImage = data.imageUrl;
+      },
+      error: (err) => {
+        console.error('Error fetching image: ', err);
+      }
+    });
+  }
+  
+  hideImage(){
+    this.showImage = false;
+  }
+ 
 
   viewForm() {  
     this.showForm = true;
