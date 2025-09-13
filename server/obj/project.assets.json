@@ -3933,11 +3933,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/farrahpepino/Documents/GitHub/loop-social/server/server.csproj",
+      "projectUniqueName": "/Users/farrahpepino/Documents/GitHub/social-networking-app/server/server.csproj",
       "projectName": "server",
-      "projectPath": "/Users/farrahpepino/Documents/GitHub/loop-social/server/server.csproj",
+      "projectPath": "/Users/farrahpepino/Documents/GitHub/social-networking-app/server/server.csproj",
       "packagesPath": "/Users/farrahpepino/.nuget/packages/",
-      "outputPath": "/Users/farrahpepino/Documents/GitHub/loop-social/server/obj/",
+      "outputPath": "/Users/farrahpepino/Documents/GitHub/social-networking-app/server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/farrahpepino/.nuget/NuGet/NuGet.Config"
@@ -3952,8 +3952,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj": {
-              "projectPath": "/Users/farrahpepino/Documents/GitHub/loop-social/AwsS3/AwsS3.csproj"
+            "/Users/farrahpepino/Documents/GitHub/social-networking-app/AwsS3/AwsS3.csproj": {
+              "projectPath": "/Users/farrahpepino/Documents/GitHub/social-networking-app/AwsS3/AwsS3.csproj"
             }
           }
         }
