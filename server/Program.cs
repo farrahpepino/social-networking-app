@@ -1,16 +1,16 @@
 using server.Data; // for dapper
 using server.Services; // for Dependency Injection
-using server.Models; //for jwtsettings
+using server.Models; // for jwtsettings
 using server.Middlewares;
 using server.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer; //for authentication
+using Microsoft.AspNetCore.Authentication.JwtBearer; // for authentication
 using Microsoft.IdentityModel.Tokens; // for signing credentials
 using System.Text; // for encoding 
 using AwsS3.Models;
 using AwsS3.Services;
 using Microsoft.AspNetCore.Http.Features;
 
-// DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in c#
+// DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in C#
 
 
 var builder = WebApplication.CreateBuilder(args); 
@@ -30,7 +30,6 @@ builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<InterestRepository>();
 
-
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddControllers();  
 builder.Services.AddSwaggerGen(); 
@@ -41,8 +40,7 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = long.MaxValue; 
 });
 
-//configure cors
-
+// configure cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev",
@@ -71,7 +69,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!))
     };
 });
-
 
 
 //build app
