@@ -7,6 +7,7 @@ namespace server.Controllers{
 
     [ApiController]
     [Route("[controller]")]
+    
     public class AuthController: ControllerBase{
         private readonly AuthService _authService;
 
