@@ -1,4 +1,4 @@
-using server.Data; // for dapper
+using server.Data; 
 using server.Services; // for Dependency Injection
 using server.Models; // for jwtsettings
 using server.Middlewares;
@@ -11,7 +11,6 @@ using AwsS3.Services;
 using Microsoft.AspNetCore.Http.Features;
 
 // DapperContext is a helper class that sets your database connection for Dapper, which allows you to run sql commands in C#
-
 
 var builder = WebApplication.CreateBuilder(args); 
 var secret = builder.Configuration["Jwt:Secret"];
