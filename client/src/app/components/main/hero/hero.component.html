@@ -1,14 +1,16 @@
-  <div class="content">
-    <div class="item">
-        <p class="logo">LOOP</p>
-        <p class="f-100 st">A QUIET SPACE TO SHARE WHAT YOU LOVE</p>
+<body>
+    <div class="header">
+        <p class="logo">L O O P</p>
+        <div>A quiet space to share what you love.</div>
     </div>
-    <div class="item">
+    <div class="content">
+        <div>
         <app-login *ngIf="showLogin"/>
         <app-register *ngIf="!showLogin"/>
-        <p class="f-100 st">
+        </div>
+        <p class="st">
             {{showLogin? "Don't have an account? " : "Already have an account? "}}
             <button class="toggle-b st" (click)="toggleForm()">{{showLogin ? "REGISTER." : "LOG IN."}}</button>
         </p>    
-    </div>
-</div>
+    </div>  
+</body>
