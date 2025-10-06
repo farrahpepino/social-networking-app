@@ -16,7 +16,6 @@ namespace server.Controllers{
             _interestService=interestService;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> CreateInterest(InterestDto interest){
             var createdInterest = await _interestService.CreateInterest(interest);
