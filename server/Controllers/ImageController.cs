@@ -21,6 +21,7 @@ namespace server.Controllers{
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadFile([FromForm] IFormFile File, [FromForm] string UserId) {
 
         await using var memoryStream = new MemoryStream();
